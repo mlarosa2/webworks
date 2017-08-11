@@ -24,7 +24,7 @@ mongo.connect(mongoConnect, (err, db) => {
         .get((req, res) => {
             db.collection('Pages').find({}).toArray((err, result) => {
                 if (err) throw err;
-                let titles = result.map(page => { page.title });
+                let titles = result.map(page => page.title);
                 res.setHeader('Content-Type', 'application/json');
                 res.send(JSON.stringify(titles));
             });

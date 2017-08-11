@@ -23,4 +23,8 @@ export class AdminComponent implements OnInit {
     return this.adminAuthService.isLoggedIn();
   }
 
+  getUserName(): String {
+    return this.adminAuthService.getUserName();
+  }
+
 }

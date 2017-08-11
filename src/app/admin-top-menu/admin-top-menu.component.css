@@ -1,0 +1,20 @@
+:host {
+    display: block;
+    background-color: silver;
+
+}
+
+ul {
+    margin: 0;
+    padding: 10px;
+}
+
+li {
+    display: inline-block;
+}
+
+li:last-child {
+    float: right;
+}
+
+

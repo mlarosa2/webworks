@@ -1,9 +1,13 @@
 <div *ngIf="isPageHome()">
-
+  <ul>
+    <li *ngFor="let title of getTitles()">{{title}}</li>
+  </ul>
 </div>
 
 <div *ngIf="isSpecificPage()">
   <app-page></app-page>
 </div>
 
-<div *ngIf="isCreatePage();"></div>
+<div *ngIf="isCreatePage();">
+  <p>Coming Soon</p>
+</div>

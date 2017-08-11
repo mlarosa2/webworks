@@ -1,0 +1,35 @@
+h1, p {
+    text-align: center;
+}
+
+form {
+    width: 25%;
+    min-width: 225px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+label {
+    width: 65px;
+    float: left;
+    display: inline-block;
+}
+
+input {
+    width: calc(100% - 75px);
+    float: right;
+}
+
+div::after {
+    display: block;
+    content: ' ';
+    clear: both;
+}
+
+div {
+    margin-bottom: 10px;
+}
+
+button {
+    width: 100%;
+}

@@ -27,6 +27,10 @@ export class AdminAuthService {
     
   }
 
+  getUserName(): String {
+    return this.userName;
+  }
+
   private handleError(error: any): void {
     console.log('woo boy build this out');
     console.error(error._body);
