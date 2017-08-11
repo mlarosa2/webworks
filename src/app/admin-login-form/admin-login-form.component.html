@@ -1,0 +1,13 @@
+<h1>Welcome to WebWorks Admin</h1>
+<p>Please log in to access the administration panel.</p>
+<form (ngSubmit)="onSubmit()" #adminLoginForm="ngForm">
+  <label for="user">Username</label>
+  <input type="text" id="username"
+         required
+         [(ngModel)]="model.username" name="username">
+  <label for="password">Password</label>
+  <input type="password" id="password"
+         required
+         [(ngModel)]="model.password" name="password">
+  <button type="submit" [disabled]="!adminLoginForm.form.valid">Log In</button>
+</form>

@@ -1,0 +1,8 @@
+<div *ngIf="!isLoggedIn()">
+  <app-admin-login-form></app-admin-login-form>
+</div>
+<div *ngIf="isLoggedIn()">
+  <app-admin-top-menu [userName]="getUserName()"></app-admin-top-menu>
+  <app-admin-side-menu></app-admin-side-menu>
+  <app-admin-view-area></app-admin-view-area>
+</div>
