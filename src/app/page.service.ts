@@ -50,7 +50,6 @@ export class PageService {
   }
 
   createNewPage(title: String, body: String): void {
-    console.log(title, body)
     this.http
       .post(`${this.pageUrl}/pages`, JSON.stringify({title: title, body: body}), {headers: this.headers})
       .toPromise()
@@ -58,6 +57,12 @@ export class PageService {
         this.setPageHome();
       })
       .catch(this.handleError);
+  }
+
+  getPage(title: String): Promise<any> {
+    return this.http
+      .get(`${this.pageUrl}/page/${title}`)
+        .toPromise()
   }
 
   private handleError(error: any): void {

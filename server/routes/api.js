@@ -12,10 +12,10 @@ mongo.connect(mongoConnect, (err, db) => {
         .post((req, res) => {
             db.collection('Users').find({ name: req.body.username }).toArray((err, result) => {
                 if (err) throw err;
-                if (result.length !== 0 && req.body.password === result[0].password) {
+                if (result.length > 0 && req.body.password === result[0].password) {
                     res.sendStatus(200);
                 } else {
-                    res.sendStatus(401).send('Invalid Credentials');
+                    res.sendStatus(401);
                 }
             });
         });
@@ -34,6 +34,18 @@ mongo.connect(mongoConnect, (err, db) => {
                 if (err) throw err;
                 res.sendStatus(200);
             });
+        });
+    
+    router.route('/page/:title')
+        .get((req, res) => {
+            db.collection('Pages').find({title: req.params.title}).toArray((err, result) => {
+                if (err) throw err;
+                if (result.length === 1) {
+                    res.send(result[0].body);
+                } else {
+                    res.sendStatus(404);
+                }
+            })
         });
 });
 

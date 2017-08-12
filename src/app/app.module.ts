@@ -10,14 +10,13 @@ import { AdminComponent } from './admin/admin.component';
 import { AdminTopMenuComponent } from './admin-top-menu/admin-top-menu.component';
 import { AdminSideMenuComponent } from './admin-side-menu/admin-side-menu.component';
 import { AdminViewAreaComponent } from './admin-view-area/admin-view-area.component';
-
-//services
 import { AdminAuthService } from './admin-auth.service';
 import { AdminLoginFormComponent } from './admin-login-form/admin-login-form.component';
 import { PagesComponent } from './pages/pages.component';
 import { PageComponent } from './page/page.component';
 import { AdminHomeComponent } from './admin-home/admin-home.component';
 import { NewPageFormComponent } from './new-page-form/new-page-form.component';
+import { FrontendComponent } from './frontend/frontend.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +29,8 @@ import { NewPageFormComponent } from './new-page-form/new-page-form.component';
     PagesComponent,
     PageComponent,
     AdminHomeComponent,
-    NewPageFormComponent
+    NewPageFormComponent,
+    FrontendComponent
   ],
   imports: [
     BrowserModule,
