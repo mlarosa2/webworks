@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { RouterModule } from '@angular/router';
+import { AppRoutingModule } from './app-routing.module';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
@@ -19,13 +19,6 @@ import { PageComponent } from './page/page.component';
 import { AdminHomeComponent } from './admin-home/admin-home.component';
 import { NewPageFormComponent } from './new-page-form/new-page-form.component';
 
-const ROUTES = [
-  {
-    path: 'admin',
-    component: AdminComponent
-  }
-];
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -43,7 +36,7 @@ const ROUTES = [
     BrowserModule,
     FormsModule,
     HttpModule,
-    RouterModule.forRoot(ROUTES)
+    AppRoutingModule
   ],
   providers: [AdminAuthService],
   bootstrap: [AppComponent]
