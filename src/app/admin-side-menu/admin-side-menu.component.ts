@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AdminService } from '../admin.service';
+import { PageService } from '../page.service';
 
 @Component({
   selector: 'app-admin-side-menu',
@@ -7,7 +8,8 @@ import { AdminService } from '../admin.service';
   styleUrls: ['./admin-side-menu.component.css']
 })
 export class AdminSideMenuComponent implements OnInit {
-  constructor(private adminService: AdminService) { }
+  constructor(private adminService: AdminService,
+              private pageService: PageService) { }
 
   ngOnInit() {
   }
@@ -18,6 +20,9 @@ export class AdminSideMenuComponent implements OnInit {
 
   setView(view: String): void {
     this.adminService.setCurrentView(view.toLowerCase());
+    if (view === 'Pages') {
+      this.pageService.setPageHome();
+    }
   }
 
 }

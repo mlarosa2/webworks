@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { PageService } from '../page.service';
-import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'app-pages',
@@ -9,9 +8,6 @@ import { Observable } from 'rxjs/Observable';
 })
 export class PagesComponent implements OnInit {
   private titles: String[];
-  private pageHome: Boolean = true;
-  private specificPage: Boolean = false;
-  private createPage: Boolean = false;
   constructor(private pageService: PageService) { }
 
   ngOnInit() {
@@ -24,18 +20,20 @@ export class PagesComponent implements OnInit {
 
   loadTitles(): void {
     this.pageService.getPageTitles()
-        .subscribe(titles => this.titles = titles);
+        .then(data => {
+          this.titles = JSON.parse(data._body).map(title => {return title;});
+        });
   }
 
   isPageHome(): Boolean {
-    return this.pageHome;
+    return this.pageService.getPageHome();
   }
 
   isSpecificPage(): Boolean {
-    return this.specificPage;
+    return this.pageService.getSpecficPage();
   }
 
   isCreatePage(): Boolean {
-    return this.createPage;
+    return this.pageService.getCreatePage();
   }
 }

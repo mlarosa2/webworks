@@ -1,0 +1,15 @@
+<form #newPage="ngForm" (submit)="onSubmit();">
+  <div>
+    <label for="title">Page Title</label>
+    <input type="text" id="title"
+           required
+           [(ngModel)]="model.title" name="title">
+  </div>
+  <div>
+    <label for="body">Page Body</label>
+    <textarea id="body" 
+              required
+              [(ngModel)]="model.body" name="body"></textarea>
+  </div>
+  <div><button type="submit" [disabled]="!newPage.form.valid">Create Page</button></div>
+</form>

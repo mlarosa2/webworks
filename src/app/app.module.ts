@@ -16,6 +16,8 @@ import { AdminAuthService } from './admin-auth.service';
 import { AdminLoginFormComponent } from './admin-login-form/admin-login-form.component';
 import { PagesComponent } from './pages/pages.component';
 import { PageComponent } from './page/page.component';
+import { AdminHomeComponent } from './admin-home/admin-home.component';
+import { NewPageFormComponent } from './new-page-form/new-page-form.component';
 
 const ROUTES = [
   {
@@ -33,7 +35,9 @@ const ROUTES = [
     AdminViewAreaComponent,
     AdminLoginFormComponent,
     PagesComponent,
-    PageComponent
+    PageComponent,
+    AdminHomeComponent,
+    NewPageFormComponent
   ],
   imports: [
     BrowserModule,

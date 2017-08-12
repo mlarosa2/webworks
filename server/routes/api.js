@@ -15,7 +15,7 @@ mongo.connect(mongoConnect, (err, db) => {
                 if (result.length !== 0 && req.body.password === result[0].password) {
                     res.sendStatus(200);
                 } else {
-                    res.status(401).send('Invalid Credentials');
+                    res.sendStatus(401).send('Invalid Credentials');
                 }
             });
         });
@@ -30,7 +30,10 @@ mongo.connect(mongoConnect, (err, db) => {
             });
         })
         .post((req, res) => {
-            
+            db.collection('Pages').insertOne({title: req.body.title, body: req.body.body}, (err, result) => {
+                if (err) throw err;
+                res.sendStatus(200);
+            });
         });
 });
 

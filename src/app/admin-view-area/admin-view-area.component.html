@@ -1,1 +1,3 @@
+<h2>{{currentView()}}</h2>
+<app-admin-home *ngIf="currentView() === 'home'"></app-admin-home>
 <app-pages *ngIf="currentView() === 'pages'"></app-pages>

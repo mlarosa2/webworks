@@ -1,4 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { AdminService } from '../admin.service';
+import { PageService } from '../page.service';
 
 @Component({
   selector: 'app-admin-top-menu',
@@ -9,9 +11,19 @@ import { Component, OnInit, Input } from '@angular/core';
 export class AdminTopMenuComponent implements OnInit {
   @Input() userName: String;
   
-  constructor() { }
+  constructor(private adminService: AdminService,
+              private pageService: PageService) { }
 
   ngOnInit() {
+  }
+
+  goHome(): void {
+    this.adminService.setCurrentView('home');
+  }
+
+  newPage(): void {
+    this.adminService.setCurrentView('pages')
+    this.pageService.setCreatePage();
   }
 
 }
