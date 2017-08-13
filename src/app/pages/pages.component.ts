@@ -10,23 +10,19 @@ export class PagesComponent implements OnInit {
   private titles: String[];
   constructor(private pageService: PageService) { }
 
-  ngOnInit() {
-    this.loadTitles();           
-  }
-
-  getTitles(): String[] {
-    return this.titles;
-  }
-
-  loadTitles(): void {
-    this.pageService.getPageTitles()
-        .then(data => {
-          this.titles = JSON.parse(data._body).map(title => {return title;});
-        });
+  ngOnInit() {       
   }
 
   isPageHome(): Boolean {
     return this.pageService.getPageHome();
+  }
+
+  getTitles(): String[] {
+    return this.pageService.getTitles();
+  }
+
+  getSelectedPage(): String {
+    return this.pageService.getSelectedPage();
   }
 
   isSpecificPage(): Boolean {
@@ -35,5 +31,15 @@ export class PagesComponent implements OnInit {
 
   isCreatePage(): Boolean {
     return this.pageService.getCreatePage();
+  }
+
+  goToPage(title: String): void {
+    this.pageService.setSpecficPage(title);
+  }
+
+  deletePage(title: String, event: any): void {
+    event.stopPropagation();
+    this.pageService.deletePage(title);
+    this.pageService.loadTitles();
   }
 }

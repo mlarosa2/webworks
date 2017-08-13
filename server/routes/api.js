@@ -46,6 +46,20 @@ mongo.connect(mongoConnect, (err, db) => {
                     res.sendStatus(404);
                 }
             })
+        })
+        .delete((req, res) => {
+            db.collection('Pages').deleteOne({title: req.params.title}, (err, result) => {
+                if (err) console.log(err);
+                res.sendStatus(200);
+            });
+        })
+        .put((req, res) => {
+            const query         = { title: req.params.title };
+            const updatedValues = req.body.body; 
+            db.collection('Pages').updateOne(query, updatedValues, (err, result) => {
+                if (err) throw err;
+                res.sendStatus(200);
+            });
         });
 });
 

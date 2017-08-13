@@ -1,11 +1,11 @@
 <div *ngIf="isPageHome()">
   <ul>
-    <li *ngFor="let title of getTitles()">{{title}}</li>
+    <li *ngFor="let title of getTitles();" (click)="goToPage(title)"><span>{{title}}</span><i class="fa fa-times" (click)="deletePage(title, $event)"></i></li>
   </ul>
 </div>
 
 <div *ngIf="isSpecificPage()">
-  <app-page></app-page>
+  <app-page [title]="getSelectedPage()"></app-page>
 </div>
 
 <div *ngIf="isCreatePage();">
