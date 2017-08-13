@@ -11,7 +11,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 
 app.use(express.static(path.join(__dirname, 'dist')));
-
+app.use('/media', express.static(path.join(__dirname, 'media')));
 app.use('/api', api);
 
 app.get('*', (req, res) => {
