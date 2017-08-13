@@ -35,6 +35,7 @@ testem.log
 yarn-error.log
 /server/secrets.js
 secrets.txt
+/server/media/*
 
 # e2e
 /e2e/*.js
