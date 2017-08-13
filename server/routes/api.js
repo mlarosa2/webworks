@@ -5,10 +5,10 @@ const mongoConnect = require('../secrets').mongo;
 const multer       = require('multer');
 const storage      = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, __dirname + '/../media/')
+        cb(null, __dirname + '/../../media/');
     },
     filename: (req, file, cb) => {
-        cb(null, file.originalname)
+        cb(null, file.originalname);
     }
 });
 const upload = multer({storage: storage}).single('file');
@@ -76,8 +76,7 @@ mongo.connect(mongoConnect, (err, db) => {
         .post((req, res) => {
             let path = '';
             upload(req, res, err => {
-                if (err) res.sendStatus(422);
-                path = req.file.path;
+                if (err) throw err;
                 return res.sendStatus(200);
             });
         });
