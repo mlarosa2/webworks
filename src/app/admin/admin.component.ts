@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AdminAuthService } from '../admin-auth.service';
 import { AdminService } from '../admin.service';
 import { PageService } from '../page.service';
+import { MediaService } from '../media.service';
 
 @Component({
   selector: 'app-admin',
@@ -9,12 +10,14 @@ import { PageService } from '../page.service';
   styleUrls: ['./admin.component.css'],
   providers: [
     AdminService,
-    PageService
+    PageService,
+    MediaService
   ]
 })
 export class AdminComponent implements OnInit {
   constructor(private adminAuthService: AdminAuthService,
-              private adminService: AdminService) { }
+              private adminService: AdminService,
+              private mediaService: MediaService) { }
 
   ngOnInit() {
   }

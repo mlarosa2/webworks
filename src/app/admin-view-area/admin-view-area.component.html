@@ -1,3 +1,6 @@
 <h2>{{currentView()}}</h2>
 <app-admin-home *ngIf="currentView() === 'home'"></app-admin-home>
 <app-pages *ngIf="currentView() === 'pages'"></app-pages>
+<app-media *ngIf="currentView() == 'media'"></app-media>
+<app-collections *ngIf="currentView() === 'collections'"></app-collections>
+<app-forms *ngIf="currentView() === 'forms'"></app-forms>

@@ -17,6 +17,10 @@ import { PageComponent } from './page/page.component';
 import { AdminHomeComponent } from './admin-home/admin-home.component';
 import { NewPageFormComponent } from './new-page-form/new-page-form.component';
 import { FrontendComponent } from './frontend/frontend.component';
+import { MediaComponent } from './media/media.component';
+import { UploadMediaComponent } from './upload-media/upload-media.component';
+import { CollectionsComponent } from './collections/collections.component';
+import { FormsComponent } from './forms/forms.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +34,11 @@ import { FrontendComponent } from './frontend/frontend.component';
     PageComponent,
     AdminHomeComponent,
     NewPageFormComponent,
-    FrontendComponent
+    FrontendComponent,
+    MediaComponent,
+    UploadMediaComponent,
+    CollectionsComponent,
+    FormsComponent
   ],
   imports: [
     BrowserModule,

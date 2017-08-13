@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { AdminService } from '../admin.service';
 import { PageService } from '../page.service';
+import { MediaService } from '../media.service';
 
 @Component({
   selector: 'app-admin-top-menu',
@@ -12,7 +13,8 @@ export class AdminTopMenuComponent implements OnInit {
   @Input() userName: String;
   
   constructor(private adminService: AdminService,
-              private pageService: PageService) { }
+              private pageService: PageService,
+              private mediaService: MediaService) { }
 
   ngOnInit() {
   }
@@ -24,6 +26,11 @@ export class AdminTopMenuComponent implements OnInit {
   newPage(): void {
     this.adminService.setCurrentView('pages')
     this.pageService.setCreatePage();
+  }
+
+  newMedia(): void {
+    this.adminService.setCurrentView('media');
+    this.mediaService.turnOnUploadMode();
   }
 
 }

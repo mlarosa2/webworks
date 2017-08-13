@@ -2,6 +2,16 @@ const express      = require('express');
 const router       = express.Router();
 const mongo        = require('mongodb').MongoClient;
 const mongoConnect = require('../secrets').mongo;
+const multer       = require('multer');
+const storage      = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, __dirname + '/../media/')
+    },
+    filename: (req, file, cb) => {
+        cb(null, file.originalname)
+    }
+});
+const upload = multer({storage: storage}).single('file');
 
 mongo.connect(mongoConnect, (err, db) => {
     router.get('/', (req, res) => {
@@ -33,7 +43,7 @@ mongo.connect(mongoConnect, (err, db) => {
             db.collection('Pages').insertOne({title: req.body.title, body: req.body.body}, (err, result) => {
                 if (err) throw err;
                 res.sendStatus(200);
-            });
+            });console.log(upload);
         });
     
     router.route('/page/:title')
@@ -59,6 +69,16 @@ mongo.connect(mongoConnect, (err, db) => {
             db.collection('Pages').updateOne(query, updatedValues, (err, result) => {
                 if (err) throw err;
                 res.sendStatus(200);
+            });
+        });
+
+    router.route('/media')
+        .post((req, res) => {
+            let path = '';
+            upload(req, res, err => {
+                if (err) res.sendStatus(422);
+                path = req.file.path;
+                return res.sendStatus(200);
             });
         });
 });
