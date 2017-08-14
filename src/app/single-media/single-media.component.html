@@ -1,9 +1,9 @@
 <div class="single-media-bg" (click)="closeModal()"></div>
-<i class="fa fa-times"></i>
 <div class="single-media-fg">
+  <i class="fa fa-times" (click)="closeModal()"></i>
   <h2>{{file}}</h2>
   <img src="/media/{{file}}" *ngIf="isImage(file)">
-  <i fa fa-file *ngIf="!isImage(file)" (click)="closeModal()"></i>
+  <i fa fa-file *ngIf="!isImage(file)"></i>
   <form #updateMedia="ngForm" (submit)="onSubmit()">
     <div>
       <label for="name">File Name</label>
