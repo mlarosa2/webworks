@@ -13,7 +13,7 @@ export class FrontendComponent implements OnInit {
   constructor(private pageService: PageService) { }
 
   ngOnInit() {
-    this.page = window.location.pathname.substr(1);
+    this.page = window.location.pathname.substr(1).replace(/-/g, ' ');
     this.pageService.getPage(this.page).then(response => {
       this.body = response._body;
     });

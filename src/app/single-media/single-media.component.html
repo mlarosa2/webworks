@@ -1,0 +1,17 @@
+<div class="single-media-bg" (click)="closeModal()"></div>
+<i class="fa fa-times"></i>
+<div class="single-media-fg">
+  <h2>{{file}}</h2>
+  <img src="/media/{{file}}" *ngIf="isImage(file)">
+  <i fa fa-file *ngIf="!isImage(file)" (click)="closeModal()"></i>
+  <form #updateMedia="ngForm" (submit)="onSubmit()">
+    <div>
+      <label for="name">File Name</label>
+      <input type="text" id="name"
+            required
+            [(ngModel)]="model.name" name="name">
+    </div>
+    <div><button type="submit" [disabled]="!updateMedia.form.valid">Update File</button></div>
+  </form>
+  <button (click)="deleteFile(file)">Delete File</button>
+</div>

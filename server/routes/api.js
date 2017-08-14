@@ -77,9 +77,12 @@ mongo.connect(mongoConnect, (err, db) => {
         .post((req, res) => {
             upload(req, res, err => {
                 if (err) throw err;
-                fs.writeFile(`${Date.now()}-${req.file.originalname}`, '', (err) => {
+                fs.writeFile(`${__dirname}/../../meta-media/${Date.now()}-${req.file.originalname}`, '', (err) => {
                     if (err) throw err;
-                    return res.sendStatus(200);
+                    db.collection('Media').insertOne({title: req.file.originalname}, (err, result) => {
+                        if (err) throw err
+                        return res.sendStatus(200);
+                    });
                 });
             });
         })
@@ -88,7 +91,64 @@ mongo.connect(mongoConnect, (err, db) => {
             fs.readdir(mediaDir, (err, files) => {
                 const allFiles = files.map((file) => { return file.substr(file.indexOf('-') + 1) });                
                 res.setHeader('Content-Type', 'application/json');
-                res.send(JSON.stringify(allFiles));
+                res.send(JSON.stringify(allFiles.reverse()));
+            });
+        });
+    router.route('/media/:title')
+        .get((req, res) => {
+            db.collection('Media').find({title: req.params.title}).toArray((err, result) => {
+                if (err) throw err;
+                if (result.length === 1) {
+                    res.send(result[0].body);
+                } else {
+                    res.sendStatus(404);
+                }
+            });
+        })
+        .delete((req, res) => {
+            const metaDir  = __dirname + '/../../meta-media/';
+            const mediaDir = __dirname + '/../../media/'; 
+            db.collection('Media').deleteOne({title: req.params.title}, (err, result) => {
+                if (err) throw err;
+                fs.readdir(metaDir, (err, files) => {
+                    if (err) throw err;
+                    for (let i = 0; i < files.length; i++) {
+                        if (files[i].substr(files[i].indexOf('-') + 1) === req.params.title) {
+                            fs.unlink(`${metaDir}${files[i]}`, (err) => {
+                                if (err) throw err;
+                                fs.unlink(`${mediaDir}${req.params.title}`, (err) => {
+                                    if (err) throw err;
+                                    res.sendStatus(200);
+                                });
+                            });
+                            break;
+                        }
+                    };
+                });
+            });
+        })
+        .put((req, res) => {
+            const metaDir  = __dirname + '/../../meta-media/';
+            const mediaDir = __dirname + '/../../media/'; 
+            const query         = { title: req.params.title };
+            const updatedValues = { title: req.body.updateTitle }; 
+            db.collection('Media').updateOne(query, updatedValues, (err, result) => {
+                if (err) throw err;
+                fs.readdir(metaDir, (err, files) => {
+                    if (err) throw err;
+                    for (let i = 0; i < files.length; i++) {
+                        if (files[i].substr(files[i].indexOf('-') + 1) === req.params.title) {
+                            fs.rename(`${metaDir}${files[i]}`, `${metaDir}${files[i].substr(0, files[i].indexOf('-') + 1)}${req.body.updateTitle}`, (err) => {
+                                if (err) throw err;
+                                fs.rename(`${mediaDir}${req.params.title}`, `${mediaDir}${req.body.updateTitle}`, (err) => {
+                                    if (err) throw err;
+                                    res.sendStatus(200);
+                                });
+                            });
+                            break;
+                        }
+                    };
+                });
             });
         });
 });

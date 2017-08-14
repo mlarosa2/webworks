@@ -10,10 +10,16 @@ export class MediaService {
   private mediaUrl: String = 'api';
   private mediaPaths: String[];
   private uploadMode: Boolean = false;
+  private singleMode: Boolean = false;
+  private singleFile: String; 
   constructor(private http: Http) { }
 
   isUploadMode(): Boolean {
     return this.uploadMode;
+  }
+
+  isSingleMode(): Boolean {
+    return this.singleMode;
   }
 
   turnOffUploadMode(): void {
@@ -22,13 +28,26 @@ export class MediaService {
 
   turnOnUploadMode(): void {
     this.uploadMode = true;
+    if (this.singleMode) this.singleMode = false;
+  }
+
+  turnOffSingleMode(): void {
+    this.singleMode = false;
+    this.singleFile = null;
+  }
+
+  turnOnSingleMode(): void {
+    this.singleMode = true;
+    if (this.uploadMode) this.uploadMode = false;
   }
 
   upload(formData: FormData): Promise<void> {
     return this.http
             .post(`${this.mediaUrl}/media`, formData, new Headers({'Content-Type': 'multipart/form-data'}))
             .toPromise()
-            .then(() => null)
+            .then(() => {
+              this.setFiles();
+            })
             .catch(this.handleError);
   }
 
@@ -46,8 +65,45 @@ export class MediaService {
       .catch(this.handleError);
   }
 
+  setSingleFile(file: String): void {
+    this.singleFile = file;
+  }
+
+  getSingleFile(): String {
+    return this.singleFile;
+  }
+
   getFilesList(): String[] {
     return this.mediaPaths;
+  }
+
+  isImage(file: String): Boolean {
+    if (!file) return false;
+    const ext = file.substr(file.lastIndexOf('.') + 1);
+    const images = ['jpg', 'png', 'svg', 'gif'];
+    return images.includes(ext);
+  }
+
+  deleteFile(file: String): void {
+    this.http
+      .delete(`${this.mediaUrl}/media/${file}`, {headers: this.headers})
+      .toPromise()
+      .then(response => {
+        this.setFiles();
+        this.turnOffSingleMode();
+      })
+      .catch(this.handleError);
+  }
+
+  updateMedia(originalTitle: String, mediaData: any): void {
+    this.http
+      .put(`${this.mediaUrl}/media/${originalTitle}`, { updateTitle: `${mediaData.name}${mediaData.ext}`})
+      .toPromise()
+      .then(response => {
+        this.setFiles();
+        this.turnOffSingleMode();
+      })
+      .catch(this.handleError);
   }
 
   private handleError(error: any): void {

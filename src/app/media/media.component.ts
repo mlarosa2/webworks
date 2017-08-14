@@ -22,9 +22,20 @@ export class MediaComponent implements OnInit {
   }
 
   isImage(file: String): Boolean {
-    const ext = file.substr(file.lastIndexOf('.') + 1);
-    const images = ['jpg', 'png', 'svg', 'gif'];
-    return images.includes(ext);
+    return this.mediaService.isImage(file);
+  }
+
+  viewFile(file: String): void {
+    this.mediaService.turnOnSingleMode();
+    this.mediaService.setSingleFile(file);
+  }
+
+  isSingleMode(): Boolean {
+    return this.mediaService.isSingleMode();
+  }
+
+  getSingleFile(): String {
+    return this.mediaService.getSingleFile();
   }
 
 }

@@ -14,13 +14,18 @@ export class UploadMediaComponent implements OnInit {
   ngOnInit() {
   }
 
-  fileChanged(event): void {
+  fileChanged(event, preview): void {
     let target: HTMLInputElement = event.target as HTMLInputElement;
     this.file = target.files[0];
+    preview.src = window.URL.createObjectURL(this.file);
   }
 
   closeModal(): void {
     this.mediaService.turnOffUploadMode();
+  }
+
+  isImage(file: String): Boolean {
+    return this.mediaService.isImage(file);
   }
 
   onSubmit(event): void {
@@ -28,7 +33,6 @@ export class UploadMediaComponent implements OnInit {
     formData.append('file', this.file, this.file.name);
     this.mediaService.upload(formData);
     this.mediaService.turnOffUploadMode();
-    this.mediaService.setFiles();
   } 
 
 }

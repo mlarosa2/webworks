@@ -1,4 +1,4 @@
-.modal-bg {
+.single-media-bg {
     position: absolute;
     top: 0;
     bottom: 0;
@@ -8,7 +8,9 @@
     z-index: 99;
 }
 
-form {
+
+
+.single-media-fg {
     position: absolute;
     z-index: 100;
     width: 50%;
@@ -23,8 +25,8 @@ form {
     background-color: white;
 }
 
-.image-preview img {
-    max-width: 200px;
+.single-media-fg img {
+    width: 300px;
     height: auto;
     object-fit: cover;    
 }

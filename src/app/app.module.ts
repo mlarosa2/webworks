@@ -21,6 +21,7 @@ import { MediaComponent } from './media/media.component';
 import { UploadMediaComponent } from './upload-media/upload-media.component';
 import { CollectionsComponent } from './collections/collections.component';
 import { FormsComponent } from './forms/forms.component';
+import { SingleMediaComponent } from './single-media/single-media.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { FormsComponent } from './forms/forms.component';
     MediaComponent,
     UploadMediaComponent,
     CollectionsComponent,
-    FormsComponent
+    FormsComponent,
+    SingleMediaComponent
   ],
   imports: [
     BrowserModule,

@@ -1,6 +1,6 @@
-<div>Media Goes Here</div>
-<div *ngFor="let file of getFiles()">
+<div *ngFor="let file of getFiles()" class="media-container" (click)="viewFile(file)">
   <img src="/media/{{file}}" *ngIf="isImage(file)">
-  <a href="/media/{{file}}" target="_blank"><i class="fa fa-file" *ngIf="!isImage(file)"></i></a>
+  <i class="fa fa-file" *ngIf="!isImage(file)"></i>
 </div>
 <app-upload-media *ngIf="isUploadMode()"></app-upload-media>
+<app-single-media *ngIf="isSingleMode()" [file]="getSingleFile()"></app-single-media>

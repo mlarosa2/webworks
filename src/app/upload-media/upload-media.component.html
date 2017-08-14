@@ -1,8 +1,12 @@
 <div class="modal-bg" (click)="closeModal()"></div>
 <form (submit)="onSubmit()" #upload="ngForm">
+  <i class="fa fa-times" (click)="closeModal()"></i>
   <div>
     <label for="file">Upload File</label>
-    <input type="file" id="file" name="file" (change)="fileChanged($event)">
+    <input type="file" id="file" name="file" (change)="fileChanged($event, preview)">
+  </div>
+  <div class="image-preview">
+    <img #preview>
   </div>
   <div><button [disabled]="file === undefined" type="submit">Upload</button></div>
 </form>

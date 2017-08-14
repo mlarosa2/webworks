@@ -13,7 +13,7 @@ export class PageComponent implements OnChanges {
   constructor(private pageService: PageService) { }
 
   ngOnChanges() {
-    const title = this.title
+    const title = this.title;
     this.pageService.getPage(title)
       .then(page => {
         this.model.title = title;
