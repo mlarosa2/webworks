@@ -6,6 +6,7 @@ export class CollectionsService {
   private buildCollection: Boolean = false;
   private updateCollection: Boolean = false;
   private selectedCollection: String;
+  private collectionsList: String[];
 
   constructor() { }
 
