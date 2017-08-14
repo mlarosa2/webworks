@@ -19,10 +19,16 @@ export class UploadMediaComponent implements OnInit {
     this.file = target.files[0];
   }
 
+  closeModal(): void {
+    this.mediaService.turnOffUploadMode();
+  }
+
   onSubmit(event): void {
     let formData: FormData = new FormData();
     formData.append('file', this.file, this.file.name);
     this.mediaService.upload(formData);
+    this.mediaService.turnOffUploadMode();
+    this.mediaService.setFiles();
   } 
 
 }

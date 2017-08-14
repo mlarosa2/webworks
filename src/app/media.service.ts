@@ -32,6 +32,24 @@ export class MediaService {
             .catch(this.handleError);
   }
 
+  getFiles(): Promise<any> {
+    return this.http
+            .get(`${this.mediaUrl}/media`)
+            .toPromise();
+  }
+
+  setFiles(): void {
+    this.getFiles()
+      .then(response => {
+        this.mediaPaths = JSON.parse(response._body);
+      })
+      .catch(this.handleError);
+  }
+
+  getFilesList(): String[] {
+    return this.mediaPaths;
+  }
+
   private handleError(error: any): void {
     console.log('woo boy build this out');
     console.error(error._body);

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AdminService } from '../admin.service';
 import { PageService } from '../page.service';
+import { MediaService } from '../media.service';
 
 @Component({
   selector: 'app-admin-side-menu',
@@ -9,7 +10,8 @@ import { PageService } from '../page.service';
 })
 export class AdminSideMenuComponent implements OnInit {
   constructor(private adminService: AdminService,
-              private pageService: PageService) { }
+              private pageService: PageService,
+              private mediaService: MediaService) { }
 
   ngOnInit() {
   }
@@ -22,6 +24,8 @@ export class AdminSideMenuComponent implements OnInit {
     this.adminService.setCurrentView(view.toLowerCase());
     if (view === 'Pages') {
       this.pageService.setPageHome();
+    } else if (view === 'Media') {
+      this.mediaService.setFiles();
     }
   }
 

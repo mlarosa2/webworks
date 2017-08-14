@@ -31,6 +31,7 @@ export class AdminTopMenuComponent implements OnInit {
   newMedia(): void {
     this.adminService.setCurrentView('media');
     this.mediaService.turnOnUploadMode();
+    this.mediaService.setFiles();
   }
 
 }

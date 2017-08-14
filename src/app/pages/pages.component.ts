@@ -7,7 +7,6 @@ import { PageService } from '../page.service';
   styleUrls: ['./pages.component.css']
 })
 export class PagesComponent implements OnInit {
-  private titles: String[];
   constructor(private pageService: PageService) { }
 
   ngOnInit() {       

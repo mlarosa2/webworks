@@ -16,8 +16,7 @@ import { MediaService } from '../media.service';
 })
 export class AdminComponent implements OnInit {
   constructor(private adminAuthService: AdminAuthService,
-              private adminService: AdminService,
-              private mediaService: MediaService) { }
+              private adminService: AdminService) { }
 
   ngOnInit() {
   }

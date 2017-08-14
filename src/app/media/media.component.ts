@@ -17,4 +17,14 @@ export class MediaComponent implements OnInit {
     return this.mediaService.isUploadMode();
   }
 
+  getFiles(): String[] {
+    return this.mediaService.getFilesList();
+  }
+
+  isImage(file: String): Boolean {
+    const ext = file.substr(file.lastIndexOf('.') + 1);
+    const images = ['jpg', 'png', 'svg', 'gif'];
+    return images.includes(ext);
+  }
+
 }

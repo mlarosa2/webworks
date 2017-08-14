@@ -2,6 +2,7 @@ const express      = require('express');
 const router       = express.Router();
 const mongo        = require('mongodb').MongoClient;
 const mongoConnect = require('../secrets').mongo;
+const fs           = require('fs');
 const multer       = require('multer');
 const storage      = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -36,7 +37,7 @@ mongo.connect(mongoConnect, (err, db) => {
                 if (err) throw err;
                 let titles = result.map(page => page.title);
                 res.setHeader('Content-Type', 'application/json');
-                res.send(JSON.stringify(titles));
+                res.send(JSON.stringify(titles));this.med
             });
         })
         .post((req, res) => {
@@ -74,10 +75,20 @@ mongo.connect(mongoConnect, (err, db) => {
 
     router.route('/media')
         .post((req, res) => {
-            let path = '';
             upload(req, res, err => {
                 if (err) throw err;
-                return res.sendStatus(200);
+                fs.writeFile(`${Date.now()}-${req.file.originalname}`, '', (err) => {
+                    if (err) throw err;
+                    return res.sendStatus(200);
+                });
+            });
+        })
+        .get((req, res) => {
+            const mediaDir = __dirname + '/../../meta-media/';
+            fs.readdir(mediaDir, (err, files) => {
+                const allFiles = files.map((file) => { return file.substr(file.indexOf('-') + 1) });                
+                res.setHeader('Content-Type', 'application/json');
+                res.send(JSON.stringify(allFiles));
             });
         });
 });
