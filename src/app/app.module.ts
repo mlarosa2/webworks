@@ -22,6 +22,11 @@ import { UploadMediaComponent } from './upload-media/upload-media.component';
 import { CollectionsComponent } from './collections/collections.component';
 import { FormsComponent } from './forms/forms.component';
 import { SingleMediaComponent } from './single-media/single-media.component';
+import { CollectionBuilderComponent } from './collection-builder/collection-builder.component';
+import { CollectionItemsComponent } from './collection-items/collection-items.component';
+import { CollectionItemComponent } from './collection-item/collection-item.component';
+import { CollectionsListComponent } from './collections-list/collections-list.component';
+import { UpdateCollectionComponent } from './update-collection/update-collection.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +45,12 @@ import { SingleMediaComponent } from './single-media/single-media.component';
     UploadMediaComponent,
     CollectionsComponent,
     FormsComponent,
-    SingleMediaComponent
+    SingleMediaComponent,
+    CollectionBuilderComponent,
+    CollectionItemsComponent,
+    CollectionItemComponent,
+    CollectionsListComponent,
+    UpdateCollectionComponent
   ],
   imports: [
     BrowserModule,

@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { AdminService } from '../admin.service';
 import { PageService } from '../page.service';
 import { MediaService } from '../media.service';
+import { CollectionsService } from '../collections.service';
 
 @Component({
   selector: 'app-admin-top-menu',
@@ -14,7 +15,8 @@ export class AdminTopMenuComponent implements OnInit {
   
   constructor(private adminService: AdminService,
               private pageService: PageService,
-              private mediaService: MediaService) { }
+              private mediaService: MediaService,
+              private collectionsService: CollectionsService) { }
 
   ngOnInit() {
   }
@@ -32,6 +34,11 @@ export class AdminTopMenuComponent implements OnInit {
     this.adminService.setCurrentView('media');
     this.mediaService.turnOnUploadMode();
     this.mediaService.setFiles();
+  }
+
+  newCollection(): void {
+    this.adminService.setCurrentView('collections');
+    this.collectionsService.setBuildView();
   }
 
 }
