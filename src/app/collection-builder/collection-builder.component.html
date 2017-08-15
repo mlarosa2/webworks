@@ -8,7 +8,7 @@
   <h3>{{model.name}}</h3>
   <h3>Added Fields</h3>
   <ul>
-    <li *ngFor="let field of fields #i = index">
+    <li *ngFor="let field of fields let i = index">
       {{field}} 
       <i class="fa fa-pencil" (click)=updateField(i)></i>
       <i class="fa fa-times" (click)="deleteField(field)"></i>
