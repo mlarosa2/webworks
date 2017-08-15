@@ -44,7 +44,7 @@ mongo.connect(mongoConnect, (err, db) => {
             db.collection('Pages').insertOne({title: req.body.title, body: req.body.body}, (err, result) => {
                 if (err) throw err;
                 res.sendStatus(200);
-            });console.log(upload);
+            });
         });
     
     router.route('/page/:title')
@@ -60,7 +60,7 @@ mongo.connect(mongoConnect, (err, db) => {
         })
         .delete((req, res) => {
             db.collection('Pages').deleteOne({title: req.params.title}, (err, result) => {
-                if (err) console.log(err);
+                if (err) throw err;
                 res.sendStatus(200);
             });
         })
@@ -94,6 +94,7 @@ mongo.connect(mongoConnect, (err, db) => {
                 res.send(JSON.stringify(allFiles.reverse()));
             });
         });
+
     router.route('/media/:title')
         .get((req, res) => {
             db.collection('Media').find({title: req.params.title}).toArray((err, result) => {
@@ -150,6 +151,14 @@ mongo.connect(mongoConnect, (err, db) => {
                     };
                 });
             });
+        });
+
+    router.route('/collections')
+        .get((req, res) => {
+
+        })
+        .post((req, res) => {
+
         });
 });
 
