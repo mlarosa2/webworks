@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { CollectionsService } from '../collections.service';
 
 @Component({
   selector: 'app-collections-list',
@@ -7,9 +8,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CollectionsListComponent implements OnInit {
 
-  constructor() { }
+  constructor(private collectionsService: CollectionsService) { }
 
   ngOnInit() {
+  }
+
+  getAllTitles(): string[] {
+    return this.collectionsService.getTitles();
   }
 
 }

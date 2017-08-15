@@ -12,31 +12,31 @@ export class PagesComponent implements OnInit {
   ngOnInit() {       
   }
 
-  isPageHome(): Boolean {
+  isPageHome(): boolean {
     return this.pageService.getPageHome();
   }
 
-  getTitles(): String[] {
+  getTitles(): string[] {
     return this.pageService.getTitles();
   }
 
-  getSelectedPage(): String {
+  getSelectedPage(): string {
     return this.pageService.getSelectedPage();
   }
 
-  isSpecificPage(): Boolean {
+  isSpecificPage(): boolean {
     return this.pageService.getSpecficPage();
   }
 
-  isCreatePage(): Boolean {
+  isCreatePage(): boolean {
     return this.pageService.getCreatePage();
   }
 
-  goToPage(title: String): void {
+  goToPage(title: string): void {
     this.pageService.setSpecficPage(title);
   }
 
-  deletePage(title: String, event: any): void {
+  deletePage(title: string, event: any): void {
     event.stopPropagation();
     this.pageService.deletePage(title);
     this.pageService.loadTitles();

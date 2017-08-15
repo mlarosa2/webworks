@@ -24,7 +24,7 @@ export class UploadMediaComponent implements OnInit {
     this.mediaService.turnOffUploadMode();
   }
 
-  isImage(file: String): Boolean {
+  isImage(file: string): boolean {
     return this.mediaService.isImage(file);
   }
 

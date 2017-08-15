@@ -11,7 +11,7 @@ import { CollectionsService } from '../collections.service';
 })
 
 export class AdminTopMenuComponent implements OnInit {
-  @Input() userName: String;
+  @Input() userName: string;
   
   constructor(private adminService: AdminService,
               private pageService: PageService,

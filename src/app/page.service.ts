@@ -8,12 +8,12 @@ import 'rxjs/add/operator/toPromise';
 @Injectable()
 export class PageService {
   private headers: Headers = new Headers({'Content-Type': 'application/json'});
-  private pageUrl: String = 'api';
-  private pageHome: Boolean = true;
-  private specificPage: Boolean = false;
-  private createPage: Boolean = false;
-  private selectedPage: String;
-  private titles: String[];
+  private pageUrl: string = 'api';
+  private pageHome: boolean = true;
+  private specificPage: boolean = false;
+  private createPage: boolean = false;
+  private selectedPage: string;
+  private titles: string[];
   constructor(private http: Http) { }
 
   getPageTitles(): Promise<any>{
@@ -22,19 +22,19 @@ export class PageService {
                .toPromise()
   }
 
-  getSelectedPage(): String {
+  getSelectedPage(): string {
     return this.selectedPage;
   }
 
-  getPageHome(): Boolean {
+  getPageHome(): boolean {
     return this.pageHome;
   }
 
-  getSpecficPage(): Boolean {
+  getSpecficPage(): boolean {
     return this.specificPage;
   }
 
-  getCreatePage(): Boolean {
+  getCreatePage(): boolean {
     return this.createPage;
   }
 
@@ -45,7 +45,7 @@ export class PageService {
     this.loadTitles();
   }
 
-  setSpecficPage(title:String): void {
+  setSpecficPage(title: string): void {
     this.pageHome     = false;
     this.specificPage = true;
     this.createPage   = false;
@@ -58,7 +58,7 @@ export class PageService {
     this.createPage   = true;
   }
 
-  createNewPage(title: String, body: String): void {
+  createNewPage(title: string, body: string): void {
     this.http
       .post(`${this.pageUrl}/pages`, JSON.stringify({title: title, body: body}), {headers: this.headers})
       .toPromise()
@@ -68,7 +68,7 @@ export class PageService {
       .catch(this.handleError);
   }
 
-  getPage(title: String): Promise<any> {
+  getPage(title: string): Promise<any> {
     return this.http
       .get(`${this.pageUrl}/page/${title}`)
       .toPromise()
@@ -81,11 +81,11 @@ export class PageService {
         });
   }
 
-  getTitles(): String[] {
+  getTitles(): string[] {
     return this.titles;
   }
 
-  deletePage(title:String): Promise<void> {
+  deletePage(title: string): Promise<void> {
     return this.http
       .delete(`${this.pageUrl}/page/${title}`, {headers: this.headers})
       .toPromise()
@@ -93,7 +93,7 @@ export class PageService {
       .catch(this.handleError);
   }
 
-  updatePage(title: String, body: Page): Promise<void> {
+  updatePage(title: string, body: Page): Promise<void> {
     return this.http
       .put(`${this.pageUrl}/page/${title}`, {body: body})
       .toPromise()

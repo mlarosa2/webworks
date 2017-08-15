@@ -11,17 +11,18 @@ export class CollectionsComponent implements OnInit {
   constructor(private collectionsService: CollectionsService) { }
 
   ngOnInit() {
+    this.collectionsService.loadTitles();
   }
 
-  isCollectionView(): Boolean {
+  isCollectionView(): boolean {
     return this.collectionsService.isCollectionView();
   }
 
-  isBuildView(): Boolean {
+  isBuildView(): boolean {
     return this.collectionsService.isBuildView();
   }
 
-  isUpdateView(): Boolean {
+  isUpdateView(): boolean {
     return this.collectionsService.isUpdateView();
   }
 }

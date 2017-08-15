@@ -21,11 +21,11 @@ export class AdminComponent implements OnInit {
   ngOnInit() {
   }
 
-  isLoggedIn(): Boolean {
+  isLoggedIn(): boolean {
     return this.adminAuthService.isLoggedIn();
   }
 
-  getUserName(): String {
+  getUserName(): string {
     return this.adminAuthService.getUserName();
   }
 

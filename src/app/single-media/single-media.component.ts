@@ -7,7 +7,7 @@ import { MediaService } from '../media.service';
   styleUrls: ['./single-media.component.css']
 })
 export class SingleMediaComponent implements OnInit {
-  @Input() file: String
+  @Input() file: string
   private model: any;
 
   constructor(private mediaService: MediaService) { }
@@ -19,7 +19,7 @@ export class SingleMediaComponent implements OnInit {
           };
   }
 
-  isImage(file: String): Boolean {
+  isImage(file: string): boolean {
     return this.mediaService.isImage(file);
   }
 
@@ -31,7 +31,7 @@ export class SingleMediaComponent implements OnInit {
     this.mediaService.updateMedia(this.file, this.model);
   }
 
-  deleteFile(file: String): void {
+  deleteFile(file: string): void {
     this.mediaService.deleteFile(file);
   }
 

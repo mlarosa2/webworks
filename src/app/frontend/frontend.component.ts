@@ -8,8 +8,8 @@ import { PageService } from '../page.service';
   providers: [PageService]
 })
 export class FrontendComponent implements OnInit {
-  private page: String;
-  private body: String;
+  private page: string;
+  private body: string;
   constructor(private pageService: PageService) { }
 
   ngOnInit() {

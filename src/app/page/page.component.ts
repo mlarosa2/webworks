@@ -8,7 +8,7 @@ import { Page } from '../page';
   styleUrls: ['./page.component.css']
 })
 export class PageComponent implements OnChanges {
-  @Input() title: String;
+  @Input() title: string;
   private model: Page = new Page('', '');
   constructor(private pageService: PageService) { }
 

@@ -17,15 +17,15 @@ export class MediaComponent implements OnInit {
     return this.mediaService.isUploadMode();
   }
 
-  getFiles(): String[] {
+  getFiles(): string[] {
     return this.mediaService.getFilesList();
   }
 
-  isImage(file: String): Boolean {
+  isImage(file: string): Boolean {
     return this.mediaService.isImage(file);
   }
 
-  viewFile(file: String): void {
+  viewFile(file: string): void {
     this.mediaService.turnOnSingleMode();
     this.mediaService.setSingleFile(file);
   }
@@ -34,7 +34,7 @@ export class MediaComponent implements OnInit {
     return this.mediaService.isSingleMode();
   }
 
-  getSingleFile(): String {
+  getSingleFile(): string {
     return this.mediaService.getSingleFile();
   }
 

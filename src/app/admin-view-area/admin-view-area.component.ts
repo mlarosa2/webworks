@@ -13,7 +13,7 @@ export class AdminViewAreaComponent implements OnInit {
   ngOnInit() {
   }
 
-  currentView(): String {
+  currentView(): string {
     return this.adminService.getCurrentView();
   }
 }

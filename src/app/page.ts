@@ -1,6 +1,6 @@
 export class Page {
     constructor(
-        public title: String,
-        public body: String
+        public title: string,
+        public body: string
     ) { }
 }

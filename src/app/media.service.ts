@@ -7,18 +7,18 @@ import 'rxjs/add/operator/toPromise';
 @Injectable()
 export class MediaService {
   private headers: Headers = new Headers({'Content-Type': 'application/json'});
-  private mediaUrl: String = 'api';
-  private mediaPaths: String[];
-  private uploadMode: Boolean = false;
-  private singleMode: Boolean = false;
-  private singleFile: String; 
+  private mediaUrl: string = 'api';
+  private mediaPaths: string[];
+  private uploadMode: boolean = false;
+  private singleMode: boolean = false;
+  private singleFile: string; 
   constructor(private http: Http) { }
 
-  isUploadMode(): Boolean {
+  isUploadMode(): boolean {
     return this.uploadMode;
   }
 
-  isSingleMode(): Boolean {
+  isSingleMode(): boolean {
     return this.singleMode;
   }
 
@@ -65,26 +65,26 @@ export class MediaService {
       .catch(this.handleError);
   }
 
-  setSingleFile(file: String): void {
+  setSingleFile(file: string): void {
     this.singleFile = file;
   }
 
-  getSingleFile(): String {
+  getSingleFile(): string {
     return this.singleFile;
   }
 
-  getFilesList(): String[] {
+  getFilesList(): string[] {
     return this.mediaPaths;
   }
 
-  isImage(file: String): Boolean {
+  isImage(file: string): boolean {
     if (!file) return false;
     const ext = file.substr(file.lastIndexOf('.') + 1);
     const images = ['jpg', 'png', 'svg', 'gif'];
     return images.includes(ext);
   }
 
-  deleteFile(file: String): void {
+  deleteFile(file: string): void {
     this.http
       .delete(`${this.mediaUrl}/media/${file}`, {headers: this.headers})
       .toPromise()
@@ -95,7 +95,7 @@ export class MediaService {
       .catch(this.handleError);
   }
 
-  updateMedia(originalTitle: String, mediaData: any): void {
+  updateMedia(originalTitle: string, mediaData: any): void {
     this.http
       .put(`${this.mediaUrl}/media/${originalTitle}`, { updateTitle: `${mediaData.name}${mediaData.ext}`})
       .toPromise()

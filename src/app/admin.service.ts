@@ -5,17 +5,17 @@ import { CollectionsService } from './collections.service';
 
 @Injectable()
 export class AdminService {
-  private currentView: String = 'home';
-  private views: String[] = ['Media', 'Pages', 'Collections', 'Forms'];
+  private currentView: string = 'home';
+  private views: string[] = ['Media', 'Pages', 'Collections', 'Forms'];
     constructor(private pageService: PageService,
                 private mediaService: MediaService,
                 private collectionsService: CollectionsService) { }
 
-  getCurrentView(): String {
+  getCurrentView(): string {
     return this.currentView;
   }
 
-  setCurrentView(view: String): void  {
+  setCurrentView(view: string): void  {
     this.currentView = view;
     if (view === 'pages') {
       this.pageService.setPageHome();
@@ -26,7 +26,7 @@ export class AdminService {
     }
   }
 
-  getViews(): String[] {
+  getViews(): string[] {
     return this.views;
   }
 }

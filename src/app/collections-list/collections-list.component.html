@@ -1,3 +1,3 @@
-<p>
-  collections-list works!
-</p>
+  <ul>
+    <li *ngFor="let title of getTitles();" (click)="goToPage(title)"><span>{{title}}</span><i class="fa fa-times" (click)="deletePage(title, $event)"></i></li>
+  </ul>

@@ -12,11 +12,11 @@ export class AdminSideMenuComponent implements OnInit {
   ngOnInit() {
   }
 
-  getViews(): String[] {
+  getViews(): string[] {
     return this.adminService.getViews();
   }
 
-  setView(view: String): void {
+  setView(view: string): void {
     this.adminService.setCurrentView(view.toLowerCase());
   }
 

@@ -5,17 +5,17 @@ import 'rxjs/add/operator/toPromise';
 
 @Injectable()
 export class AdminAuthService {
-  private loggedIn: Boolean = false;
-  private userName: String = '';
+  private loggedIn: boolean = false;
+  private userName: string = '';
   private headers: Headers = new Headers({'Content-Type': 'application/json'});
-  private authUrl: String = 'api';
+  private authUrl: string = 'api';
   constructor(private http: Http) { }
 
-  isLoggedIn(): Boolean {
+  isLoggedIn(): boolean {
     return this.loggedIn;
   }
 
-  logIn(user:String, password:String):void {
+  logIn(user: string, password: string):void {
     this.http
       .post(`${this.authUrl}/login`, JSON.stringify({username: user, password: password}), {headers: this.headers})
       .toPromise()
@@ -27,7 +27,7 @@ export class AdminAuthService {
     
   }
 
-  getUserName(): String {
+  getUserName(): string {
     return this.userName;
   }
 
