@@ -13,7 +13,7 @@ export class CollectionsListComponent implements OnInit {
   ngOnInit() {
   }
 
-  getAllTitles(): string[] {
+  getTitles(): string[] {
     return this.collectionsService.getTitles();
   }
 

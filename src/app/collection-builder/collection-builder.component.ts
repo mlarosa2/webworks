@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CollectionsService } from '../collections.service';
+import { Collection } from '../collection';
 
 @Component({
   selector: 'app-collection-builder',
@@ -11,10 +12,8 @@ export class CollectionBuilderComponent implements OnInit {
   private addFieldModel: any = {
     name: ''
   };
-  private model: any = {
-    name: '',
-    fields: this.fields
-  };
+  private model: Collection = new Collection ('', this.fields);
+
   private fieldToUpdate: number = -1;
 
   constructor(private collectionsService: CollectionsService) { }
@@ -43,6 +42,6 @@ export class CollectionBuilderComponent implements OnInit {
   }
 
   onSubmit():void {
-
+    this.collectionsService.saveCollection(this.model);
   }
 }

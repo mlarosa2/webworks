@@ -163,7 +163,10 @@ mongo.connect(mongoConnect, (err, db) => {
             });
         })
         .post((req, res) => {
-            
+            db.collection('Collections').insertOne({title: req.body.title, fields: req.body.fields}, (err, result) => {
+                if (err) throw err;
+                res.sendStatus(200);
+            });
         });
 });
 

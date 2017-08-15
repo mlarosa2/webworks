@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Headers, Http } from '@angular/http';
+import { Collection } from './collection';
 
 import 'rxjs/add/operator/toPromise';
 
@@ -61,6 +62,17 @@ export class CollectionsService {
 
   getTitles(): string[] {
     return this.collectionsList;
+  }
+
+  saveCollection(collection: Collection): void {
+    this.http
+      .post(`${this.collectionsUrl}/collections`, JSON.stringify(collection), {headers: this.headers})
+      .toPromise()
+      .then(response => {
+        this.loadTitles();
+        this.setCollectionView();
+      })
+      .catch(this.handleError)
   }
 
   private handleError(error: any): void {
