@@ -37,7 +37,7 @@ mongo.connect(mongoConnect, (err, db) => {
                 if (err) throw err;
                 let titles = result.map(page => page.title);
                 res.setHeader('Content-Type', 'application/json');
-                res.send(JSON.stringify(titles));this.med
+                res.send(JSON.stringify(titles));
             });
         })
         .post((req, res) => {
@@ -155,7 +155,12 @@ mongo.connect(mongoConnect, (err, db) => {
 
     router.route('/collections')
         .get((req, res) => {
-
+            db.collection('Collections').find({}).toArray((err, result) => {
+                if (err) throw err;
+                let titles = result.map(collection => collection.title);
+                res.setHeader('Content-Type', 'application/json');
+                res.send(JSON.stringify(titles));
+            });
         })
         .post((req, res) => {
 
