@@ -42,6 +42,7 @@ export class CollectionBuilderComponent implements OnInit {
   }
 
   onSubmit():void {
+    this.model.fields = this.fields;
     this.collectionsService.saveCollection(this.model);
   }
 }
