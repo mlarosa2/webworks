@@ -182,6 +182,18 @@ mongo.connect(mongoConnect, (err, db) => {
                 res.sendStatus(200);
             });
         });
+    
+    router.route('/collections/:title')
+        .get((req, res) => {
+            db.collection('Collections').find({title: req.params.title}).toArray((err, result) => {
+                if (err) throw err;
+                if (result.length === 1) {
+                    res.send(result[0]);
+                } else {
+                    res.sendStatus(404);
+                }
+            });
+        });
 });
 
 module.exports = router;

@@ -1,3 +1,30 @@
-<p>
-  update-collection works!
-</p>
+<form #newCollection="ngForm" (submit)="onSubmit()">
+  <div #fieldDiv>
+    <label for="collectionName">Collection Name</label>
+    <input name="collectionName" id="collection-name"
+          required
+          [(ngModel)]="model.title" type="text">
+  </div>
+  <h3>{{model.name}}</h3>
+  <h3>Added Fields</h3>
+  <ul>
+    <li *ngFor="let field of fields let i = index">
+      {{field}} 
+      <i class="fa fa-pencil" (click)=updateField(i)></i>
+      <i class="fa fa-times" (click)="deleteField(field)"></i>
+      <div *ngIf="i === fieldToUpdate">
+        <input type="text" #updateInput>
+        <button (click)="confirmUpdate(updateInput.value, i)">Update</button>
+      </div>
+    </li>
+  </ul>
+  <div><button type="submit" [disabled]="!newCollection.form.valid || model.fields.length === 0">Add Collection</button></div>
+</form>
+
+<form #newField="ngForm">
+  <label for="fieldName">New Field Name</label>
+  <input type="text" name="fieldName"
+         id="fieldName" required
+         [(ngModel)]="addFieldModel.name">
+  <button (click)="addField()" [disabled]="!newField.form.valid">Add Field</button>
+</form>

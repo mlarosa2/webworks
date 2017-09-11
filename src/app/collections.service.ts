@@ -78,11 +78,38 @@ export class CollectionsService {
 
   deleteCollection(title: String):void {
     this.http
-      .delete(`${this.collectionsUrl}`)
+      .delete(`${this.collectionsUrl}`, {headers: this.headers, body: {title: title}})
+        .toPromise()
+        .then(() => null)
+        .catch(this.handleError);
+  }
+
+  updateCollectionRecord(title: string, fields: string[]): Promise<void> {
+    return this.http
+      .put(`${this.collectionsUrl}`, {body: {fields: fields}})
+      .toPromise()
+      .then(() => null)
+      .catch(this.handleError)
   }
 
   selectCollection(title: string): void {
     this.collectionSelected = true;
+    this.setSelectedCollection(title);
+  }
+
+  setSelectedCollection(title: string): void {
+    this.http
+      .get(`${this.collectionsUrl}/${title}`)
+      .toPromise()
+      .then(response => {
+        let collection = JSON.parse(response.json()._body);
+        this.selectedCollection = new Collection(collection.title, collection.fields);
+      })
+      .catch(this.handleError);
+  }
+
+  getSelectedCollection(): Collection {
+    return this.selectedCollection;
   }
 
   isCollectionSelected(): boolean {

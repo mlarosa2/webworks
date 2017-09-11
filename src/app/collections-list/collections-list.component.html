@@ -1,4 +1,4 @@
   <ul>
     <li *ngFor="let title of getTitles();"><span (click)="goToCollection(title)">{{title}}</span><i class="fa fa-times" (click)="deleteCollection(title, $event)"></i></li>
   </ul>
-<app-update-collection ngif="collectionSelected()"></app-update-collection>
+<app-update-collection *ngIf="collectionSelected()"></app-update-collection>
