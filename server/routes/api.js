@@ -167,6 +167,20 @@ mongo.connect(mongoConnect, (err, db) => {
                 if (err) throw err;
                 res.sendStatus(200);
             });
+        })
+        .delete((req, res) => {
+            db.collection('Collections').deleteOne({title: req.body.title}, (err, result) => {
+                if (err) throw err;
+                res.sendStatus(200);
+            });
+        })
+        .put((req, res) => {
+            const query         = { title: req.body.title };
+            const updatedValues = req.body.fields; 
+            db.collection('Collections').updateOne(query, updatedValues, (err, result) => {
+                if (err) throw err;
+                res.sendStatus(200);
+            });
         });
 });
 

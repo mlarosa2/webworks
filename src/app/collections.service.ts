@@ -7,12 +7,13 @@ import 'rxjs/add/operator/toPromise';
 @Injectable()
 export class CollectionsService {
   private headers: Headers = new Headers({'Content-Type': 'application/json'});
-  private collectionsUrl: string = 'api';
+  private collectionsUrl: string = 'api/collections';
   private viewCollections: boolean = false;
   private buildCollection: boolean = false;
   private updateCollection: boolean = false;
-  private selectedCollection: string;
   private collectionsList: string[];
+  private collectionSelected: boolean = false; //determines if a collection is selected
+  private selectedCollection: Collection; //stores the selected collection
 
   constructor(private http: Http) { }
 
@@ -48,7 +49,7 @@ export class CollectionsService {
 
   getAllTitles(): Promise<any> {
     return this.http
-      .get(`${this.collectionsUrl}/collections`)
+      .get(`${this.collectionsUrl}`)
       .toPromise();
   }
 
@@ -66,13 +67,26 @@ export class CollectionsService {
 
   saveCollection(collection: Collection): void {
     this.http
-      .post(`${this.collectionsUrl}/collections`, JSON.stringify(collection), {headers: this.headers})
+      .post(`${this.collectionsUrl}`, JSON.stringify(collection), {headers: this.headers})
       .toPromise()
       .then(response => {
         this.loadTitles();
         this.setCollectionView();
       })
       .catch(this.handleError)
+  }
+
+  deleteCollection(title: String):void {
+    this.http
+      .delete(`${this.collectionsUrl}`)
+  }
+
+  selectCollection(title: string): void {
+    this.collectionSelected = true;
+  }
+
+  isCollectionSelected(): boolean {
+    return this.collectionSelected;
   }
 
   private handleError(error: any): void {

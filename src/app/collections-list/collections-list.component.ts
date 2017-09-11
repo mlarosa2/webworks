@@ -17,4 +17,15 @@ export class CollectionsListComponent implements OnInit {
     return this.collectionsService.getTitles();
   }
 
+  goToCollection(title: string): void {
+    this.collectionsService.selectCollection(title);
+  }
+
+  collectionSelected(): boolean {
+    return this.collectionsService.isCollectionSelected();
+  }
+
+  deleteCollection(title: string): void {
+    this.collectionsService.deleteCollection(title);
+  }
 }
