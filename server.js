@@ -25,5 +25,5 @@ app.set('port', port);
 const server = http.createServer(app);
 
 server.listen(port, () => {
-    
+    console.log('Server is up at localhost:3000')
 });
