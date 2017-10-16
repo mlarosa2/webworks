@@ -1,3 +1,9 @@
-<app-collections-list *ngIf="isCollectionView()"></app-collections-list>
+<div *ngIf="isCollectionView()">
+  <ul>
+    <li *ngFor="let title of getTitles();"><span (click)="goToCollection(title)">{{title}}</span><i class="fa fa-times" (click)="deleteCollection(title, $event)"></i></li>
+  </ul>
+</div>
 <app-collection-builder *ngIf="isBuildView()"></app-collection-builder>
-<app-update-collection *ngIf="isUpdateView()"></app-update-collection>
+<div *ngIf="isUpdateView()">
+    <app-update-collection [title]="selectedTitle"></app-update-collection>
+</div>

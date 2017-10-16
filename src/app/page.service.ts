@@ -71,7 +71,7 @@ export class PageService {
   getPage(title: string): Promise<any> {
     return this.http
       .get(`${this.pageUrl}/page/${title}`)
-      .toPromise()
+      .toPromise();
   }
 
   loadTitles(): void {

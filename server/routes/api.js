@@ -157,9 +157,9 @@ mongo.connect(mongoConnect, (err, db) => {
         .get((req, res) => {
             db.collection('Collections').find({}).toArray((err, result) => {
                 if (err) throw err;
-                let titles = result.map(collection => collection.title);
+                let collections = result.map(collection => collection);
                 res.setHeader('Content-Type', 'application/json');
-                res.send(JSON.stringify(titles));
+                res.send(JSON.stringify(collections));
             });
         })
         .post((req, res) => {
@@ -176,7 +176,8 @@ mongo.connect(mongoConnect, (err, db) => {
         })
         .put((req, res) => {
             const query         = { title: req.body.title };
-            const updatedValues = req.body.fields; 
+            const updatedValues = { fields: req.body.fields, title: req.body.newTitle };
+
             db.collection('Collections').updateOne(query, updatedValues, (err, result) => {
                 if (err) throw err;
                 res.sendStatus(200);

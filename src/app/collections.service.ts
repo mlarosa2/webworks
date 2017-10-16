@@ -21,6 +21,13 @@ export class CollectionsService {
     return this.viewCollections;
   }
 
+  getCollection(title: string): Promise<any> {
+    return this.http
+      .get(`${this.collectionsUrl}/${title}`)
+      .toPromise();
+  }
+
+
   isBuildView(): boolean {
     return this.buildCollection;
   }
@@ -33,6 +40,7 @@ export class CollectionsService {
     this.viewCollections = true;
     this.buildCollection = false;
     this.updateCollection = false;
+    this.loadTitles();
   }
 
   setBuildView(): void {
@@ -56,7 +64,7 @@ export class CollectionsService {
   loadTitles(): void {
     this.getAllTitles()
       .then(response => {
-        this.collectionsList = JSON.parse(response._body).map(title => {return title;});
+        this.collectionsList = JSON.parse(response._body).map(collection => {return collection.title;});
       })
       .catch(this.handleError);
   }
@@ -80,21 +88,26 @@ export class CollectionsService {
     this.http
       .delete(`${this.collectionsUrl}`, {headers: this.headers, body: {title: title}})
         .toPromise()
-        .then(() => null)
+        .then(() => {
+          this.setCollectionView();
+        })
         .catch(this.handleError);
   }
 
-  updateCollectionRecord(title: string, fields: string[]): Promise<void> {
+  updateCollectionRecord(title: string, fields: string[], newTitle: string): Promise<void> {
     return this.http
-      .put(`${this.collectionsUrl}`, {body: {fields: fields}})
+      .put(`${this.collectionsUrl}`, {fields: fields, newTitle: newTitle, title: title})
       .toPromise()
-      .then(() => null)
+      .then(() => {
+        this.setCollectionView();
+      })
       .catch(this.handleError)
   }
 
   selectCollection(title: string): void {
     this.collectionSelected = true;
     this.setSelectedCollection(title);
+    this.setUpdateView();
   }
 
   setSelectedCollection(title: string): void {
@@ -104,6 +117,7 @@ export class CollectionsService {
       .then(response => {
         let collection = JSON.parse(response.json()._body);
         this.selectedCollection = new Collection(collection.title, collection.fields);
+        this.setUpdateView();
       })
       .catch(this.handleError);
   }

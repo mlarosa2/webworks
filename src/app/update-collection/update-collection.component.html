@@ -2,8 +2,8 @@
   <div #fieldDiv>
     <label for="collectionName">Collection Name</label>
     <input name="collectionName" id="collection-name"
-          required
-          [(ngModel)]="model.title" type="text">
+           required
+           [(ngModel)]="model.title" type="text">
   </div>
   <h3>{{model.name}}</h3>
   <h3>Added Fields</h3>
@@ -18,7 +18,7 @@
       </div>
     </li>
   </ul>
-  <div><button type="submit" [disabled]="!newCollection.form.valid || model.fields.length === 0">Add Collection</button></div>
+  <div><button type="submit" [disabled]="!newCollection.form.valid || model.fields.length === 0">Update Collection</button></div>
 </form>
 
 <form #newField="ngForm">

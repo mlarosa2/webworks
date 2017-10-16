@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnChanges, Input } from '@angular/core';
 import { CollectionsService } from '../collections.service';
 import { Collection } from '../collection';
 
@@ -7,9 +7,11 @@ import { Collection } from '../collection';
   templateUrl: './update-collection.component.html',
   styleUrls: ['./update-collection.component.css']
 })
-export class UpdateCollectionComponent implements OnInit {
-  private model: Collection = this.collectionsService.getSelectedCollection();
-  private fields: string[] = this.model.fields;
+export class UpdateCollectionComponent implements OnChanges {
+  @Input() title: string;
+  private model: Collection = new Collection('', []);
+  private fields: string[];
+  private originalTitle: string;
   private addFieldModel: any = {
     name: ''
   };
@@ -18,7 +20,15 @@ export class UpdateCollectionComponent implements OnInit {
 
   constructor(private collectionsService: CollectionsService) { }
   
-  ngOnInit() {
+  ngOnChanges() {
+    const title = this.title;
+    this.collectionsService.getCollection(title)
+      .then(collection => {
+        this.model.title   = title;
+        this.model.fields  = JSON.parse(collection._body).fields;
+        this.originalTitle = title;
+        this.fields        = JSON.parse(collection._body).fields
+      });
   }
   
   addField(): void {
@@ -43,7 +53,7 @@ export class UpdateCollectionComponent implements OnInit {
 
   onSubmit():void {
     this.model.fields = this.fields;
-    this.collectionsService.updateCollectionRecord(this.model.title, this.model.fields);
+    this.collectionsService.updateCollectionRecord(this.originalTitle, this.model.fields, this.model.title);
   }
 
 }
