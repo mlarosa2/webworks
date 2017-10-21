@@ -26,6 +26,8 @@ import { CollectionBuilderComponent } from './collection-builder/collection-buil
 import { CollectionItemsComponent } from './collection-items/collection-items.component';
 import { CollectionItemComponent } from './collection-item/collection-item.component';
 import { UpdateCollectionComponent } from './update-collection/update-collection.component';
+import { FormsBuilderComponent } from './forms-builder/forms-builder.component';
+import { UpdateFormComponent } from './update-form/update-form.component';
 
 @NgModule({
   declarations: [
@@ -46,9 +48,9 @@ import { UpdateCollectionComponent } from './update-collection/update-collection
     FormsComponent,
     SingleMediaComponent,
     CollectionBuilderComponent,
-    CollectionItemsComponent,
-    CollectionItemComponent,
-    UpdateCollectionComponent
+    UpdateCollectionComponent,
+    FormsBuilderComponent,
+    UpdateFormComponent
   ],
   imports: [
     BrowserModule,

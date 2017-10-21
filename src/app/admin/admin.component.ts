@@ -4,6 +4,7 @@ import { AdminService } from '../admin.service';
 import { PageService } from '../page.service';
 import { MediaService } from '../media.service';
 import { CollectionsService } from '../collections.service'; 
+import { FormsService } from '../forms.service';
 @Component({
   selector: 'app-admin',
   templateUrl: './admin.component.html',
