@@ -195,6 +195,49 @@ mongo.connect(mongoConnect, (err, db) => {
                 }
             });
         });
+
+    router.route('/forms')
+        .get((req, res) => {
+            db.collection('Forms').find({}).toArray((err, result) => {
+                if (err) throw err;
+                let forms = result.map(form => form);
+                res.setHeader('Content-Type', 'application/json');
+                res.send(JSON.stringify(forms));
+            });
+        })
+        .post((req, res) => {
+            db.collection('Forms').insertOne({title: req.body.title, fields: req.body.fields}, (err, result) => {
+                if (err) throw err;
+                res.sendStatus(200);
+            });
+        })
+        .delete((req, res) => {
+            db.collection('Forms').deleteOne({title: req.body.title}, (err, result) => {
+                if (err) throw err;
+                res.sendStatus(200);
+            });
+        })
+        .put((req, res) => {
+            const query         = { title: req.body.title };
+            const updatedValues = { fields: req.body.fields, title: req.body.newTitle };
+
+            db.collection('Forms').updateOne(query, updatedValues, (err, result) => {
+                if (err) throw err;
+                res.sendStatus(200);
+            });
+        });
+    
+    router.route('/forms/:title')
+        .get((req, res) => {
+            db.collection('Forms').find({title: req.params.title}).toArray((err, result) => {
+                if (err) throw err;
+                if (result.length === 1) {
+                    res.send(result[0]);
+                } else {
+                    res.sendStatus(404);
+                }
+            });
+        });
 });
 
 module.exports = router;

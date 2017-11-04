@@ -1,3 +1,51 @@
-<p>
-  forms-builder works!
-</p>
+<form #newCollection="ngForm" (submit)="onSubmit()">
+  <div #fieldDiv>
+    <label for="formName">Form Name</label>
+    <input name="formName" id="form-name"
+          required
+          [(ngModel)]="model.title" type="text">
+  </div>
+  <h3>{{model.name}}</h3>
+  <h3>Added Fields</h3>
+  <ul>
+    <li *ngFor="let field of fields let i = index">
+      {{field.name}}: {{field.type}} 
+      <i class="fa fa-pencil" (click)=updateField(i)></i>
+      <i class="fa fa-times" (click)="deleteField(field)"></i>
+      <div *ngIf="i === fieldToUpdate">
+        <input type="text" #updateInput>
+        <button (click)="confirmUpdate(updateInput.value, i)">Update</button>
+      </div>
+    </li>
+  </ul>
+  <div><button type="submit" [disabled]="!newCollection.form.valid || model.fields.length === 0">Add Collection</button></div>
+</form>
+
+<form #newField="ngForm">
+  <label for="fieldName">New Field Name</label>
+  <input type="text" name="fieldName"
+         id="field-type" required
+         [(ngModel)]="addFieldModel.name">
+  <select name="fieldType" id="field-type"
+          [(ngModel)]="addFieldModel.type"
+          required #fieldType>
+          <option value="text">Text</option>
+          <option value="textArea">Text Area</option>
+          <option value="radio">Radio Buttons</option>
+          <option value="checkmarks">Check Boxes</option>
+          <option value="select">Dropdown</option>
+  </select>
+  <div *ngIf="fieldType.value">
+    <input type="text" [(ngModel)]="addFieldModel.options.placeHolder" placeholder="Field Placeholder">
+    <div *ngIf="fieldType.value !== text && fieldType.value !== textArea">
+      <div *ngFor="let option of addFieldModel.options.userOptions; let i = index">
+        <div>User Options For Field</div>
+        <input [(ngModel)]="addFieldModel.options.userOptions[i]" 
+               placeholder="Option {{i + 1}}" 
+               required>
+        <div (click)="addUserOption()" [ngClass]="{'disabled': addFieldModel.options.userOptions[i] === ''}">Add Option</div>
+      </div>
+    </div>
+  </div>
+  <button (click)="addField()" [disabled]="!newField.form.valid">Add Field</button>
+</form>

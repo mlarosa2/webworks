@@ -1,3 +1,9 @@
-<p>
-  forms works!
-</p>
+<div *ngIf="isFormView()">
+  <ul>
+    <li *ngFor="let title of getTitles();"><span (click)="goToForm(title)">{{title}}</span><i class="fa fa-times" (click)="deleteForm(title, $event)"></i></li>
+  </ul>
+</div>
+<app-form-builder *ngIf="isBuildView()"></app-form-builder>
+<div *ngIf="isUpdateView()">
+    <app-update-form [title]="selectedTitle"></app-update-form>
+</div>
