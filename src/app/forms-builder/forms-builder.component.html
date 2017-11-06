@@ -13,8 +13,29 @@
       <i class="fa fa-pencil" (click)=updateField(i)></i>
       <i class="fa fa-times" (click)="deleteField(field)"></i>
       <div *ngIf="i === fieldToUpdate">
-        <input type="text" #updateInput>
-        <button (click)="confirmUpdate(updateInput.value, i)">Update</button>
+        <span>Field Name</span><input type="text" [(ngModel)]="editFieldModel.name" name="editFieldName">
+        <div>
+          <span>Field Type:</span>
+          <select #updateFieldType [value]="editFieldModel.type" name="editFieldType">
+            <option [value]="'text'">Text</option>
+            <option [value]="'textArea'">Text Area</option>
+            <option [value]="'radio'">Radio Buttons</option>
+            <option [value]="'checkmarks'">Check Boxes</option>
+            <option [value]="'select'">Dropdown</option>
+          </select>
+        </div>
+        <div>
+          <span>Placehholder</span><input type="text" [(ngModel)]="editFieldModel.options.placeholder" placeholder="Placeholder" name="placeholderEdit">
+        </div>
+        <div *ngFor="let option of editFieldModel.options.userOptions; let i = index; trackBy:trackByFn">
+          <span>Option {{i+1}}</span>
+          <input [(ngModel)]="editFieldModel.options.userOptions[i]" 
+                 placeholder="Option {{i + 1}}" 
+                 required
+                 name="option_{{i + 1}}">
+        </div>
+        <div (click)="addEditUserOption()" [ngClass]="{'disabled': editFieldModel.options.userOptions[0] === ''}">Add Option</div>
+        <button (click)="confirmUpdate(i)">Update</button>
       </div>
     </li>
   </ul>
@@ -26,23 +47,24 @@
   <input type="text" name="fieldName"
          id="field-type" required
          [(ngModel)]="addFieldModel.name">
+  <span>Field Type:</span>
   <select name="fieldType" id="field-type"
           [(ngModel)]="addFieldModel.type"
           required #fieldType>
-          <option [value]="text">Text</option>
-          <option [value]="textArea">Text Area</option>
-          <option [value]="radio">Radio Buttons</option>
-          <option [value]="checkmarks">Check Boxes</option>
-          <option [value]="select">Dropdown</option>
+          <option [value]="'text'">Text</option>
+          <option [value]="'textArea'">Text Area</option>
+          <option [value]="'radio'">Radio Buttons</option>
+          <option [value]="'checkmarks'">Check Boxes</option>
+          <option [value]="'select'">Dropdown</option>
   </select>
-  <div *ngIf="fieldType.value">
+  <div>
     <input type="text" 
            [(ngModel)]="addFieldModel.options.placeHolder" 
            placeholder="Field Placeholder"
            name="fieldType">
-    <div *ngIf="fieldType.value !== 'text' && fieldType.value !== 'textArea'">
+    <div *ngIf="addFieldModel.type && addFieldModel.type !== 'text' && addFieldModel.type !== 'textArea'">
+      <div>User Options For Field</div>
       <div *ngFor="let option of addFieldModel.options.userOptions; let i = index; trackBy:trackByFn">
-        <div>User Options For Field</div>
         <input [(ngModel)]="addFieldModel.options.userOptions[i]" 
                placeholder="Option {{i + 1}}" 
                required

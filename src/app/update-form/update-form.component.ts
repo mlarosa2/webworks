@@ -20,7 +20,7 @@ export class UpdateFormComponent implements OnChanges {
       userOptions: ['']
     }
   };
-
+  private editFieldModel: any;
   private fieldToUpdate: number = -1;
 
   constructor(private formsService: FormsService) { }
@@ -57,17 +57,24 @@ export class UpdateFormComponent implements OnChanges {
 
   updateField(index: number): void {
     this.fieldToUpdate = index;
+    this.editFieldModel = JSON.parse(JSON.stringify(this.fields[index]));
+    if (this.editFieldModel.options.userOptions.length === 0) {
+      this.editFieldModel.options.push('');
+    }
   }
 
-  confirmUpdate(updatedName: string, updatedType: string, updatedOptions: object, index: number): void {
-    this.fields[index]['name'] = updatedName;
-    this.fields[index]['type'] = updatedType;
-    this.fields[index]['options'] = updatedOptions;
+  confirmUpdate(index: number): void {
+    this.fields[index] = JSON.parse(JSON.stringify(this.editFieldModel));
+    this.editFieldModel = {};
     this.fieldToUpdate = -1;
   }
 
   addUserOption(): void {
     this.addFieldModel.userOptions.push('');
+  }
+
+   addEditUserOption(): void {
+    this.editFieldModel.options.userOptions.push('');
   }
 
   //prevents losing focus when typing in user options input
