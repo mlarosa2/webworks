@@ -1,4 +1,4 @@
-<form #newCollection="ngForm" (submit)="onSubmit()">
+<form #newForm="ngForm" (submit)="onSubmit()">
   <div #fieldDiv>
     <label for="formName">Form Name</label>
     <input name="formName" id="form-name"
@@ -8,7 +8,7 @@
   <h3>{{model.name}}</h3>
   <h3>Added Fields</h3>
   <ul>
-    <li *ngFor="let field of fields let i = index">
+    <li *ngFor="let field of fields; let i = index">
       {{field.name}}: {{field.type}} 
       <i class="fa fa-pencil" (click)=updateField(i)></i>
       <i class="fa fa-times" (click)="deleteField(field)"></i>
@@ -18,7 +18,7 @@
       </div>
     </li>
   </ul>
-  <div><button type="submit" [disabled]="!newCollection.form.valid || model.fields.length === 0">Add Collection</button></div>
+  <div><button type="submit" [disabled]="!newForm.form.valid || model.fields.length === 0">Add Form</button></div>
 </form>
 
 <form #newField="ngForm">
@@ -29,21 +29,25 @@
   <select name="fieldType" id="field-type"
           [(ngModel)]="addFieldModel.type"
           required #fieldType>
-          <option value="text">Text</option>
-          <option value="textArea">Text Area</option>
-          <option value="radio">Radio Buttons</option>
-          <option value="checkmarks">Check Boxes</option>
-          <option value="select">Dropdown</option>
+          <option [value]="text">Text</option>
+          <option [value]="textArea">Text Area</option>
+          <option [value]="radio">Radio Buttons</option>
+          <option [value]="checkmarks">Check Boxes</option>
+          <option [value]="select">Dropdown</option>
   </select>
   <div *ngIf="fieldType.value">
-    <input type="text" [(ngModel)]="addFieldModel.options.placeHolder" placeholder="Field Placeholder">
-    <div *ngIf="fieldType.value !== text && fieldType.value !== textArea">
-      <div *ngFor="let option of addFieldModel.options.userOptions; let i = index">
+    <input type="text" 
+           [(ngModel)]="addFieldModel.options.placeHolder" 
+           placeholder="Field Placeholder"
+           name="fieldType">
+    <div *ngIf="fieldType.value !== 'text' && fieldType.value !== 'textArea'">
+      <div *ngFor="let option of addFieldModel.options.userOptions; let i = index; trackBy:trackByFn">
         <div>User Options For Field</div>
         <input [(ngModel)]="addFieldModel.options.userOptions[i]" 
                placeholder="Option {{i + 1}}" 
-               required>
-        <div (click)="addUserOption()" [ngClass]="{'disabled': addFieldModel.options.userOptions[i] === ''}">Add Option</div>
+               required
+               name="option_{{i + 1}}">
+        <div (click)="addUserOption()" [ngClass]="{'disabled': addFieldModel.options.userOptions[0] === ''}">Add Option</div>
       </div>
     </div>
   </div>

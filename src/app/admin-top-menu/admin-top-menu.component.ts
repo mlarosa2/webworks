@@ -3,6 +3,7 @@ import { AdminService } from '../admin.service';
 import { PageService } from '../page.service';
 import { MediaService } from '../media.service';
 import { CollectionsService } from '../collections.service';
+import { FormsService } from '../forms.service';
 
 @Component({
   selector: 'app-admin-top-menu',
@@ -16,7 +17,8 @@ export class AdminTopMenuComponent implements OnInit {
   constructor(private adminService: AdminService,
               private pageService: PageService,
               private mediaService: MediaService,
-              private collectionsService: CollectionsService) { }
+              private collectionsService: CollectionsService,
+              private formsService: FormsService) { }
 
   ngOnInit() {
   }
@@ -39,6 +41,11 @@ export class AdminTopMenuComponent implements OnInit {
   newCollection(): void {
     this.adminService.setCurrentView('collections');
     this.collectionsService.setBuildView();
+  }
+
+  newForm(): void {
+    this.adminService.setCurrentView('forms');
+    this.formsService.setBuildView();
   }
 
 }

@@ -4,10 +4,10 @@ import { Form } from '../form';
 
 @Component({
   selector: 'app-form-builder',
-  templateUrl: './form-builder.component.html',
-  styleUrls: ['./form-builder.component.css']
+  templateUrl: './forms-builder.component.html',
+  styleUrls: ['./forms-builder.component.css']
 })
-export class FormBuilderComponent implements OnInit {
+export class FormsBuilderComponent implements OnInit {
   private fields: object[] = [];
   private addFieldModel: any = {
     name: '',
@@ -27,12 +27,15 @@ export class FormBuilderComponent implements OnInit {
   }
   
   addField(): void {
+    this.addFieldModel.options.userOptions = this.addFieldModel.options.userOptions.filter(opt => opt);
     this.fields.push(this.addFieldModel);
-    this.addFieldModel.name = '';
-    this.addFieldModel.type = '';
-    this.addFieldModel.options = {
-      placeholder: '',
-      userOptions: ['']
+    this.addFieldModel = {
+      name: '',
+      type: '',
+      options: {
+        placeholder: '',
+        userOptions: ['']
+      }
     };
   }
 
@@ -54,7 +57,12 @@ export class FormBuilderComponent implements OnInit {
   }
 
   addUserOption(): void {
-    this.addFieldModel.userOptions.push('');
+    this.addFieldModel.options.userOptions.push('');
+  }
+
+  //prevents losing focus when typing in user options input
+  trackByFn(index: any, item: any): any {
+    return index;
   }
 
   onSubmit():void {

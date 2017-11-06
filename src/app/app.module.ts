@@ -24,7 +24,6 @@ import { FormsComponent } from './forms/forms.component';
 import { SingleMediaComponent } from './single-media/single-media.component';
 import { CollectionBuilderComponent } from './collection-builder/collection-builder.component';
 import { CollectionItemsComponent } from './collection-items/collection-items.component';
-import { CollectionItemComponent } from './collection-item/collection-item.component';
 import { UpdateCollectionComponent } from './update-collection/update-collection.component';
 import { FormsBuilderComponent } from './forms-builder/forms-builder.component';
 import { UpdateFormComponent } from './update-form/update-form.component';
@@ -48,6 +47,7 @@ import { UpdateFormComponent } from './update-form/update-form.component';
     FormsComponent,
     SingleMediaComponent,
     CollectionBuilderComponent,
+    CollectionItemsComponent,
     UpdateCollectionComponent,
     FormsBuilderComponent,
     UpdateFormComponent

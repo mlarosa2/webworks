@@ -37,12 +37,15 @@ export class UpdateFormComponent implements OnChanges {
   }
   
   addField(): void {
+    this.addFieldModel.options.userOptions = this.addFieldModel.options.userOptions.filter(opt => opt);
     this.fields.push(this.addFieldModel);
-    this.addFieldModel.name = '';
-    this.addFieldModel.type = '';
-    this.addFieldModel.options = {
-      placeholder: '',
-      userOptions: ['']
+    this.addFieldModel = {
+      name: '',
+      type: '',
+      options: {
+        placeholder: '',
+        userOptions: ['']
+      }
     };
   }
 
@@ -67,9 +70,13 @@ export class UpdateFormComponent implements OnChanges {
     this.addFieldModel.userOptions.push('');
   }
 
+  //prevents losing focus when typing in user options input
+  trackByFn(index: any, item: any): any {
+    return index;
+  }
+
   onSubmit():void {
     this.model.fields = this.fields;
     this.formsService.updateFormRecord(this.originalTitle, this.model.fields, this.model.title);
   }
-
 }

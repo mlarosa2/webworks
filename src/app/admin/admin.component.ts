@@ -13,7 +13,8 @@ import { FormsService } from '../forms.service';
     AdminService,
     PageService,
     MediaService,
-    CollectionsService
+    CollectionsService,
+    FormsService
   ]
 })
 export class AdminComponent implements OnInit {
