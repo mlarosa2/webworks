@@ -8,12 +8,15 @@ import 'rxjs/add/operator/toPromise';
 export class CollectionsService {
   private headers: Headers = new Headers({'Content-Type': 'application/json'});
   private collectionsUrl: string = 'api/collections';
+  private collectionItemsUrl: string = 'api/collection-items';
   private viewCollections: boolean = false;
   private buildCollection: boolean = false;
   private updateCollection: boolean = false;
+  private collectionItems: boolean = false;
   private collectionsList: string[];
   private collectionSelected: boolean = false; //determines if a collection is selected
   private selectedCollection: Collection; //stores the selected collection
+  private selectedCollectionItems: Array<any>;  //stores collection items for selected collection
 
   constructor(private http: Http) { }
 
@@ -36,10 +39,15 @@ export class CollectionsService {
     return this.updateCollection;
   }
 
+  isItemView(): boolean {
+    return this.collectionItems;
+  }
+
   setCollectionView(): void {
     this.viewCollections = true;
     this.buildCollection = false;
     this.updateCollection = false;
+    this.collectionItems = false;
     this.loadTitles();
   }
 
@@ -47,12 +55,21 @@ export class CollectionsService {
     this.viewCollections = false;
     this.buildCollection = true;
     this.updateCollection = false;
+    this.collectionItems = false;
   }
 
   setUpdateView(): void {
     this.viewCollections = false;
     this.buildCollection = false;
     this.updateCollection = true;
+    this.collectionItems = false;
+  }
+
+  setCollectionItemsView(): void {
+    this.viewCollections = false;
+    this.buildCollection = false;
+    this.updateCollection = false;
+    this.collectionItems = true;
   }
 
   getAllTitles(): Promise<any> {
@@ -67,6 +84,10 @@ export class CollectionsService {
         this.collectionsList = JSON.parse(response._body).map(collection => {return collection.title;});
       })
       .catch(this.handleError);
+  }
+
+  loadCollectionItems(title): void {
+    
   }
 
   getTitles(): string[] {
@@ -108,6 +129,21 @@ export class CollectionsService {
     this.collectionSelected = true;
     this.setSelectedCollection(title);
     this.setUpdateView();
+  }
+
+  selectCollectionItems(title: string): void {
+    this.setCollectionItems(title);
+    this.setCollectionItemsView();
+  }
+
+  setCollectionItems(title: string): void {
+    this.http
+      .get(`${this.collectionItemsUrl}/${title}`)
+      .toPromise()
+      .then(response => {
+        this.collectionItems = JSON.parse(response.json()._body);
+      })
+      .catch(this.handleError);
   }
 
   setSelectedCollection(title: string): void {

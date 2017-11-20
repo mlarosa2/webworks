@@ -27,6 +27,8 @@ import { CollectionItemsComponent } from './collection-items/collection-items.co
 import { UpdateCollectionComponent } from './update-collection/update-collection.component';
 import { FormsBuilderComponent } from './forms-builder/forms-builder.component';
 import { UpdateFormComponent } from './update-form/update-form.component';
+import { CollectionItemBuilderComponent } from './collection-item-builder/collection-item-builder.component';
+import { UpdateCollectionItemComponent } from './update-collection-item/update-collection-item.component';
 
 @NgModule({
   declarations: [
@@ -50,7 +52,9 @@ import { UpdateFormComponent } from './update-form/update-form.component';
     CollectionItemsComponent,
     UpdateCollectionComponent,
     FormsBuilderComponent,
-    UpdateFormComponent
+    UpdateFormComponent,
+    CollectionItemBuilderComponent,
+    UpdateCollectionItemComponent
   ],
   imports: [
     BrowserModule,

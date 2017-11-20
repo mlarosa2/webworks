@@ -1,3 +1,22 @@
-<p>
-  collection-items works!
-</p>
+<h2> Collection Items for {{title}}</h2>
+<div *ngIf="currentCollectionItems && isListView()">
+  <div>
+    <ul>
+      <li *ngFor="let item of currentCollectionItems">
+          <span>{{item}}</span><i class="fa fa-times" (click)="deleteCollectionItem(title, $event)"></i><i class="fa fa-edit" (click)="goToCollectionItem(title, $event)"></i>
+      </li>
+    </ul>
+  </div>
+  <div *ngIf="!currentCollectionItems && isListView()">
+    No collection items found for {{title}}.
+  </div>
+  <div>
+    <button (click)="newCollectionItem()">Add Collection Item</button>
+  </div>
+</div>
+<div *ngIf="isBuildView()">
+  <app-collection-item-builder [title]="selectedTitle"></app-collection-item-builder>
+</div>
+<div *ngIf="isUpdateView()">
+  <app-update-collection-item [title]="selectedTitle"></app-update-collection-item>
+</div> 

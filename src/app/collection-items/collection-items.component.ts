@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { CollectionItemService } from '../collection-item.service';
 
 @Component({
   selector: 'app-collection-items',
@@ -6,10 +7,41 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./collection-items.component.css']
 })
 export class CollectionItemsComponent implements OnInit {
+  @Input() title: string;
+  private currentCollectionItems: string[];
 
-  constructor() { }
+  constructor(private collectionItemService: CollectionItemService) { }
 
-  ngOnInit() {
+  ngOnInit() { }
+
+  getCollectionItems(): void {
+    if (!this.currentCollectionItems) {
+      this.currentCollectionItems = this.collectionItemService.getCollectionItems();
+    }
   }
 
+  isListView(): boolean {
+    return this.collectionItemService.isListView();
+  }
+
+  isBuildView(): boolean {
+    return this.collectionItemService.isNewItemView();
+  }
+
+  isUpdateView(): boolean {
+    return this.collectionItemService.isUpdateItemView();
+  }
+
+  newCollectionItem(): void {
+    this.collectionItemService.setNewItemView();
+  }
+
+  deleteCollectionItem(title: string, $event: any): void {
+    $event.stopPropagation();
+  }
+
+  goToCollectionItem(title: string, $event: any): void {
+    $event.stopPropagation();
+    this.collectionItemService.setupdateItemView();
+  }
 }

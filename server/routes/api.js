@@ -238,6 +238,12 @@ mongo.connect(mongoConnect, (err, db) => {
                 }
             });
         });
+
+    router.route('/collection-items')
+        .get()
+        .post()
+        .delete()
+        .put();
 });
 
 module.exports = router;
