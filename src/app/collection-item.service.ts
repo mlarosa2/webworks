@@ -8,10 +8,13 @@ import 'rxjs/add/operator/toPromise';
 export class CollectionItemService {
   private headers: Headers = new Headers({'Content-Type': 'application/json'});
   private collectionItemsUrl: string = 'api/collection-items';
+  private collectionsUrl: string = 'api/collections';
   private titlesForCurrentCollection: string[];
+  private templateFields: string[];
   private listView: boolean;
   private newItemView: boolean;
   private updateItemView: boolean;
+
   constructor(private http: Http) { }
   
   loadCollectionItems(title: string): void {
@@ -26,6 +29,20 @@ export class CollectionItemService {
 
   getCollectionItems(): string[] {
     return this.titlesForCurrentCollection;
+  }
+
+  setTemplate(title: string): void {
+    this.http
+      .get(`${this.collectionsUrl}/${title}`)
+      .toPromise()
+      .then(collection => {
+        this.templateFields = collection.json().fields;
+      })
+      .catch(this.handleError);
+  }
+
+  getTemplate(): string[] {
+    return this.templateFields;
   }
 
   setListView(): void {

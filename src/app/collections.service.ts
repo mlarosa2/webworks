@@ -87,7 +87,7 @@ export class CollectionsService {
   }
 
   loadCollectionItems(title): void {
-    
+
   }
 
   getTitles(): string[] {

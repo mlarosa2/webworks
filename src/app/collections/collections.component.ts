@@ -52,6 +52,7 @@ export class CollectionsComponent implements OnInit {
     this.collectionsService.selectCollectionItems(title);
     this.collectionItemService.loadCollectionItems(title);
     this.collectionItemService.setListView();
+    this.collectionItemService.setTemplate(title);
     this.selectedTitle = title;
   }
 

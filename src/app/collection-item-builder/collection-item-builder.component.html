@@ -1,3 +1,7 @@
-<p>
-  collection-item-builder works!
-</p>
+<div>
+  <ul>
+    <li *ngFor="let field of getTemplate(); let i = index;">
+      <span>{{field}}</span><input type="text" model="fieldModel[field]" name="field_{{i}}">
+    </li>
+  </ul>
+</div>

@@ -1,13 +1,13 @@
 <h2> Collection Items for {{title}}</h2>
-<div *ngIf="currentCollectionItems && isListView()">
-  <div>
+<div *ngIf="isListView()">
+  <div *ngIf="currentCollectionItems">
     <ul>
       <li *ngFor="let item of currentCollectionItems">
           <span>{{item}}</span><i class="fa fa-times" (click)="deleteCollectionItem(title, $event)"></i><i class="fa fa-edit" (click)="goToCollectionItem(title, $event)"></i>
       </li>
     </ul>
   </div>
-  <div *ngIf="!currentCollectionItems && isListView()">
+  <div *ngIf="!currentCollectionItems">
     No collection items found for {{title}}.
   </div>
   <div>
