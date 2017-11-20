@@ -75,6 +75,11 @@ export class CollectionItemService {
     return this.updateItemView;
   }
 
+  addItem(): void {
+    this.http
+      .post()
+  }
+
   private handleError(error: any): void {
     console.log('woo boy build this out');
     console.error(error._body);

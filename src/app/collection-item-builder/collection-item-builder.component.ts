@@ -21,4 +21,8 @@ export class CollectionItemBuilderComponent implements OnInit {
 
     return this.template;
   }
+
+  addCollectionItem(): void {
+    this.collectionItemService.addItem();
+  }
 }
