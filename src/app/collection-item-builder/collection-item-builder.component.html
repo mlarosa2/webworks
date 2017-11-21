@@ -1,9 +1,19 @@
-<div>
+<form #newCollectionItem="ngForm" (submit)="onSubmit()">
   <ul>
-    <li><span>Collection Item Title:</span><input type="text" [(ngModel)]="fieldModel.title" name="title_field"></li>
+    <li>
+      <span>Collection Item Title:</span>
+      <input type="text" 
+             [(ngModel)]="fieldModel.title" 
+             name="title_field"
+             required>
+    </li>
     <li *ngFor="let field of getTemplate(); let i = index;">
-      <span>{{field}}</span><input type="text" [(ngModel)]="fieldModel.fields[field]" name="field_{{i}}">
+      <span>{{field}}</span>
+      <input type="text" 
+             [(ngModel)]="fieldModel.fields[field]" 
+             name="field_{{i}}"
+             required>
     </li>
   </ul>
-  <button (click)="addCollectionItem()">Add</button>
-</div>
+  <button type="submit" [disabled]="!newCollectionItem.form.valid">Add</button>
+</form>

@@ -23,7 +23,7 @@ export class CollectionItemBuilderComponent implements OnInit {
     return this.template;
   }
 
-  addCollectionItem(): void {
+  onSubmit(): void {
     this.fieldModel.setBelongsTo(this.belongsTo); // not sure why I don't have this.belongs to when I instantiate class
     this.collectionItemService.addItem(this.fieldModel);
   }
