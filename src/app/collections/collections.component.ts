@@ -49,11 +49,12 @@ export class CollectionsComponent implements OnInit {
   }
 
   goToCollectionItems(title: string) {
+    this.selectedTitle = title;
     this.collectionsService.selectCollectionItems(title);
-    this.collectionItemService.loadCollectionItems(title);
+    this.collectionItemService.setCurrentCollection(title);
+    this.collectionItemService.loadCollectionItems();
     this.collectionItemService.setListView();
     this.collectionItemService.setTemplate(title);
-    this.selectedTitle = title;
   }
 
   collectionSelected(): boolean {

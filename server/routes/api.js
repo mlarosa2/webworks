@@ -240,10 +240,50 @@ mongo.connect(mongoConnect, (err, db) => {
         });
 
     router.route('/collection-items')
-        .get()
-        .post()
-        .delete()
-        .put();
+        .post((req, res) => {
+            db.collection('CollectionItems').insertOne({title: req.body.title, fields: req.body.fields, belongsTo: req.body.belongsTo}, (err, result) => {
+                if (err) throw err;
+                res.sendStatus(200);
+            });
+        })
+        .delete((req, res) => {
+            db.collection('CollectionItems').deleteOne({title: req.body.title, belongsTo: req.body.belongsTo}, (err, result) => {
+                if (err) throw err;
+                res.sendStatus(200);
+            });
+        })
+        .put((req, res) => {
+            const query         = { title: req.body.title, belongsTo: req.body.belongsTo };
+            const updatedValues = { fields: req.body.fields, title: req.body.newTitle };
+
+            db.collection('CollectionItems').updateOne(query, updatedValues, (err, result) => {
+                if (err) throw err;
+                res.sendStatus(200);
+            });
+        });
+
+    router.route('/collection-items/:belongsTo')
+        .get((req, res) => {
+            db.collection('CollectionItems').find({belongsTo: req.params.belongsTo}).toArray((err, result) => {
+                if (err) throw err;
+                let collectionItems = result.map(collection => collection.title);
+                res.setHeader('Content-Type', 'application/json');
+                res.send(JSON.stringify(collectionItems));
+            });
+        });
+    
+    router.route('/collection-items/:belongsTo/:title')
+        .get((req, rest) => {
+            db.collection('CollectionItems').find({belongsTo: req.params.belongsTo, title: req.params.title}).toArray((err, result) => {
+                if (err) throw err;
+                if (result.length === 1) {
+                    res.send(result[0]);
+                } else {
+                    res.sendStatus(404);
+                }
+            });
+        });
+        
 });
 
 module.exports = router;

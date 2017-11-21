@@ -1,13 +1,13 @@
 <h2> Collection Items for {{title}}</h2>
 <div *ngIf="isListView()">
-  <div *ngIf="currentCollectionItems">
+  <div *ngIf="getCollectionItems()">
     <ul>
-      <li *ngFor="let item of currentCollectionItems">
+      <li *ngFor="let item of getCollectionItems()">
           <span>{{item}}</span><i class="fa fa-times" (click)="deleteCollectionItem(title, $event)"></i><i class="fa fa-edit" (click)="goToCollectionItem(title, $event)"></i>
       </li>
     </ul>
   </div>
-  <div *ngIf="!currentCollectionItems">
+  <div *ngIf="!getCollectionItems()">
     No collection items found for {{title}}.
   </div>
   <div>
@@ -15,8 +15,8 @@
   </div>
 </div>
 <div *ngIf="isBuildView()">
-  <app-collection-item-builder [title]="selectedTitle"></app-collection-item-builder>
+  <app-collection-item-builder [belongsTo]="title"></app-collection-item-builder>
 </div>
 <div *ngIf="isUpdateView()">
-  <app-update-collection-item [title]="selectedTitle"></app-update-collection-item>
+  <app-update-collection-item [belongsTo]="title"></app-update-collection-item>
 </div> 

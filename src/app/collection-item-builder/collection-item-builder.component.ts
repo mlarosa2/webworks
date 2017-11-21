@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { CollectionItemService } from '../collection-item.service';
+import { CollectionItem } from '../collection-item';
 
 @Component({
   selector: 'app-collection-item-builder',
@@ -7,12 +8,12 @@ import { CollectionItemService } from '../collection-item.service';
   styleUrls: ['./collection-item-builder.component.css']
 })
 export class CollectionItemBuilderComponent implements OnInit {
+  @Input() belongsTo: string;
   private template: string[];
-  private fieldModel: any = {};
+  private fieldModel: CollectionItem = new CollectionItem('', {}, '');
 
   constructor(private collectionItemService: CollectionItemService) { }
-  ngOnInit() {
-  }
+  ngOnInit() { }
 
   getTemplate(): string[] {
     if (!this.template) {
@@ -23,6 +24,7 @@ export class CollectionItemBuilderComponent implements OnInit {
   }
 
   addCollectionItem(): void {
-    this.collectionItemService.addItem();
+    this.fieldModel.setBelongsTo(this.belongsTo); // not sure why I don't have this.belongs to when I instantiate class
+    this.collectionItemService.addItem(this.fieldModel);
   }
 }

@@ -14,10 +14,9 @@ export class CollectionItemsComponent implements OnInit {
 
   ngOnInit() { }
 
-  getCollectionItems(): void {
-    if (!this.currentCollectionItems) {
-      this.currentCollectionItems = this.collectionItemService.getCollectionItems();
-    }
+  getCollectionItems(): string[] {
+    this.currentCollectionItems = this.collectionItemService.getCollectionItems();
+    return this.currentCollectionItems;
   }
 
   isListView(): boolean {

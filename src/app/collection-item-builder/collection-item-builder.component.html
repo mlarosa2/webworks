@@ -1,7 +1,8 @@
 <div>
   <ul>
+    <li><span>Collection Item Title:</span><input type="text" [(ngModel)]="fieldModel.title" name="title_field"></li>
     <li *ngFor="let field of getTemplate(); let i = index;">
-      <span>{{field}}</span><input type="text" model="fieldModel[field]" name="field_{{i}}">
+      <span>{{field}}</span><input type="text" [(ngModel)]="fieldModel.fields[field]" name="field_{{i}}">
     </li>
   </ul>
   <button (click)="addCollectionItem()">Add</button>

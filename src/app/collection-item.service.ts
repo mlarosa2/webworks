@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Headers, Http } from '@angular/http';
+import { CollectionItem } from './collection-item';
 
 import 'rxjs/add/operator/toPromise';
 
@@ -11,20 +12,25 @@ export class CollectionItemService {
   private collectionsUrl: string = 'api/collections';
   private titlesForCurrentCollection: string[];
   private templateFields: string[];
+  private currentCollection: string;
   private listView: boolean;
   private newItemView: boolean;
   private updateItemView: boolean;
 
   constructor(private http: Http) { }
   
-  loadCollectionItems(title: string): void {
+  loadCollectionItems(): void {
     this.http
-      .get(`${this.collectionItemsUrl}/${title}`)
+      .get(`${this.collectionItemsUrl}/${this.currentCollection}`)
       .toPromise()
       .then(response => {
-        this.titlesForCurrentCollection = JSON.parse(response.json()._body);
+        this.titlesForCurrentCollection = response.json();
       })
       .catch(this.handleError);
+  }
+
+  setCurrentCollection(title: string): void {
+    this.currentCollection = title;
   }
 
   getCollectionItems(): string[] {
@@ -75,9 +81,15 @@ export class CollectionItemService {
     return this.updateItemView;
   }
 
-  addItem(): void {
+  addItem(collectionItem: CollectionItem): void {
     this.http
-      .post()
+      .post(`${this.collectionItemsUrl}`, JSON.stringify(collectionItem), {headers: this.headers})
+      .toPromise()
+      .then(() => {
+        this.loadCollectionItems();
+        this.setListView();
+      })
+      .catch(this.handleError);
   }
 
   private handleError(error: any): void {

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-update-collection-item',
@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./update-collection-item.component.css']
 })
 export class UpdateCollectionItemComponent implements OnInit {
-
+  @Input() belongsTo: string;
   constructor() { }
 
   ngOnInit() {
