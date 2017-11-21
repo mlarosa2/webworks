@@ -35,8 +35,10 @@ export class CollectionItemsComponent implements OnInit {
     this.collectionItemService.setNewItemView();
   }
 
-  deleteCollectionItem(title: string, $event: any): void {
+  deleteCollectionItem(item: string, $event: any): void {
     $event.stopPropagation();
+    this.currentCollectionItems = this.currentCollectionItems.filter(itemName => itemName !== item);
+    this.collectionItemService.deleteItem(item);
   }
 
   goToCollectionItem(title: string, $event: any): void {

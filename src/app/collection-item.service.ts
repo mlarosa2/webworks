@@ -12,7 +12,7 @@ export class CollectionItemService {
   private collectionsUrl: string = 'api/collections';
   private titlesForCurrentCollection: string[];
   private templateFields: string[];
-  private currentCollection: string;
+  private currentCollection: string; // name of collection we are looking at items for
   private listView: boolean;
   private newItemView: boolean;
   private updateItemView: boolean;
@@ -88,6 +88,16 @@ export class CollectionItemService {
       .then(() => {
         this.loadCollectionItems();
         this.setListView();
+      })
+      .catch(this.handleError);
+  }
+
+  deleteItem(item: string): void {
+    this.http
+  .delete(`${this.collectionItemsUrl}`, {headers: this.headers, body: {title: item, belongsTo: this.currentCollection}})
+      .toPromise()
+      .then(() => {
+        this.loadCollectionItems();
       })
       .catch(this.handleError);
   }

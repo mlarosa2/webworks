@@ -1,13 +1,13 @@
 <h2> Collection Items for {{title}}</h2>
 <div *ngIf="isListView()">
-  <div *ngIf="getCollectionItems()">
+  <div *ngIf="getCollectionItems() && getCollectionItems().length > 0">
     <ul>
-      <li *ngFor="let item of getCollectionItems()">
-          <span>{{item}}</span><i class="fa fa-times" (click)="deleteCollectionItem(title, $event)"></i><i class="fa fa-edit" (click)="goToCollectionItem(title, $event)"></i>
+      <li *ngFor="let item of getCollectionItems();">
+          <span>{{item}}</span><i class="fa fa-times" (click)="deleteCollectionItem(item, $event)"></i><i class="fa fa-edit" (click)="goToCollectionItem(title, $event)"></i>
       </li>
     </ul>
   </div>
-  <div *ngIf="!getCollectionItems()">
+  <div *ngIf="!getCollectionItems() || getCollectionItems() && getCollectionItems().length === 0">
     No collection items found for {{title}}.
   </div>
   <div>
