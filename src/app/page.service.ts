@@ -97,7 +97,7 @@ export class PageService {
     return this.http
       .put(`${this.pageUrl}/page/${title}`, {body: body})
       .toPromise()
-      .then(() => null)
+      .then(() => this.setPageHome())
       .catch(this.handleError);
   }
 
