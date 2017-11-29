@@ -1,8 +1,8 @@
 export class CollectionItem {
     constructor(
-        public title: string,
-        public fields: any,
-        public belongsTo: string
+        private title: string,
+        private fields: any,
+        private belongsTo: string
     ) { }
 
     setBelongsTo(name: string): void {
