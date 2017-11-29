@@ -43,6 +43,6 @@ export class CollectionItemsComponent implements OnInit {
 
   goToCollectionItem(title: string, $event: any): void {
     $event.stopPropagation();
-    this.collectionItemService.setupdateItemView();
+    this.collectionItemService.setUpdateItemView(title);
   }
 }

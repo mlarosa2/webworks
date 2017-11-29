@@ -3,7 +3,7 @@
   <div *ngIf="getCollectionItems() && getCollectionItems().length > 0">
     <ul>
       <li *ngFor="let item of getCollectionItems();">
-          <span>{{item}}</span><i class="fa fa-times" (click)="deleteCollectionItem(item, $event)"></i><i class="fa fa-edit" (click)="goToCollectionItem(title, $event)"></i>
+          <span>{{item}}</span><i class="fa fa-times" (click)="deleteCollectionItem(item, $event)"></i><i class="fa fa-edit" (click)="goToCollectionItem(item, $event)"></i>
       </li>
     </ul>
   </div>

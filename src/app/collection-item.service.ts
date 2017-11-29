@@ -16,6 +16,7 @@ export class CollectionItemService {
   private listView: boolean;
   private newItemView: boolean;
   private updateItemView: boolean;
+  private collectionItemToEdit: string;
 
   constructor(private http: Http) { }
   
@@ -35,6 +36,12 @@ export class CollectionItemService {
 
   getCollectionItems(): string[] {
     return this.titlesForCurrentCollection;
+  }
+
+  getCollectionItem(): Promise<any> {
+    return this.http
+      .get(`${this.collectionItemsUrl}/${this.currentCollection}/${this.collectionItemToEdit}`)
+      .toPromise();
   }
 
   setTemplate(title: string): void {
@@ -63,10 +70,11 @@ export class CollectionItemService {
     this.updateItemView = false;
   }
   
-  setupdateItemView(): void {
+  setUpdateItemView(title: string): void {
     this.listView       = false;
     this.newItemView    = false;
     this.updateItemView = true;
+    this.collectionItemToEdit = title;
   }
 
   isListView(): boolean {
@@ -87,6 +95,31 @@ export class CollectionItemService {
       .toPromise()
       .then(() => {
         this.loadCollectionItems();
+        this.setListView();
+      })
+      .catch(this.handleError);
+  }
+
+  updateItem(collectionItem: CollectionItem): void {
+    this.http
+      .put(`${this.collectionItemsUrl}`,
+        { 
+          title: this.collectionItemToEdit,
+          belongsTo: this.currentCollection,
+          fields: collectionItem.getFields(),
+          newTitle: collectionItem.getTitle()
+        }
+      )
+      .toPromise()
+      .then(() => {
+        // need to update the list of titles
+        this.titlesForCurrentCollection = this.titlesForCurrentCollection.map(title => {
+          if (title === this.collectionItemToEdit) {
+            return collectionItem.getTitle();
+          }
+
+          return title;
+        });
         this.setListView();
       })
       .catch(this.handleError);

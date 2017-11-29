@@ -254,7 +254,7 @@ mongo.connect(mongoConnect, (err, db) => {
         })
         .put((req, res) => {
             const query         = { title: req.body.title, belongsTo: req.body.belongsTo };
-            const updatedValues = { fields: req.body.fields, title: req.body.newTitle };
+            const updatedValues = { fields: req.body.fields, title: req.body.newTitle, belongsTo: req.body.belongsTo };
 
             db.collection('CollectionItems').updateOne(query, updatedValues, (err, result) => {
                 if (err) throw err;
@@ -273,7 +273,7 @@ mongo.connect(mongoConnect, (err, db) => {
         });
     
     router.route('/collection-items/:belongsTo/:title')
-        .get((req, rest) => {
+        .get((req, res) => {
             db.collection('CollectionItems').find({belongsTo: req.params.belongsTo, title: req.params.title}).toArray((err, result) => {
                 if (err) throw err;
                 if (result.length === 1) {

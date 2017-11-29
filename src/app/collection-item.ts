@@ -9,6 +9,14 @@ export class CollectionItem {
         this.belongsTo = name;
     }
 
+    setTitle(title: string): void {
+        this.title = title;
+    }
+
+    setFields(fields: any): void {
+        this.fields = fields;
+    }
+
     getTitle(): string {
         return this.title;
     }
