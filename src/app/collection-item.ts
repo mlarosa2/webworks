@@ -8,4 +8,12 @@ export class CollectionItem {
     setBelongsTo(name: string): void {
         this.belongsTo = name;
     }
+
+    getTitle(): string {
+        return this.title;
+    }
+
+    getFields(): string[] {
+        return this.fields;
+    }
 }
