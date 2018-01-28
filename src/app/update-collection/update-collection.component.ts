@@ -25,9 +25,9 @@ export class UpdateCollectionComponent implements OnChanges {
     this.collectionsService.getCollection(title)
       .then(collection => {
         this.model.title   = title;
-        this.model.fields  = JSON.parse(collection._body).fields;
+        this.model.fields  = collection.json().fields;
         this.originalTitle = title;
-        this.fields        = JSON.parse(collection._body).fields
+        this.fields        = collection.json().fields
       });
   }
   
