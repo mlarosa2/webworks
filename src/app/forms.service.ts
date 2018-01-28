@@ -8,6 +8,7 @@ import 'rxjs/add/operator/toPromise';
 export class FormsService {
   private headers: Headers = new Headers({'Content-Type': 'application/json'});
   private formsUrl: string = 'api/forms';
+  private singularFormsUrl: string = 'api/form';
   private viewForms: boolean = false;
   private buildForm: boolean = false;
   private updateForm: boolean = false;
@@ -23,7 +24,7 @@ export class FormsService {
 
   getForm(title: string): Promise<any> {
     return this.http
-      .get(`${this.formsUrl}/${title}`)
+      .get(`${this.singularFormsUrl}/${title}`)
       .toPromise();
   }
 
@@ -112,7 +113,7 @@ export class FormsService {
 
   setSelectedForm(title: string): void {
     this.http
-      .get(`${this.formsUrl}/${title}`)
+      .get(`${this.singularFormsUrl}/${title}`)
       .toPromise()
       .then(response => {
         let form = JSON.parse(response.json()._body);

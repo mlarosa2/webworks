@@ -8,6 +8,7 @@ import 'rxjs/add/operator/toPromise';
 export class CollectionsService {
   private headers: Headers = new Headers({'Content-Type': 'application/json'});
   private collectionsUrl: string = 'api/collections';
+  private singularCollectionUrl: string = 'api/collection';
   private collectionItemsUrl: string = 'api/collection-items';
   private viewCollections: boolean = false;
   private buildCollection: boolean = false;
@@ -26,7 +27,7 @@ export class CollectionsService {
 
   getCollection(title: string): Promise<any> {
     return this.http
-      .get(`${this.collectionsUrl}/${title}`)
+      .get(`${this.singularCollectionUrl}/${title}`)
       .toPromise();
   }
 
@@ -148,7 +149,7 @@ export class CollectionsService {
 
   setSelectedCollection(title: string): void {
     this.http
-      .get(`${this.collectionsUrl}/${title}`)
+      .get(`${this.singularCollectionUrl}/${title}`)
       .toPromise()
       .then(response => {
         let collection = JSON.parse(response.json()._body);

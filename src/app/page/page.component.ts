@@ -17,7 +17,7 @@ export class PageComponent implements OnChanges {
     this.pageService.getPage(title)
       .then(page => {
         this.model.title = title;
-        this.model.body  = page._body;
+        this.model.body  = page.json().body;
       });
   }
 
