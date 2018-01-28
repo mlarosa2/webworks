@@ -52,7 +52,7 @@ mongo.connect(mongoConnect, (err, db) => {
             db.collection('Pages').find({title: req.params.title}).toArray((err, result) => {
                 if (err) throw err;
                 if (result.length === 1) {
-                    res.send(result[0].body);
+                    res.send(result[0]);
                 } else {
                     res.sendStatus(404);
                 }
@@ -184,7 +184,7 @@ mongo.connect(mongoConnect, (err, db) => {
             });
         });
     
-    router.route('/collections/:title')
+    router.route('/collection/:title')
         .get((req, res) => {
             db.collection('Collections').find({title: req.params.title}).toArray((err, result) => {
                 if (err) throw err;
@@ -227,7 +227,7 @@ mongo.connect(mongoConnect, (err, db) => {
             });
         });
     
-    router.route('/forms/:title')
+    router.route('/form/:title')
         .get((req, res) => {
             db.collection('Forms').find({title: req.params.title}).toArray((err, result) => {
                 if (err) throw err;
