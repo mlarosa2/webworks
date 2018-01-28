@@ -9,8 +9,8 @@ import { Collection } from '../collection';
 })
 export class UpdateCollectionComponent implements OnChanges {
   @Input() title: string;
+  public fields: string[] = [];
   private model: Collection = new Collection('', []);
-  private fields: string[];
   private originalTitle: string;
   private addFieldModel: any = {
     name: ''

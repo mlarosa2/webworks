@@ -5,7 +5,9 @@ import { PageService } from '../page.service';
   selector: 'app-frontend',
   templateUrl: './frontend.component.html',
   styleUrls: ['./frontend.component.css'],
-  providers: [PageService]
+  providers: [
+                PageService
+             ]
 })
 export class FrontendComponent implements OnInit {
   private page: string;
@@ -15,7 +17,7 @@ export class FrontendComponent implements OnInit {
   ngOnInit() {
     this.page = window.location.pathname.substr(1).replace(/-/g, ' ');
     this.pageService.getPage(this.page).then(response => {
-      this.body = response._body;
+      this.body = response.json().body();
     });
   }
 

@@ -4,6 +4,7 @@ const mongo        = require('mongodb').MongoClient;
 const mongoConnect = require('../secrets').mongo;
 const fs           = require('fs');
 const multer       = require('multer');
+const PageParser   = require('../page-parser/main')
 const storage      = multer.diskStorage({
     destination: (req, file, cb) => {
         cb(null, __dirname + '/../../media/');
@@ -41,7 +42,8 @@ mongo.connect(mongoConnect, (err, db) => {
             });
         })
         .post((req, res) => {
-            db.collection('Pages').insertOne({title: req.body.title, body: req.body.body}, (err, result) => {
+            const parsedPage = PageParser(req.body.body);
+            db.collection('Pages').insertOne({title: req.body.title, body: req.body.body, parsed: parsedPage}, (err, result) => {
                 if (err) throw err;
                 res.sendStatus(200);
             });
