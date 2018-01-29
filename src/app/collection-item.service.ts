@@ -9,7 +9,7 @@ import 'rxjs/add/operator/toPromise';
 export class CollectionItemService {
   private headers: Headers = new Headers({'Content-Type': 'application/json'});
   private collectionItemsUrl: string = 'api/collection-items';
-  private collectionsUrl: string = 'api/collections';
+  private collectionsUrl: string = 'api/collection';
   private titlesForCurrentCollection: string[];
   private templateFields: string[];
   private currentCollection: string; // name of collection we are looking at items for
