@@ -1,9 +1,9 @@
-import { PageParser } from './page-parser';
+const PageParser = require('./page-parser');
 
 const parse = page => {
-    pageParser = new PageParser(page);
+    const pageParser = new PageParser(page);
 
-    return pageParse.getParsedPage();
+    return pageParser.getParsedPage();
 };
 
 module.exports = parse;

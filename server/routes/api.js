@@ -68,7 +68,10 @@ mongo.connect(mongoConnect, (err, db) => {
         })
         .put((req, res) => {
             const query         = { title: req.params.title };
-            const updatedValues = req.body.body; 
+            const parsedPage = PageParser(req.body.body.body);
+            const updatedValues = req.body.body;
+
+            updatedValues.parsed = parsedPage;
             db.collection('Pages').updateOne(query, updatedValues, (err, result) => {
                 if (err) throw err;
                 res.sendStatus(200);
