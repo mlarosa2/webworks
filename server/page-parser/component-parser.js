@@ -41,27 +41,30 @@ module.exports = class ComponentParser {
         let parsedEle = '';
 
         parsedEle += this.getFirstPartOfElement(element.type);
-        parsedEle += this.getComponentAttributes(element.options);
-        parsedEle += this.getComponentUserOptions(element.options.userOptions, element.type);
+        parsedEle += this.getComponentAttributes(element.options, element.type);
+        parsedEle += this.getComponentUserOptions(element.options.userOptions, element.type, element.name);
+        parsedEle += this.getLastPartOfElement(element.type);
+
+        return parsedEle;
     }
 
     getFirstPartOfElement(type) {
         let parsedEle = '';
         switch (type) {
             case 'textArea': 
-                parsedEle += '<textarea '
+                parsedEle += '<textarea ';
                 break;
             case 'text':
                 parsedEle += '<input type="text" ';
                 break;
             case 'radio':
-                parsedEle += '<input type="radio" ';
+                parsedEle += '<div class="radio-group>"';
                 break;
             case 'checkmarks':
-                parsedEle += '<input type="checkbox" ';
+                parsedEle += '<div class="checkbox-group">';
                 break;
             case 'select':
-                parsedEle += '<input type="select" ';
+                parsedEle += '<select ';
                 break;
             default:
                 break;
@@ -70,15 +73,49 @@ module.exports = class ComponentParser {
         return parsedEle;
     }
 
-    getComponentAttributes(options) {
+    getLastPartOfElement(type) {
         let parsedEle = '';
-        
-        if (options.placeholder) {
-            parsedEle += `placeholder="${options.placeholder}" `;
+        switch (type) {
+            case 'textArea': 
+                parsedEle += '</textarea>';
+                break;
+            case 'text':
+                parsedEle += '>'
+                break;
+            case 'radio':
+                parsedEle += '</div>';
+                break;
+            case 'checkmarks':
+                parsedEle += '</div>';
+                break;
+            case 'select':
+                parsedEle += '</div>';
+                break;
+            default:
+                break;
         }
 
-        if (options.name) {
-            parsedEle += `name="${options.name}"`;
+        return parsedEle;
+    }
+
+    getComponentAttributes(options, type) {
+        let parsedEle = '';
+        if (type === 'textArea') {
+            if (options.name) {
+                parsedEle += `name="${options.name}">`;
+            } 
+
+           if (options.placeholder) {
+                parsedEle += `${options.placeholder}"`;
+            }
+        } else if (type !== 'checkmarks' && type !== 'radio') {
+            if (options.placeholder) {
+                parsedEle += `placeholder="${options.placeholder}" `;
+            }
+
+            if (options.name) {
+                parsedEle += `name="${options.name}"`;
+            }
         }
 
         parsedEle += '>';
@@ -86,8 +123,16 @@ module.exports = class ComponentParser {
         return parsedEle;
     }
     
-    getComponentUserOptions(userOptions, type) {
-        let parsedEle = '';
+    getComponentUserOptions(userOptions, type, name) {
+        return userOptions.map(option => {
+            if (type === 'textArea') {
+                return makeSelectOption(option);
+            } else if (type === 'radio') {
+                return makeRadio(option, name);
+            } else if (type === 'checkmarks') {
+                return makeCheckbox(option, name);
+            }
+        }).join('');
     }
 
     makeCheckbox(value, checkboxGroup) {
@@ -98,7 +143,7 @@ module.exports = class ComponentParser {
         return `<input id="${value + radioGroup}" type="radio" name="${radioGroup}" value="${value}"><label for="${value + radioGroup}">${value}</label>`;
     }
 
-    makeSelectOption(name) {
-        return `<option value="${name}">${name}</option>`;
+    makeSelectOption(value) {
+        return `<option value="${value}">${value}</option>`;
     }
 }

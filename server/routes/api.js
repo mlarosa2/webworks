@@ -42,10 +42,11 @@ mongo.connect(mongoConnect, (err, db) => {
             });
         })
         .post((req, res) => {
-            const parsedPage = PageParser(req.body.body);
-            db.collection('Pages').insertOne({title: req.body.title, body: req.body.body, parsed: parsedPage}, (err, result) => {
-                if (err) throw err;
-                res.sendStatus(200);
+            PageParser(req.body.body).then(parsedPage => {
+                db.collection('Pages').insertOne({title: req.body.title, body: req.body.body, parsed: parsedPage}, (err, result) => {
+                    if (err) throw err;
+                    res.sendStatus(200);
+                });
             });
         });
     
@@ -68,14 +69,16 @@ mongo.connect(mongoConnect, (err, db) => {
         })
         .put((req, res) => {
             const query         = { title: req.params.title };
-            const parsedPage = PageParser(req.body.body.body);
             const updatedValues = req.body.body;
+            PageParser(req.body.body.body).then(parsedPage => {
+                updatedValues.parsed = parsedPage;
+                db.collection('Pages').updateOne(query, updatedValues, (err, result) => {
+                    if (err) throw err;
+                    res.sendStatus(200);
+                });
+            },
+            err => err);
 
-            updatedValues.parsed = parsedPage;
-            db.collection('Pages').updateOne(query, updatedValues, (err, result) => {
-                if (err) throw err;
-                res.sendStatus(200);
-            });
         });
 
     router.route('/media')
