@@ -76,7 +76,7 @@ module.exports = class PageParser {
             }
             regex = new RegExp(pre, 'g');
             
-            this.page.replace(regex, replaceText);
+            this.page = this.page.replace(regex, replaceText);
         });
     }
 
