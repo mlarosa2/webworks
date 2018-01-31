@@ -44,6 +44,7 @@ module.exports = class ComponentParser {
         }
 
         this.parsedComponent += `<button id="${this.formId}-submit">${submitText}</button>`;
+        this.parsedComponent += '</form>';
     }
 
     getParsedComponent() {
