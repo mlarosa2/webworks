@@ -10,9 +10,19 @@ module.exports = class ComponentParser {
         if (this.component.hasOwnProperty('belongsTo')) {
             this.parseCollection();
         } else {
-            this.formId = this.component.title.split(' ').map(word => word.toLowerCase()).join('-');
+            this.formId = convertToAscii(this.component.title);
             this.parseForm();
         }
+    }
+
+    convertToAscii(title) {
+        let hyphenatedAscii = ''
+
+        for (let i = 0; i < title.length; i++) {
+            hyphenatedAscii += title.charCodeAt(i) + '-';
+        }
+
+        return hyphenatedAscii;
     }
 
     parseCollection() {
