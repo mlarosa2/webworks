@@ -35,12 +35,15 @@ module.exports = class ComponentParser {
 
     parseForm() {
         this.parsedComponent += `<form id="${this.formId}">`;
+        let submitText = this.parsedComponent.submitText || 'Submit';
         
         for (let field in this.component.fields) {
             if (this.component.fields.hasOwnProperty(field)) {
                 this.parsedComponent += this.parseFormComponent(this.component.fields[field]);
             }
         }
+
+        this.parsedComponent += `<button id="${this.formId}-submit">${submitText}</button>`;
     }
 
     getParsedComponent() {
