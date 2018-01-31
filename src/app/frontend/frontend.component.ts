@@ -17,7 +17,7 @@ export class FrontendComponent implements OnInit {
   ngOnInit() {
     this.page = window.location.pathname.substr(1).replace(/-/g, ' ');
     this.pageService.getPage(this.page).then(response => {
-      this.body = response.json().body();
+      this.body = response.json().parsed;
     });
   }
 
