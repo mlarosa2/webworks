@@ -26,18 +26,26 @@ module.exports = class PageParser {
                         const parsedComponents = {};
                         
                         processedComponents[0].forEach(pc => {
-                            let id = pc.title;
-                            if (pc.hasOwnProperty('belongsTo')) {
+                            let id, isCollection = pc.hasOwnProperty('belongsTo');
+                            if (isCollection) {
+                                id = pc.belongsTo;
                                 id += '_collection';
                             } else {
+                                id = pc.title;
                                 id += '_form';
                             }
                             const parser = new ComponentParser(pc);
-                            
-                            parsedComponents[id] = parser.getParsedComponent();
+                            if (isCollection) {
+                                if (!parsedComponents[id]) {
+                                    parsedComponents[id] = [];
+                                }
+                                parsedComponents[id].push(parser.getParsedComponent());
+                            } else {
+                                parsedComponents[id] = parser.getParsedComponent();
+                            }
                         });
-                        
-                        this.constructFullPageBody(parsedComponents, components);
+                        // filter out meta data from regex result
+                        this.constructFullPageBody(parsedComponents, components.filter(comp => typeof comp === 'string'));
                         resolve(this.page);
                     });
                 },
@@ -67,15 +75,22 @@ module.exports = class PageParser {
     constructFullPageBody(processedComponents, preProcessedComponents) {
         preProcessedComponents.forEach(pre => {
             const preTitle = this.getComponentName(pre);
-            let replaceText = '', regex;
+            let replaceText = '', regex, escapedPre = '';
+            // [ and ] are special chars for regex so need to change them to \[ and \]
+            for (let i = 0; i < pre.length; i++) {
+                if (pre[i] === '[' || pre[i] === ']') {
+                    escapedPre += '\\' + pre[i];
+                } else {
+                    escapedPre += pre[i];
+                }
+            }
 
             if (this.getComponentType(pre) === 'collection') {
-                replaceText = processedComponents[preTitle + '_collection'];
+                replaceText = processedComponents[preTitle + '_collection'].join('');
             } else {
                 replaceText = processedComponents[preTitle + '_form'];
             }
-            regex = new RegExp(pre, 'g');
-            
+            regex = new RegExp(escapedPre, 'g');
             this.page = this.page.replace(regex, replaceText);
         });
     }
