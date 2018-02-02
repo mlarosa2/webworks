@@ -16,7 +16,7 @@ export class PageService {
   private titles: string[];
   constructor(private http: Http) { }
 
-  getPageTitles(): Promise<any>{
+  getPageTitles(): Promise<any> {
     return this.http
                .get(`${this.pageUrl}/pages`)
                .toPromise()
