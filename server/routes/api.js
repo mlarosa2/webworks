@@ -291,7 +291,48 @@ mongo.connect(mongoConnect, (err, db) => {
                 }
             });
         });
-        
+    router.route('/assets')
+        .get((req, res) => {
+            db.collection('Assets').find({}).toArray((err, result) => {
+                if (err) throw err;
+                let titles = result.map(page => page.title);
+                res.setHeader('Content-Type', 'application/json');
+                res.send(JSON.stringify(titles));
+            });
+        })
+        .post((req, res) => {
+            db.collection('Assets').insertOne({title: req.body.title, type: req.body.type, body: req.body.body}, (err, result) => {
+                if (err) throw err;
+                res.sendStatus(200);
+            });
+        });
+    
+    router.route('/asset/')
+        .get((req, res) => {
+            db.collection('Assets').find({title: req.body.title, type: req.body.type}).toArray((err, result) => {
+                if (err) throw err;
+                if (result.length === 1) {
+                    res.send(result[0]);
+                } else {
+                    res.sendStatus(404);
+                }
+            })
+        })
+        .delete((req, res) => {
+            db.collection('Assets').deleteOne({title: req.body.title, type: req.body.type}, (err, result) => {
+                if (err) throw err;
+                res.sendStatus(200);
+            });
+        })
+        .put((req, res) => {
+            const query = { title: req.body.title, type: req.body.type };
+            const updatedValues = { body: req.body.body, title: req.body.newTitle};
+
+            db.collection('Assets').updateOne(query, updatedValues, (err, result) => {
+                if (err) throw err;
+                res.sendStatus(200);
+            });
+        });
 });
 
 module.exports = router;

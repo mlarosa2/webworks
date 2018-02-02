@@ -5,6 +5,8 @@ import { PageService } from '../page.service';
 import { MediaService } from '../media.service';
 import { CollectionsService } from '../collections.service'; 
 import { FormsService } from '../forms.service';
+import {AssetService } from '../asset.service';
+
 @Component({
   selector: 'app-admin',
   templateUrl: './admin.component.html',
@@ -14,7 +16,8 @@ import { FormsService } from '../forms.service';
     PageService,
     MediaService,
     CollectionsService,
-    FormsService
+    FormsService,
+    AssetService
   ]
 })
 export class AdminComponent implements OnInit {
