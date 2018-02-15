@@ -2,19 +2,6 @@ const express      = require('express');
 const router       = express.Router();
 const mongo        = require('mongodb').MongoClient;
 const mongoConnect = require('../secrets').mongo;
-const fs           = require('fs');
-const multer       = require('multer');
-
-const storage      = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, __dirname + '/../../media/');
-    },
-    filename: (req, file, cb) => {
-        cb(null, file.originalname);
-    }
-});
-const upload = multer({storage: storage}).single('file');
-
 // include REST route classes
 const Login                 = require('./login');
 const Pages                 = require('./pages');
