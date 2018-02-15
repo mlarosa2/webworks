@@ -4,7 +4,7 @@ const mongo        = require('mongodb').MongoClient;
 const mongoConnect = require('../secrets').mongo;
 const fs           = require('fs');
 const multer       = require('multer');
-const PageParser   = require('../page-parser/main')
+
 const storage      = multer.diskStorage({
     destination: (req, file, cb) => {
         cb(null, __dirname + '/../../media/');
@@ -15,324 +15,96 @@ const storage      = multer.diskStorage({
 });
 const upload = multer({storage: storage}).single('file');
 
+// include REST route classes
+const Login                 = require('./login');
+const Pages                 = require('./pages');
+const SinglePage            = require('./single-page');
+const Media                 = require('./media');
+const SingleMedia           = require('./single-media');
+const Collections           = require('./collections');
+const SingleCollection      = require('./single-collection');
+const Forms                 = require('./forms');
+const SingleForm            = require('./single-form');
+const CollectionItems       = require('./collection-items');
+const SingleCollectionItems = require('./single-collection-items');
+const CollectionItem        = require('./collection-item');
+const Assets                = require('./assets');
+const SingleAsset           = require('./single-asset');
+
 mongo.connect(mongoConnect, (err, db) => {
-    router.get('/', (req, res) => {
-        res.send('test api');
-    });
+    const login                 = new Login(db); // /login
+    const pages                 = new Pages(db); // /pages
+    const singlePage            = new SinglePage(db); // /page/:title
+    const media                 = new Media(db); // /media
+    const singleMedia           = new SingleMedia(db); // /media/:title
+    const collections           = new Collections(db); // /collections
+    const singleCollection      = new SingleCollection(db); // /collection/:title
+    const Forms                 = new Forms(db); // /forms
+    const singleForm            = new SingleForm(db); // /form/:title
+    const collectionItems       = new CollectionItems(db); // /collection-items
+    const singleCollectionItems = new SingleCollectionItems(db); // /collection-items/:belongsTo
+    const collectionItem        = new CollectionItem(db); // /collection-item/:belongsTo/:title
+    const assets                = new Assets(db); // /assets
+    const SingleAsset           = new SingleAsset(db); // /asset 
 
     router.route('/login')
-        .post((req, res) => {
-            db.collection('Users').find({ name: req.body.username }).toArray((err, result) => {
-                if (err) throw err;
-                if (result.length > 0 && req.body.password === result[0].password) {
-                    res.sendStatus(200);
-                } else {
-                    res.sendStatus(401);
-                }
-            });
-        });
+        .post(login.post.bind(login)); // binding so this context is consistent in class
 
     router.route('/pages')
-        .get((req, res) => {
-            db.collection('Pages').find({}).toArray((err, result) => {
-                if (err) throw err;
-                let titles = result.map(page => page.title);
-                res.setHeader('Content-Type', 'application/json');
-                res.send(JSON.stringify(titles));
-            });
-        })
-        .post((req, res) => {
-            PageParser(req.body.body).then(parsedPage => {
-                db.collection('Pages').insertOne({title: req.body.title, body: req.body.body, parsed: parsedPage}, (err, result) => {
-                    if (err) throw err;
-                    res.sendStatus(200);
-                });
-            });
-        });
+        .get(pages.get.bind(pages))
+        .post(pages.post.bind(pages));
     
     router.route('/page/:title')
-        .get((req, res) => {
-            db.collection('Pages').find({title: req.params.title}).toArray((err, result) => {
-                if (err) throw err;
-                if (result.length === 1) {
-                    res.send(result[0]);
-                } else {
-                    res.sendStatus(404);
-                }
-            })
-        })
-        .delete((req, res) => {
-            db.collection('Pages').deleteOne({title: req.params.title}, (err, result) => {
-                if (err) throw err;
-                res.sendStatus(200);
-            });
-        })
-        .put((req, res) => {
-            const query         = { title: req.params.title };
-            const updatedValues = req.body.body;
-            PageParser(req.body.body.body).then(parsedPage => {
-                updatedValues.parsed = parsedPage;
-                db.collection('Pages').updateOne(query, updatedValues, (err, result) => {
-                    if (err) throw err;
-                    res.sendStatus(200);
-                });
-            },
-            err => err);
-
-        });
+        .get(singlePage.get.bind(singlePage))
+        .delete(singlePage.delete.bind(singlePage))
+        .put(singlePage.put.bind(singlePage));
 
     router.route('/media')
-        .post((req, res) => {
-            upload(req, res, err => {
-                if (err) throw err;
-                fs.writeFile(`${__dirname}/../../meta-media/${Date.now()}-${req.file.originalname}`, '', (err) => {
-                    if (err) throw err;
-                    db.collection('Media').insertOne({title: req.file.originalname}, (err, result) => {
-                        if (err) throw err
-                        return res.sendStatus(200);
-                    });
-                });
-            });
-        })
-        .get((req, res) => {
-            const mediaDir = __dirname + '/../../meta-media/';
-            fs.readdir(mediaDir, (err, files) => {
-                const allFiles = files.map((file) => { return file.substr(file.indexOf('-') + 1) });                
-                res.setHeader('Content-Type', 'application/json');
-                res.send(JSON.stringify(allFiles.reverse()));
-            });
-        });
+        .post(media.post.bind(media))
+        .get(media.get.bind(media));
 
     router.route('/media/:title')
-        .get((req, res) => {
-            db.collection('Media').find({title: req.params.title}).toArray((err, result) => {
-                if (err) throw err;
-                if (result.length === 1) {
-                    res.send(result[0].body);
-                } else {
-                    res.sendStatus(404);
-                }
-            });
-        })
-        .delete((req, res) => {
-            const metaDir  = __dirname + '/../../meta-media/';
-            const mediaDir = __dirname + '/../../media/'; 
-            db.collection('Media').deleteOne({title: req.params.title}, (err, result) => {
-                if (err) throw err;
-                fs.readdir(metaDir, (err, files) => {
-                    if (err) throw err;
-                    for (let i = 0; i < files.length; i++) {
-                        if (files[i].substr(files[i].indexOf('-') + 1) === req.params.title) {
-                            fs.unlink(`${metaDir}${files[i]}`, (err) => {
-                                if (err) throw err;
-                                fs.unlink(`${mediaDir}${req.params.title}`, (err) => {
-                                    if (err) throw err;
-                                    res.sendStatus(200);
-                                });
-                            });
-                            break;
-                        }
-                    };
-                });
-            });
-        })
-        .put((req, res) => {
-            const metaDir  = __dirname + '/../../meta-media/';
-            const mediaDir = __dirname + '/../../media/'; 
-            const query         = { title: req.params.title };
-            const updatedValues = { title: req.body.updateTitle }; 
-            db.collection('Media').updateOne(query, updatedValues, (err, result) => {
-                if (err) throw err;
-                fs.readdir(metaDir, (err, files) => {
-                    if (err) throw err;
-                    for (let i = 0; i < files.length; i++) {
-                        if (files[i].substr(files[i].indexOf('-') + 1) === req.params.title) {
-                            fs.rename(`${metaDir}${files[i]}`, `${metaDir}${files[i].substr(0, files[i].indexOf('-') + 1)}${req.body.updateTitle}`, (err) => {
-                                if (err) throw err;
-                                fs.rename(`${mediaDir}${req.params.title}`, `${mediaDir}${req.body.updateTitle}`, (err) => {
-                                    if (err) throw err;
-                                    res.sendStatus(200);
-                                });
-                            });
-                            break;
-                        }
-                    };
-                });
-            });
-        });
+        .get(singleMedia.get.bind(this))
+        .delete(singleMedia.delete.bind(this))
+        .put(singleMedia.put.bind(this));
 
     router.route('/collections')
-        .get((req, res) => {
-            db.collection('Collections').find({}).toArray((err, result) => {
-                if (err) throw err;
-                let collections = result.map(collection => collection);
-                res.setHeader('Content-Type', 'application/json');
-                res.send(JSON.stringify(collections));
-            });
-        })
-        .post((req, res) => {
-            db.collection('Collections').insertOne({title: req.body.title, fields: req.body.fields}, (err, result) => {
-                if (err) throw err;
-                res.sendStatus(200);
-            });
-        })
-        .delete((req, res) => {
-            db.collection('Collections').deleteOne({title: req.body.title}, (err, result) => {
-                if (err) throw err;
-                res.sendStatus(200);
-            });
-        })
-        .put((req, res) => {
-            const query         = { title: req.body.title };
-            const updatedValues = { fields: req.body.fields, title: req.body.newTitle };
-
-            db.collection('Collections').updateOne(query, updatedValues, (err, result) => {
-                if (err) throw err;
-                res.sendStatus(200);
-            });
-        });
+        .get(collections.get.bind(this))
+        .post(collections.post.bind(this))
+        .delete(collections.delete.bind(this))
+        .put(collections.put.bind(this));
     
     router.route('/collection/:title')
-        .get((req, res) => {
-            db.collection('Collections').find({title: req.params.title}).toArray((err, result) => {
-                if (err) throw err;
-                if (result.length === 1) {
-                    res.send(result[0]);
-                } else {
-                    res.sendStatus(404);
-                }
-            });
-        });
+        .get(singleCollection.get.bind(this));
 
     router.route('/forms')
-        .get((req, res) => {
-            db.collection('Forms').find({}).toArray((err, result) => {
-                if (err) throw err;
-                let forms = result.map(form => form);
-                res.setHeader('Content-Type', 'application/json');
-                res.send(JSON.stringify(forms));
-            });
-        })
-        .post((req, res) => {
-            db.collection('Forms').insertOne({title: req.body.title, fields: req.body.fields}, (err, result) => {
-                if (err) throw err;
-                res.sendStatus(200);
-            });
-        })
-        .delete((req, res) => {
-            db.collection('Forms').deleteOne({title: req.body.title}, (err, result) => {
-                if (err) throw err;
-                res.sendStatus(200);
-            });
-        })
-        .put((req, res) => {
-            const query         = { title: req.body.title };
-            const updatedValues = { fields: req.body.fields, title: req.body.newTitle };
-
-            db.collection('Forms').updateOne(query, updatedValues, (err, result) => {
-                if (err) throw err;
-                res.sendStatus(200);
-            });
-        });
+        .get(forms.get.bind(this))
+        .post(forms.post.bind(this))
+        .delete(forms.delete.bind(this))
+        .put(forms.put.bind(this));
     
     router.route('/form/:title')
-        .get((req, res) => {
-            db.collection('Forms').find({title: req.params.title}).toArray((err, result) => {
-                if (err) throw err;
-                if (result.length === 1) {
-                    res.send(result[0]);
-                } else {
-                    res.sendStatus(404);
-                }
-            });
-        });
+        .get(singleForm.get.bind(this));
 
     router.route('/collection-items')
-        .post((req, res) => {
-            db.collection('CollectionItems').insertOne({title: req.body.title, fields: req.body.fields, belongsTo: req.body.belongsTo}, (err, result) => {
-                if (err) throw err;
-                res.sendStatus(200);
-            });
-        })
-        .delete((req, res) => {
-            db.collection('CollectionItems').deleteOne({title: req.body.title, belongsTo: req.body.belongsTo}, (err, result) => {
-                if (err) throw err;
-                res.sendStatus(200);
-            });
-        })
-        .put((req, res) => {
-            const query         = { title: req.body.title, belongsTo: req.body.belongsTo };
-            const updatedValues = { fields: req.body.fields, title: req.body.newTitle, belongsTo: req.body.belongsTo };
-
-            db.collection('CollectionItems').updateOne(query, updatedValues, (err, result) => {
-                if (err) throw err;
-                res.sendStatus(200);
-            });
-        });
+        .post(collectionItems.post.bind(this))
+        .delete(collectionItems.delete.bind(this))
+        .put(collectionItems.put.bind(this));
 
     router.route('/collection-items/:belongsTo')
-        .get((req, res) => {
-            db.collection('CollectionItems').find({belongsTo: req.params.belongsTo}).toArray((err, result) => {
-                if (err) throw err;
-                let collectionItems = result.map(collection => collection.title);
-                res.setHeader('Content-Type', 'application/json');
-                res.send(JSON.stringify(collectionItems));
-            });
-        });
+        .get(singleCollectionItems.get.bind(this));
     
     router.route('/collection-items/:belongsTo/:title')
-        .get((req, res) => {
-            db.collection('CollectionItems').find({belongsTo: req.params.belongsTo, title: req.params.title}).toArray((err, result) => {
-                if (err) throw err;
-                if (result.length === 1) {
-                    res.send(result[0]);
-                } else {
-                    res.sendStatus(404);
-                }
-            });
-        });
+        .get(collectionItem.get.bind(this));
+    
     router.route('/assets')
-        .get((req, res) => {
-            db.collection('Assets').find({}).toArray((err, result) => {
-                if (err) throw err;
-                let titles = result.map(page => page.title);
-                res.setHeader('Content-Type', 'application/json');
-                res.send(JSON.stringify(titles));
-            });
-        })
-        .post((req, res) => {
-            db.collection('Assets').insertOne({title: req.body.title, type: req.body.type, body: req.body.body}, (err, result) => {
-                if (err) throw err;
-                res.sendStatus(200);
-            });
-        });
+        .get(assets.get.bind(this))
+        .post(assets.post.bind(this))
+         .delete(assets.delete.bind(this))
+        .put(assets.put.bind(this));
     
     router.route('/asset/')
-        .get((req, res) => {
-            db.collection('Assets').find({title: req.body.title, type: req.body.type}).toArray((err, result) => {
-                if (err) throw err;
-                if (result.length === 1) {
-                    res.send(result[0]);
-                } else {
-                    res.sendStatus(404);
-                }
-            })
-        })
-        .delete((req, res) => {
-            db.collection('Assets').deleteOne({title: req.body.title, type: req.body.type}, (err, result) => {
-                if (err) throw err;
-                res.sendStatus(200);
-            });
-        })
-        .put((req, res) => {
-            const query = { title: req.body.title, type: req.body.type };
-            const updatedValues = { body: req.body.body, title: req.body.newTitle};
-
-            db.collection('Assets').updateOne(query, updatedValues, (err, result) => {
-                if (err) throw err;
-                res.sendStatus(200);
-            });
-        });
+        .get(singleAsset.get.bind(this));
 });
 
 module.exports = router;
