@@ -89,7 +89,7 @@ mongo.connect(mongoConnect, (err, db) => {
          .delete(assets.delete.bind(assets))
         .put(assets.put.bind(assets));
     
-    router.route('/asset/')
+    router.route('/asset/:title/:type')
         .get(singleAsset.get.bind(singleAsset));
 });
 
