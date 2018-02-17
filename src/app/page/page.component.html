@@ -12,7 +12,26 @@
               [(ngModel)]="model.body" name="body"></textarea>
   </div>
   <div>
-    
+    <p>Page CSS</p>
+    <ul>
+      <li *ngFor="let css of model.css">{{css}}<i class="fa fa-times" (click)="removeCSS(css);"></i></li>
+    </ul>
+    <select id="css" [(ngModel)]="newCSS" name="addCss">
+      <option selected disabled>Add CSS</option>
+      <option *ngFor="let selectableCSS of getPageCSS()" value="{{selectableCSS}}">{{selectableCSS}}</option>
+    </select>
+    <div><button type="button" (click)="addCSS(newCSS)">Add CSS</button></div>
+  </div>
+  <div>
+    <p>Page JS</p>
+    <ul>
+      <li *ngFor="let js of model.js">{{js}}<i class="fa fa-times" (click)="removeJS(js);"></i></li>
+    </ul>
+    <select id="js" [(ngModel)]="newJS" name="addJs">
+      <option selected disabled>Add JS</option>
+      <option *ngFor="let selectableJS of getPageJS()" value="{{selectableJS}}">{{selectableJS}}</option>
+    </select>
+    <div><button type="button" (click)="addJS(newJS)">Add JS</button></div>
   </div>
   <div><button type="submit" [disabled]="!updatePage.form.valid">Update Page</button></div>
 </form>
