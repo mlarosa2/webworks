@@ -13,13 +13,14 @@ export class NewPageFormComponent implements OnInit {
   private allJS: string[];
   private newCSS: string = '';
   private newJS: string = '';
+  private newMeta: any = {name: '', content: ''};
   constructor(private pageService: PageService,
               private assetService: AssetService) { }
 
   ngOnInit() {
   }
 
-  model = new Page('', '', [], []);
+  model = new Page('', '', [], [], []);
 
   getPageCSS(): string[] {
     return this.assetService.getAllAssets().filter(asset => asset.type === 'css').map(asset => asset.title);
@@ -53,8 +54,18 @@ export class NewPageFormComponent implements OnInit {
     this.newJS = '';
   }
 
+  addMeta(name: string, content: string): void {
+    this.model.meta.push({name: name, content: content});
+
+    this.newMeta = {name: '', content: ''};
+  }
+
+  removeMeta(name: string, content: string) {
+    this.model.meta = this.model.meta.filter(tag => !(tag.name === name && tag.content === content));
+  }
+
   onSubmit(): void {
-    this.pageService.createNewPage(this.model.title, this.model.body, this.model.css, this.model.js);
+    this.pageService.createNewPage(this.model.title, this.model.body, this.model.css, this.model.js, this.model.meta);
   }
 
 }

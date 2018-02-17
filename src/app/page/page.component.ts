@@ -10,9 +10,10 @@ import { Page } from '../page';
 })
 export class PageComponent implements OnChanges {
   @Input() title: string;
-  private model: Page = new Page('', '', [], []);
+  private model: Page = new Page('', '', [], [], []);
   private newCSS: string = '';
   private newJS: string = '';
+  private newMeta: any = {name: '', content: ''};
   constructor(private pageService: PageService,
               private assetService: AssetService) { }
 
@@ -24,6 +25,7 @@ export class PageComponent implements OnChanges {
         this.model.body  = page.json().body;
         this.model.css   = page.json().css || [];
         this.model.js    = page.json().js || [];
+        this.model.meta  = page.json().meta || [];
       });
   }
 
@@ -57,6 +59,16 @@ export class PageComponent implements OnChanges {
     }
 
     this.newJS = '';
+  }
+
+  addMeta(name: string, content: string): void {
+    this.model.meta.push({name: name, content: content});
+
+    this.newMeta = {name: '', content: ''};
+  }
+
+  removeMeta(name: string, content: string) {
+    this.model.meta = this.model.meta.filter(tag => !(tag.name === name && tag.content === content));
   }
 
   onSubmit() {

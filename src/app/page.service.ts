@@ -68,9 +68,17 @@ export class PageService {
     }
   }
 
-  createNewPage(title: string, body: string, css: string[], js: string[]): void {
+  createNewPage(title: string, body: string, css: string[], js: string[], meta: any[]): void {
     this.http
-      .post(`${this.pageUrl}/pages`, JSON.stringify({title: title, body: body, css: css, js: js}), {headers: this.headers})
+      .post(`${this.pageUrl}/pages`, JSON.stringify(
+        {
+          title: title, 
+          body: body, 
+          css: css, 
+          js: js,
+          meta: meta
+        }
+      ), {headers: this.headers})
       .toPromise()
       .then(res => {
         this.setPageHome();

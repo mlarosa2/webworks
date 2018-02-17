@@ -16,7 +16,14 @@ module.exports = class Pages {
 
     post(req, res) {
         PageParser(req.body.body).then(parsedPage => {
-            this.db.collection('Pages').insertOne({title: req.body.title, body: req.body.body, parsed: parsedPage, css: req.body.css, js: req.body.js}, (err, result) => {
+            this.db.collection('Pages').insertOne(
+                 {  title: req.body.title, 
+                    body: req.body.body, 
+                    parsed: parsedPage, 
+                    css: req.body.css, 
+                    js: req.body.js,
+                    meta: req.body.meta
+                }, (err, result) => {
                 if (err) throw err;
                 res.sendStatus(200);
             });

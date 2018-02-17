@@ -3,6 +3,7 @@ export class Page {
         public title: string,
         public body: string,
         public css: string[],
-        public js: string[]
+        public js: string[],
+        public meta: any[]
     ) { }
 }

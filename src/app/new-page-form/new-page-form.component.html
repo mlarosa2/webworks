@@ -33,5 +33,20 @@
     </select>
     <div><button type="button" (click)="addJS(newJS)">Add JS</button></div>
   </div>
+    <div>
+      <p>Page Meta</p>
+      <ul>
+        <li *ngFor="let meta of model.meta">
+          <span>Name: {{meta.name}}</span> | <span>Content: {{meta.content}}</span>
+          <i class="fa fa-times" (click)="removeMeta(meta.name, meta.content);"></i>
+        </li>
+      </ul>
+    </div>
+    <div>
+      <div><span>Name</span><span>Content</span></div>
+      <input id="meta-name" [(ngModel)]="newMeta.name" type="text" name="new-meta-name">
+      <input id="meta-content" [(ngModel)]="newMeta.content" type="text" name="new-meta-content">
+    </div>
+    <div><button [disabled]="!newMeta.name || !newMeta.content" type="button" (click)="addMeta(newMeta.name, newMeta.content)">Add Meta Tag</button></div>
   <div><button type="submit" [disabled]="!newPage.form.valid">Create Page</button></div>
 </form>
