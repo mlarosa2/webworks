@@ -29,7 +29,7 @@ export class AdminService {
       this.collectionsService.setCollectionView();
     } else if (view === 'forms') {
       this.formsService.setFormView();
-    } else if (view === 'asset') {
+    } else if (view === 'assets') {
       this.assetService.setAssetHome();
     }
   }
