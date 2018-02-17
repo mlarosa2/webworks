@@ -38,6 +38,7 @@ yarn-error.log
 secrets.txt
 /media/*
 /meta-media/*
+/assets/*
 
 # e2e
 /e2e/*.js
