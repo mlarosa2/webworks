@@ -31,6 +31,7 @@ import { CollectionItemBuilderComponent } from './collection-item-builder/collec
 import { UpdateCollectionItemComponent } from './update-collection-item/update-collection-item.component';
 import { AssetsComponent } from './assets/assets.component';
 import { AssetComponent } from './asset/asset.component';
+import { NewAssetFormComponent } from './new-asset-form/new-asset-form.component';
 
 @NgModule({
   declarations: [
@@ -58,7 +59,8 @@ import { AssetComponent } from './asset/asset.component';
     CollectionItemBuilderComponent,
     UpdateCollectionItemComponent,
     AssetsComponent,
-    AssetComponent
+    AssetComponent,
+    NewAssetFormComponent
   ],
   imports: [
     BrowserModule,

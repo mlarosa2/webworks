@@ -1,3 +1,13 @@
-<p>
-  assets works!
-</p>
+<div *ngIf="isAssetHome()">
+  <ul>
+    <li *ngFor="let title of getTitles();"><span>{{title}}</span><i class="fa fa-times" (click)="deleteAsset(title, $event)"></i><i class="fa fa-edit" (click)="goToAsset(title)"></i></li>
+  </ul>
+</div>
+
+<div *ngIf="isSpecificAsset()">
+  <app-asset [title]="getSelectedAsset()"></app-asset>
+</div>
+
+<div *ngIf="isCreateAsset();">
+  <app-new-asset-form></app-new-asset-form>
+</div>
