@@ -8,7 +8,7 @@ import { AssetService } from '../asset.service';
 })
 export class AssetComponent implements OnChanges {
   @Input() title: string;
-  @Input() type: string;
+  private type: string;
   private model: any = {title: '', body: '', type: ''};
   constructor(private assetService: AssetService) { }
 
@@ -18,11 +18,12 @@ export class AssetComponent implements OnChanges {
       .then(asset => {
         this.model.title = title;
         this.model.body  = asset.json().body;
+        this.model.type  = asset.json().type;
+        this.type        = asset.json().type; 
       });
   }
 
   onSubmit() {
-    this.assetService.updateAsset(this.title, this.type, this.model);
+    this.assetService.updateAsset(this.title, this.model.body, this.type, this.model);
   }
-
 }

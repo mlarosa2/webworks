@@ -92,9 +92,9 @@ export class AssetService {
       .catch(this.handleError);
   }
 
-  updateAsset(title: string, body: string, type: string): Promise<void> {
+  updateAsset(title: string, body: string, type: string, model: any): Promise<void> {
     return this.http
-      .put(`${this.assetUrl}/asset/${title}`, {body: body})
+      .put(`${this.assetUrl}/asset/${title}`, {body: body, title: title, newType: model.type, newTitle: model.title})
       .toPromise()
       .then(() => this.setAssetHome())
       .catch(this.handleError);
