@@ -8,9 +8,9 @@ module.exports = class Assets {
     get(req, res) {
         this.db.collection('Assets').find({}).toArray((err, result) => {
             if (err) throw err;
-            let titles = result.map(asset => asset.title);
+            let assets = result.map(asset => asset);
             res.setHeader('Content-Type', 'application/json');
-            res.send(JSON.stringify(titles));
+            res.send(JSON.stringify(assets));
         });
     }
 
@@ -23,17 +23,6 @@ module.exports = class Assets {
                 res.sendStatus(200);
             });
         });      
-    }
-
-    delete(req, res) {
-        this.db.collection('Assets').deleteOne({title: req.body.title, type: req.body.type}, (err, result) => {
-            if (err) throw err;
-            let file = _getfilePath(req.body.type, req.body.title);
-            fs.unlink(file, (err, success) => {
-                if (err) throw err;
-                res.sendStatus(200);
-            });
-        });
     }
 
     put(req, res) {

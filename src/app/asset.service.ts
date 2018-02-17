@@ -13,9 +13,10 @@ export class AssetService {
   private createAsset: boolean = false;
   private selectedAsset: string;
   private titles: string[];
+  private allAssets: any[];
   constructor(private http: Http) { }
 
-  getAssetTitles(): Promise<any> {
+  getAssets(): Promise<any> {
     return this.http 
             .get(`${this.assetUrl}/assets`)
             .toPromise();
@@ -67,24 +68,25 @@ export class AssetService {
       .catch(this.handleError);
   }
 
-  getAsset(title: string): Promise<any> {
+  getAsset(title: string, type: string): Promise<any> {
     return this.http
-      .get(`${this.assetUrl}/asset/${title}`)
+      .get(`${this.assetUrl}/asset/${title}/${type}`)
       .toPromise();
   }
 
-  loadTitles(): void {
-    this.getAssetTitles()
+  loadAssets(): void {
+    this.getAssets()
         .then(data => {
-          this.titles = data.json();
+          this.titles = data.json().map(asset => { asset.title; });
+          this.allAssets = data.json().map(asset => {asset;});
         });
   }
 
-  getTitles(): string[] {
-    return this.titles;
+  getAllAssets(): string[] {
+    return this.allAssets;
   }
 
-  deleteAsset(title: string): Promise<void> {
+  deleteAsset(title: string, type: string): Promise<void> {
     return this.http
       .delete(`${this.assetUrl}/asset/${title}`, {headers: this.headers})
       .toPromise()

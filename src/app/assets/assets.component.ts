@@ -17,8 +17,8 @@ export class AssetsComponent implements OnInit {
     return this.assetService.getAssetHome();
   }
 
-  getTitles(): string[] {
-    return this.assetService.getTitles();
+  getAssets(): string[] {
+    return this.assetService.getAllAssets();
   }
 
   getSelectedAsset(): string {
@@ -33,13 +33,13 @@ export class AssetsComponent implements OnInit {
     return this.assetService.getCreateAsset();
   }
 
-  goToAsset(title: string): void {
+  goToAsset(title: string, type: string): void {
     this.assetService.setSpecficAsset(title);
   }
 
-  deleteAsset(title: string, event: any): void {
+  deleteAsset(title: string, type: string, event: any): void {
     event.stopPropagation();
-    this.assetService.deleteAsset(title);
-    this.assetService.loadTitles();
+    this.assetService.deleteAsset(title, type);
+    this.assetService.loadAssets();
   }
 }

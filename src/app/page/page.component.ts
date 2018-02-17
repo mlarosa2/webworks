@@ -1,5 +1,6 @@
 import { Component, OnChanges, Input } from '@angular/core';
 import { PageService } from '../page.service';
+import { AssetService } from '../asset.service';
 import { Page } from '../page';
 
 @Component({
