@@ -12,7 +12,7 @@ export class AdminService {
     constructor(private pageService: PageService,
                 private mediaService: MediaService,
                 private collectionsService: CollectionsService,
-                private formsService: FormsService
+                private formsService: FormsService,
                 private assetService: AssetService) { }
 
   getCurrentView(): string {
