@@ -30,7 +30,7 @@ export class AdminService {
     } else if (view === 'forms') {
       this.formsService.setFormView();
     } else if (view === 'asset') {
-      this.assetService.setAssetView();
+      this.assetService.setAssetHome();
     }
   }
 

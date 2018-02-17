@@ -21,9 +21,9 @@ export class AssetService {
             .toPromise();
   }
   
-getSelectedAsset(): string {
-    return this.selectedAsset;
-  }
+  getSelectedAsset(): string {
+      return this.selectedAsset;
+    }
 
   getAssetHome(): boolean {
     return this.assetHome;
