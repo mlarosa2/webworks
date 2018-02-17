@@ -77,7 +77,7 @@ export class PageService {
   loadTitles(): void {
     this.getPageTitles()
         .then(data => {
-          this.titles = JSON.parse(data._body).map(title => {return title;});
+          this.titles = data.json();
         });
   }
 
