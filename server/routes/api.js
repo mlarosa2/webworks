@@ -26,13 +26,13 @@ mongo.connect(mongoConnect, (err, db) => {
     const singleMedia           = new SingleMedia(db); // /media/:title
     const collections           = new Collections(db); // /collections
     const singleCollection      = new SingleCollection(db); // /collection/:title
-    const Forms                 = new Forms(db); // /forms
+    const forms                 = new Forms(db); // /forms
     const singleForm            = new SingleForm(db); // /form/:title
     const collectionItems       = new CollectionItems(db); // /collection-items
     const singleCollectionItems = new SingleCollectionItems(db); // /collection-items/:belongsTo
     const collectionItem        = new CollectionItem(db); // /collection-item/:belongsTo/:title
     const assets                = new Assets(db); // /assets
-    const SingleAsset           = new SingleAsset(db); // /asset 
+    const singleAsset           = new SingleAsset(db); // /asset 
 
     router.route('/login')
         .post(login.post.bind(login)); // binding so this context is consistent in class

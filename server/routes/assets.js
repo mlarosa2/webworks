@@ -15,7 +15,7 @@ module.exports = class Assets {
     }
 
     post(req, res) {
-        this.db.collection('Assets').insertOne({title: req.body.title, type: req.body.type}, (err, result) => {
+        this.db.collection('Assets').insertOne({title: req.body.title, type: req.body.type, body: req.body.body}, (err, result) => {
             if (err) throw err;
             let file = __dirname + '/../../assets/',
                 css  = req.body.type === 'css';
@@ -45,8 +45,8 @@ module.exports = class Assets {
     }
 
     put(req, res) {
-        const query = { title: req.body.title, type: req.body.type };
-        const updatedValues = { type: req.body.newType, title: req.body.newTitle};
+        const query = { title: req.body.title, type: req.body.type};
+        const updatedValues = { type: req.body.newType, title: req.body.newTitle, body: req.body.body};
 
        this.db.collection('Assets').updateOne(query, updatedValues, (err, result) => {
             if (err) throw err;
