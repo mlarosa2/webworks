@@ -1,6 +1,10 @@
 <div *ngIf="isFormView()">
   <ul>
-    <li *ngFor="let title of getTitles();"><span (click)="goToForm(title)">{{title}}</span><i class="fa fa-times" (click)="deleteForm(title, $event)"></i></li>
+    <li *ngFor="let title of getTitles();">
+      <span>{{title}}</span>
+      <i class="fa fa-times" (click)="deleteForm(title, $event)"></i>
+      <i class="fa fa-edit"  (click)="goToForm(title)"></i>
+    </li>
   </ul>
 </div>
 <app-form-builder *ngIf="isBuildView()"></app-form-builder>

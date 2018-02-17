@@ -7,6 +7,7 @@
     height: calc(100% - 38px);
     width: calc(100% - 125px);
     padding: 25px;
+    background-color: #fafafa;
 }
 
 h2 {

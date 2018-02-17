@@ -4,7 +4,10 @@ import { AssetService } from '../asset.service';
 @Component({
   selector: 'app-assets',
   templateUrl: './assets.component.html',
-  styleUrls: ['./assets.component.css']
+  styleUrls: [
+    '../css/item-menu.css',
+    './assets.component.css'
+  ]
 })
 export class AssetsComponent implements OnInit {
 

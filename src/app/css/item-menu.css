@@ -1,0 +1,48 @@
+li:nth-child(odd) {
+    background-color: lightgray;
+}
+
+ul {
+    border: 1px solid lightgray;
+    padding-left: 0;
+}
+
+li {
+    padding: 20px;
+    font-size: 16px;
+    list-style: none;
+    background-color: white;
+}
+
+span {
+    cursor: default;
+}
+
+.fa {
+    float: right;
+    margin-left: 10px;
+}
+
+.fa-times, 
+.fa-edit,
+.fa-search {
+    cursor: pointer;
+}
+
+.sub-menu-title {
+    margin-left: 25px;
+}
+
+.inline-title * {
+    float: left;
+}
+
+.inline-title::after {
+    clear: both;
+    content: ' ';
+    display: block;
+}
+
+.inline-title h3 {
+    margin-top: 0;
+}

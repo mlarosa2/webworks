@@ -1,0 +1,22 @@
+button {
+    background-color: cornflowerblue;
+    border: none;
+    padding: 5px;
+    color: white;
+    cursor: pointer;
+    outline: none;
+    transition: .2s;
+    margin: 0 5px;
+    font-weight: bold;
+}
+
+button:hover {
+    background-color: #5A86D6;
+    transition: .2s;
+}
+
+button:active {
+    background-color: #4C74BA;
+    position: relative;
+    top: 1px;
+}

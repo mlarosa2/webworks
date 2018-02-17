@@ -1,16 +1,22 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { CollectionItemService } from '../collection-item.service';
+import { AdminService } from '../admin.service';
 
 @Component({
   selector: 'app-collection-items',
   templateUrl: './collection-items.component.html',
-  styleUrls: ['./collection-items.component.css']
+  styleUrls: [
+    '../css/item-menu.css',
+    '../css/forms.css',
+    './collection-items.component.css'
+  ]
 })
 export class CollectionItemsComponent implements OnInit {
   @Input() title: string;
   private currentCollectionItems: string[];
 
-  constructor(private collectionItemService: CollectionItemService) { }
+  constructor(private collectionItemService: CollectionItemService,
+              private adminService: AdminService) { }
 
   ngOnInit() { }
 
@@ -44,5 +50,13 @@ export class CollectionItemsComponent implements OnInit {
   goToCollectionItem(title: string, $event: any): void {
     $event.stopPropagation();
     this.collectionItemService.setUpdateItemView(title);
+  }
+
+  goBack() {
+    if (this.isListView()) {
+      this.adminService.setCurrentView('collections');
+    } else {
+      this.collectionItemService.setListView();
+    }
   }
 }

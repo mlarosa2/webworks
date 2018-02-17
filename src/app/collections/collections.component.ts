@@ -6,7 +6,10 @@ import { Collection } from '../collection';
 @Component({
   selector: 'app-collections',
   templateUrl: './collections.component.html',
-  styleUrls: ['./collections.component.css'],
+  styleUrls: [
+    '../css/item-menu.css',
+    './collections.component.css'
+  ],
   providers: [
     CollectionItemService
   ]

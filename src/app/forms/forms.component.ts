@@ -5,7 +5,10 @@ import { Form } from '../form';
 @Component({
   selector: 'app-forms',
   templateUrl: './forms.component.html',
-  styleUrls: ['./forms.component.css'],
+  styleUrls: [
+    '../css/item-menu.css',
+    './forms.component.css'
+  ]
 })
 export class FormsComponent implements OnInit {
   private selectedTitle: string;

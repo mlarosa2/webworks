@@ -1,6 +1,11 @@
 <div *ngIf="isCollectionView()">
   <ul>
-    <li *ngFor="let title of getTitles();"><span (click)="goToCollectionItems(title)">{{title}}</span><i class="fa fa-times" (click)="deleteCollection(title, $event)"></i><i class="fa fa-edit" (click)="goToCollection(title, $event)"></i></li>
+    <li *ngFor="let title of getTitles();">
+      <span >{{title}}</span>
+      <i class="fa fa-times" (click)="deleteCollection(title, $event)"></i>
+      <i class="fa fa-edit" (click)="goToCollection(title, $event)"></i>
+      <i class="fa fa-search" (click)="goToCollectionItems(title)"></i> 
+    </li>
   </ul>
 </div>
 <app-collection-builder *ngIf="isBuildView()"></app-collection-builder>
