@@ -14,7 +14,7 @@ module.exports = class PageParser {
                     replaceMap = {},
                     componentPromises = [];
 
-                components = this.page.match(/\[\[.+\]\]/);
+                components = this.page.match(/\[\[.+\]\]/) || [];
                 componentPromises = components.map(component => {
                     if (typeof component === 'string') {
                         return this.parseComponent(component, db);
