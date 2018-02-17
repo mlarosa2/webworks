@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Meta } from '@angular/platform-browser';
+import { AssetService } from '../asset.service';
 import { PageService } from '../page.service';
 
 @Component({
@@ -6,19 +8,35 @@ import { PageService } from '../page.service';
   templateUrl: './frontend.component.html',
   styleUrls: ['./frontend.component.css'],
   providers: [
+                AssetService,
                 PageService
              ]
 })
 export class FrontendComponent implements OnInit {
   private page: string;
   private body: string;
-  constructor(private pageService: PageService) { }
+  constructor(private pageService: PageService,
+              private metaService: Meta) { }
 
   ngOnInit() {
     this.page = window.location.pathname.substr(1).replace(/-/g, ' ');
     this.pageService.getPage(this.page).then(response => {
       this.body = response.json().parsed;
+      this.metaService.addTags(response.json().meta);
+      response.json().css.forEach(style => {
+        let link = document.createElement('link');
+        link.href = `/assets/css/${style}.css`;
+        link.rel  = 'stylesheet';
+        link.title = style;
+
+        document.head.appendChild(link);
+      });
+      response.json().js.forEach(script => {
+        let scriptTag = document.createElement('script');
+        scriptTag.src = `/assets/js/${script}.js`;
+
+        document.body.appendChild(scriptTag);
+      });
     });
   }
-
 }
