@@ -32,6 +32,7 @@ import { UpdateCollectionItemComponent } from './update-collection-item/update-c
 import { AssetsComponent } from './assets/assets.component';
 import { AssetComponent } from './asset/asset.component';
 import { NewAssetFormComponent } from './new-asset-form/new-asset-form.component';
+import { AssetFilterPipe } from './asset-filter.pipe';
 
 @NgModule({
   declarations: [
@@ -60,7 +61,8 @@ import { NewAssetFormComponent } from './new-asset-form/new-asset-form.component
     UpdateCollectionItemComponent,
     AssetsComponent,
     AssetComponent,
-    NewAssetFormComponent
+    NewAssetFormComponent,
+    AssetFilterPipe
   ],
   imports: [
     BrowserModule,

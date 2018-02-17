@@ -1,6 +1,11 @@
 <div *ngIf="isAssetHome()">
+  <p>CSS</p>
   <ul>
-    <li *ngFor="let asset of getAssets();"><span>{{asset.title}}</span><i class="fa fa-times" (click)="deleteAsset(asset.title, $event)"></i><i class="fa fa-edit" (click)="goToAsset(asset.title, asset.type)"></i></li>
+    <li *ngFor="let asset of getAssets() | assetFilter: 'css';"><span>{{asset.title}}</span><i class="fa fa-times" (click)="deleteAsset(asset.title, $event)"></i><i class="fa fa-edit" (click)="goToAsset(asset.title, asset.type)"></i></li>
+  </ul>
+  <p>JS</p>
+    <ul>
+    <li *ngFor="let asset of getAssets() | assetFilter: 'js';"><span>{{asset.title}}</span><i class="fa fa-times" (click)="deleteAsset(asset.title, $event)"></i><i class="fa fa-edit" (click)="goToAsset(asset.title, asset.type)"></i></li>
   </ul>
 </div>
 
