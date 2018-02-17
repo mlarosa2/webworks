@@ -1,6 +1,5 @@
 import { Component, OnChanges, Input } from '@angular/core';
 import { PageService } from '../page.service';
-import { AssetService } from '../asset.service';
 import { Page } from '../page';
 
 @Component({
@@ -10,7 +9,7 @@ import { Page } from '../page';
 })
 export class PageComponent implements OnChanges {
   @Input() title: string;
-  private model: Page = new Page('', '');
+  private model: Page = new Page('', '', [], []);
   constructor(private pageService: PageService) { }
 
   ngOnChanges() {

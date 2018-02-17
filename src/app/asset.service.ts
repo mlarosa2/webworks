@@ -11,9 +11,9 @@ export class AssetService {
   private assetHome: boolean = true;
   private specificAsset: boolean = false;
   private createAsset: boolean = false;
-  private selectedAsset: string;
+  private selectedAsset: any;
   private titles: string[];
-  private allAssets: any[];
+  private allAssets: any[] = [];
   constructor(private http: Http) { }
 
   getAssets(): Promise<any> {
@@ -42,14 +42,14 @@ export class AssetService {
     this.assetHome     = true;
     this.specificAsset = false;
     this.createAsset   = false;
-    this.loadTitles();
+    this.loadAssets();
   }
 
-  setSpecficAsset(title: string): void {
+  setSpecficAsset(title: string, type: string): void {
     this.assetHome     = false;
     this.specificAsset = true;
     this.createAsset   = false;
-    this.selectedAsset = title;
+    this.selectedAsset = {title: title, type: type};
   }
 
   setCreateAsset(): void {
@@ -77,13 +77,17 @@ export class AssetService {
   loadAssets(): void {
     this.getAssets()
         .then(data => {
-          this.titles = data.json().map(asset => { asset.title; });
-          this.allAssets = data.json().map(asset => {asset;});
+          this.titles = data.json().map(asset => asset.title);
+          this.allAssets = data.json().map(asset => asset);
         });
   }
 
-  getAllAssets(): string[] {
+  getAllAssets(): any[] {
     return this.allAssets;
+  }
+
+  getTitles(): string[] {
+    return this.titles;
   }
 
   deleteAsset(title: string, type: string): Promise<void> {

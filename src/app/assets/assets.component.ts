@@ -34,7 +34,7 @@ export class AssetsComponent implements OnInit {
   }
 
   goToAsset(title: string, type: string): void {
-    this.assetService.setSpecficAsset(title);
+    this.assetService.setSpecficAsset(title, type);
   }
 
   deleteAsset(title: string, type: string, event: any): void {

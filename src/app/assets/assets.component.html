@@ -1,6 +1,6 @@
 <div *ngIf="isAssetHome()">
   <ul>
-    <li *ngFor="let asset of getAssets();"><span>{{asset.title}}</span><i class="fa fa-times" (click)="deleteAsset(asset.title, $event)"></i><i class="fa fa-edit" (click)="goToAsset(asset.title)"></i></li>
+    <li *ngFor="let asset of getAssets();"><span>{{asset.title}}</span><i class="fa fa-times" (click)="deleteAsset(asset.title, $event)"></i><i class="fa fa-edit" (click)="goToAsset(asset.title, asset.type)"></i></li>
   </ul>
 </div>
 

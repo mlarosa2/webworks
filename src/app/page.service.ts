@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Headers, Http } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { Page } from './page';
-
+import { AssetService } from './asset.service';
 import 'rxjs/add/operator/toPromise';
 
 @Injectable()
@@ -14,7 +14,8 @@ export class PageService {
   private createPage: boolean = false;
   private selectedPage: string;
   private titles: string[];
-  constructor(private http: Http) { }
+  constructor(private http: Http,
+              private assetService: AssetService) { }
 
   getPageTitles(): Promise<any> {
     return this.http
@@ -43,6 +44,9 @@ export class PageService {
     this.specificPage = false;
     this.createPage   = false;
     this.loadTitles();
+    if (this.assetService.getAllAssets().length === 0) {
+      this.assetService.loadAssets();
+    }
   }
 
   setSpecficPage(title: string): void {
@@ -50,12 +54,18 @@ export class PageService {
     this.specificPage = true;
     this.createPage   = false;
     this.selectedPage = title;
+    if (this.assetService.getAllAssets().length === 0) {
+      this.assetService.loadAssets();
+    }
   }
 
   setCreatePage(): void {
     this.pageHome     = false;
     this.specificPage = false;
     this.createPage   = true;
+    if (this.assetService.getAllAssets().length === 0) {
+      this.assetService.loadAssets();
+    }
   }
 
   createNewPage(title: string, body: string): void {
