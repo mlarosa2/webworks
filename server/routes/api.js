@@ -33,7 +33,6 @@ mongo.connect(mongoConnect, (err, db) => {
     const collectionItem        = new CollectionItem(db); // /collection-item/:belongsTo/:title
     const assets                = new Assets(db); // /assets
     const singleAsset           = new SingleAsset(db); // /asset 
-
     router.route('/login')
         .post(login.post.bind(login)); // binding so this context is consistent in class
 
@@ -51,47 +50,47 @@ mongo.connect(mongoConnect, (err, db) => {
         .get(media.get.bind(media));
 
     router.route('/media/:title')
-        .get(singleMedia.get.bind(this))
-        .delete(singleMedia.delete.bind(this))
-        .put(singleMedia.put.bind(this));
+        .get(singleMedia.get.bind(singleMedia))
+        .delete(singleMedia.delete.bind(singleMedia))
+        .put(singleMedia.put.bind(singleMedia));
 
     router.route('/collections')
-        .get(collections.get.bind(this))
-        .post(collections.post.bind(this))
-        .delete(collections.delete.bind(this))
-        .put(collections.put.bind(this));
+        .get(collections.get.bind(collections))
+        .post(collections.post.bind(collections))
+        .delete(collections.delete.bind(collections))
+        .put(collections.put.bind(collections));
     
     router.route('/collection/:title')
-        .get(singleCollection.get.bind(this));
+        .get(singleCollection.get.bind(singleCollection));
 
     router.route('/forms')
-        .get(forms.get.bind(this))
-        .post(forms.post.bind(this))
-        .delete(forms.delete.bind(this))
-        .put(forms.put.bind(this));
+        .get(forms.get.bind(forms))
+        .post(forms.post.bind(forms))
+        .delete(forms.delete.bind(forms))
+        .put(forms.put.bind(forms));
     
     router.route('/form/:title')
-        .get(singleForm.get.bind(this));
+        .get(singleForm.get.bind(singleForm));
 
     router.route('/collection-items')
-        .post(collectionItems.post.bind(this))
-        .delete(collectionItems.delete.bind(this))
-        .put(collectionItems.put.bind(this));
+        .post(collectionItems.post.bind(collectionItems))
+        .delete(collectionItems.delete.bind(collectionItems))
+        .put(collectionItems.put.bind(collectionItems));
 
     router.route('/collection-items/:belongsTo')
-        .get(singleCollectionItems.get.bind(this));
+        .get(singleCollectionItems.get.bind(singleCollectionItems));
     
     router.route('/collection-items/:belongsTo/:title')
-        .get(collectionItem.get.bind(this));
+        .get(collectionItem.get.bind(collectionItem));
     
     router.route('/assets')
-        .get(assets.get.bind(this))
-        .post(assets.post.bind(this))
-         .delete(assets.delete.bind(this))
-        .put(assets.put.bind(this));
+        .get(assets.get.bind(assets))
+        .post(assets.post.bind(assets))
+         .delete(assets.delete.bind(assets))
+        .put(assets.put.bind(assets));
     
     router.route('/asset/')
-        .get(singleAsset.get.bind(this));
+        .get(singleAsset.get.bind(singleAsset));
 });
 
 module.exports = router;

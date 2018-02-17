@@ -142,7 +142,7 @@ export class CollectionsService {
       .get(`${this.collectionItemsUrl}/${title}`)
       .toPromise()
       .then(response => {
-        this.collectionItems = JSON.parse(response.json()._body);
+        this.collectionItems = response.json();
       })
       .catch(this.handleError);
   }
@@ -152,7 +152,7 @@ export class CollectionsService {
       .get(`${this.singularCollectionUrl}/${title}`)
       .toPromise()
       .then(response => {
-        let collection = JSON.parse(response.json()._body);
+        let collection = response.json();
         this.selectedCollection = new Collection(collection.title, collection.fields);
         this.setUpdateView();
       })
