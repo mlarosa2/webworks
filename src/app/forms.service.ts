@@ -116,7 +116,7 @@ export class FormsService {
       .get(`${this.singularFormsUrl}/${title}`)
       .toPromise()
       .then(response => {
-        let form = JSON.parse(response.json()._body);
+        let form = response.json();
         this.selectedForm = new Form(form.title, form.fields);
         this.setUpdateView();
       })
