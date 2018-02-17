@@ -25,27 +25,29 @@ module.exports = class PageParser {
                     Promise.all(this.processComponents(res)).then(processedComponents => {
                         const parsedComponents = {};
                         
-                        processedComponents[0].forEach(pc => {
-                            let id, isCollection = pc.hasOwnProperty('belongsTo');
-                            if (isCollection) {
-                                id = pc.belongsTo;
-                                id += '_collection';
-                            } else {
-                                id = pc.title;
-                                id += '_form';
-                            }
-                            const parser = new ComponentParser(pc);
-                            if (isCollection) {
-                                if (!parsedComponents[id]) {
-                                    parsedComponents[id] = [];
+                        if (processedComponents[0]) {
+                            processedComponents[0].forEach(pc => {
+                                let id, isCollection = pc.hasOwnProperty('belongsTo');
+                                if (isCollection) {
+                                    id = pc.belongsTo;
+                                    id += '_collection';
+                                } else {
+                                    id = pc.title;
+                                    id += '_form';
                                 }
-                                parsedComponents[id].push(parser.getParsedComponent());
-                            } else {
-                                parsedComponents[id] = parser.getParsedComponent();
-                            }
-                        });
-                        // filter out meta data from regex result
-                        this.constructFullPageBody(parsedComponents, components.filter(comp => typeof comp === 'string'));
+                                const parser = new ComponentParser(pc);
+                                if (isCollection) {
+                                    if (!parsedComponents[id]) {
+                                        parsedComponents[id] = [];
+                                    }
+                                    parsedComponents[id].push(parser.getParsedComponent());
+                                } else {
+                                    parsedComponents[id] = parser.getParsedComponent();
+                                }
+                            });
+                            // filter out meta data from regex result
+                            this.constructFullPageBody(parsedComponents, components.filter(comp => typeof comp === 'string'));
+                        }
                         resolve(this.page);
                     });
                 },

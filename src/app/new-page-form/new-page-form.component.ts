@@ -54,7 +54,7 @@ export class NewPageFormComponent implements OnInit {
   }
 
   onSubmit(): void {
-    this.pageService.createNewPage(this.model.title, this.model.body);
+    this.pageService.createNewPage(this.model.title, this.model.body, this.model.css, this.model.js);
   }
 
 }
