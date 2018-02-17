@@ -17,19 +17,7 @@ module.exports = class Assets {
     post(req, res) {
         this.db.collection('Assets').insertOne({title: req.body.title, type: req.body.type, body: req.body.body}, (err, result) => {
             if (err) throw err;
-            let file = __dirname + '/../../assets/',
-                css  = req.body.type === 'css';
-            if (css) {
-                file += 'css/';
-            } else {
-                file += 'js/';
-            }
-            file += req.body.title;
-            if (css) {
-                file += '.css';
-            } else {
-                file += '.js';
-            }
+            let file = _getfilePath(req.body.type, req.body.title);
             fs.writeFile(file, req.body.body, (err, success) => {
                 if (err) throw err;
                 res.sendStatus(200);
@@ -40,7 +28,11 @@ module.exports = class Assets {
     delete(req, res) {
         this.db.collection('Assets').deleteOne({title: req.body.title, type: req.body.type}, (err, result) => {
             if (err) throw err;
-            res.sendStatus(200);
+            let file = _getfilePath(req.body.type, req.body.title);
+            fs.unlink(file, (err, success) => {
+                if (err) throw err;
+                res.sendStatus(200);
+            });
         });
     }
 
@@ -50,7 +42,41 @@ module.exports = class Assets {
 
        this.db.collection('Assets').updateOne(query, updatedValues, (err, result) => {
             if (err) throw err;
+            let file = _getfilePath(req.body.type, req.body.title);
+            fs.unlink(file, (err, success) => {
+                if (err) {
+                    let restore = _getfilePath(req.body.type, req.body.title);
+                    fs.writeFile(restore, req.body.body, (err, success) => {
+                        throw err;
+                    });
+                } else {
+                    let file = _getfilePath(req.body.newType, req.body.newTitle);
+                    fs.write(file, req.body.body, (err, success) => {
+                        if (err) throw err;
+                        res.sendStatus(200);
+                    });
+                }
+
+            });
             res.sendStatus(200);
         });
+    }
+
+    _getfilePath(type, title) {
+        let file = __dirname + '/../../assets/',
+            css  = type === 'css';
+        if (css) {
+            file += 'css/';
+        } else {
+            file += 'js/';
+        }
+        file += title;
+        if (css) {
+            file += '.css';
+        } else {
+            file += '.js';
+        }
+
+        return file;
     }
 };
