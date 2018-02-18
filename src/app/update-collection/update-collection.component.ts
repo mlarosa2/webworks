@@ -5,7 +5,10 @@ import { Collection } from '../collection';
 @Component({
   selector: 'app-update-collection',
   templateUrl: './update-collection.component.html',
-  styleUrls: ['./update-collection.component.css']
+  styleUrls: [
+    '../css/forms.css',
+    './update-collection.component.css'
+  ]
 })
 export class UpdateCollectionComponent implements OnChanges {
   @Input() title: string;
@@ -37,9 +40,7 @@ export class UpdateCollectionComponent implements OnChanges {
   }
 
   deleteField(fieldToDelete: string): void {
-    this.fields = this.fields.filter(field => {
-      field !== fieldToDelete;
-    });
+    this.fields = this.fields.filter(field => field !== fieldToDelete);
   }
 
   updateField(index: number): void {

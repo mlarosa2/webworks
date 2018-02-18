@@ -4,7 +4,10 @@ import { AssetService } from '../asset.service';
 @Component({
   selector: 'app-new-asset-form',
   templateUrl: './new-asset-form.component.html',
-  styleUrls: ['./new-asset-form.component.css']
+  styleUrls: [
+    '../css/forms.css',
+    './new-asset-form.component.css'
+  ]
 })
 export class NewAssetFormComponent implements OnInit {
 

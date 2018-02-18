@@ -5,7 +5,10 @@ import { Form } from '../form';
 @Component({
   selector: 'app-form-builder',
   templateUrl: './forms-builder.component.html',
-  styleUrls: ['./forms-builder.component.css']
+  styleUrls: [
+    '../css/forms.css',
+    './forms-builder.component.css'
+  ]
 })
 export class FormsBuilderComponent implements OnInit {
   private fields: object[] = [];

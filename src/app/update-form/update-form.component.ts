@@ -5,7 +5,10 @@ import { Form } from '../form';
 @Component({
   selector: 'app-update-form',
   templateUrl: './update-form.component.html',
-  styleUrls: ['./update-form.component.css']
+  styleUrls: [
+    '../css/forms.css',
+    './update-form.component.css'
+  ]
 })
 export class UpdateFormComponent implements OnChanges {
   @Input() title: string;

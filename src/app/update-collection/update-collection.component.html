@@ -18,13 +18,12 @@
       </div>
     </li>
   </ul>
+  <div>
+    <label for="fieldName">New Field Name</label>
+    <input type="text" name="fieldName"
+           id="fieldName"
+           [(ngModel)]="addFieldModel.name">
+  <button (click)="addField()" [disabled]="!addFieldModel.name">Add Field</button>
+  </div>
   <div><button type="submit" [disabled]="!newCollection.form.valid || fields.length === 0">Update Collection</button></div>
-</form>
-
-<form #newField="ngForm">
-  <label for="fieldName">New Field Name</label>
-  <input type="text" name="fieldName"
-         id="fieldName" required
-         [(ngModel)]="addFieldModel.name">
-  <button (click)="addField()" [disabled]="!newField.form.valid">Add Field</button>
 </form>

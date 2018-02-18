@@ -5,7 +5,10 @@ import { CollectionItem } from '../collection-item';
 @Component({
   selector: 'app-collection-item-builder',
   templateUrl: './collection-item-builder.component.html',
-  styleUrls: ['./collection-item-builder.component.css']
+  styleUrls: [
+    '../css/forms.css',
+    './collection-item-builder.component.css'
+  ]
 })
 export class CollectionItemBuilderComponent implements OnInit {
   @Input() belongsTo: string;

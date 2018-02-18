@@ -6,7 +6,10 @@ import { Page } from '../page';
 @Component({
   selector: 'app-new-page-form',
   templateUrl: './new-page-form.component.html',
-  styleUrls: ['./new-page-form.component.css']
+  styleUrls: [
+    '../css/forms.css',
+    './new-page-form.component.css'
+  ]
 })
 export class NewPageFormComponent implements OnInit {
   private allCSS: string[];

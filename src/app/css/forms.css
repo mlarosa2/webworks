@@ -20,3 +20,21 @@ button:active {
     position: relative;
     top: 1px;
 }
+
+button:disabled,
+button:disabled:hover,
+button:disabled:active {
+    cursor: default;
+    background-color: lightgray;
+    color: darkgray;
+}
+
+label {
+    display: block;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.label-inline {
+    display: inline-block;
+}
