@@ -5,7 +5,8 @@ import { PageService } from '../page.service';
 import { MediaService } from '../media.service';
 import { CollectionsService } from '../collections.service'; 
 import { FormsService } from '../forms.service';
-import {AssetService } from '../asset.service';
+import { AssetService } from '../asset.service';
+import { DeleteConfirmationOverlayService } from '../delete-confirmation-overlay.service';
 
 @Component({
   selector: 'app-admin',
@@ -17,11 +18,13 @@ import {AssetService } from '../asset.service';
     MediaService,
     CollectionsService,
     FormsService,
-    AssetService
+    AssetService,
+    DeleteConfirmationOverlayService
   ]
 })
 export class AdminComponent implements OnInit {
-  constructor(private adminAuthService: AdminAuthService) { }
+  constructor(private adminAuthService: AdminAuthService,
+              private deleteConfirmationOverlayService: DeleteConfirmationOverlayService) { }
 
   ngOnInit() {
   }
@@ -32,6 +35,10 @@ export class AdminComponent implements OnInit {
 
   getUserName(): string {
     return this.adminAuthService.getUserName();
+  }
+
+  showDeleteOverlay(): boolean {
+    return this.deleteConfirmationOverlayService.viewOverlay();
   }
 
 }

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PageService } from '../page.service';
+import { DeleteConfirmationOverlayService } from '../delete-confirmation-overlay.service';
 
 @Component({
   selector: 'app-pages',
@@ -10,7 +11,8 @@ import { PageService } from '../page.service';
   ]
 })
 export class PagesComponent implements OnInit {
-  constructor(private pageService: PageService) { }
+  constructor(private pageService: PageService,
+              private deleteConfirmationOverlayService: DeleteConfirmationOverlayService) { }
 
   ngOnInit() {       
   }
@@ -41,7 +43,17 @@ export class PagesComponent implements OnInit {
 
   deletePage(title: string, event: any): void {
     event.stopPropagation();
-    this.pageService.deletePage(title);
-    this.pageService.loadTitles();
+    const args = [
+      {
+        fn: this.pageService.deletePage.bind(this.pageService),
+        args: [title]
+      },
+      {
+        fn: this.pageService.loadTitles.bind(this.pageService),
+        args: []
+      }
+    ];
+
+    this.deleteConfirmationOverlayService.checkDelete(args, title);
   }
 }
