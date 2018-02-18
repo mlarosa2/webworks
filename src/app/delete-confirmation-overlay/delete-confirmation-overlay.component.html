@@ -1,0 +1,9 @@
+<div class="overlay" (click)="hideOverlay()">
+  <div class="modal">
+    <div>Are you sure you want to delete {{getThingToDelete()}}? This action cannot be undone.</div>
+    <div class="buttons">
+      <button type="button" (click)="confirmDelete()">Delete</button>
+      <button type="button" (click)="hideOverlay()">Cancel</button>
+    </div>
+  </div>
+</div>
