@@ -63,12 +63,16 @@ export class NewPageFormComponent implements OnInit {
     this.newMeta = {name: '', content: ''};
   }
 
-  removeMeta(name: string, content: string) {
+  removeMeta(name: string, content: string): void {
     this.model.meta = this.model.meta.filter(tag => !(tag.name === name && tag.content === content));
   }
 
   onSubmit(): void {
     this.pageService.createNewPage(this.model.title, this.model.body, this.model.css, this.model.js, this.model.meta);
+  }
+
+  goBack(): void {
+    this.pageService.setPageHome();
   }
 
 }

@@ -52,9 +52,13 @@ export class UpdateCollectionComponent implements OnChanges {
     this.fieldToUpdate = -1;
   }
 
-  onSubmit():void {
+  onSubmit(): void {
     this.model.fields = this.fields;
     this.collectionsService.updateCollectionRecord(this.originalTitle, this.model.fields, this.model.title);
+  }
+
+  goBack(): void {
+    this.collectionsService.setCollectionView();
   }
 
 }

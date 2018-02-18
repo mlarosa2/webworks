@@ -30,4 +30,8 @@ export class CollectionItemBuilderComponent implements OnInit {
     this.fieldModel.setBelongsTo(this.belongsTo); // not sure why I don't have this.belongs to when I instantiate class
     this.collectionItemService.addItem(this.fieldModel);
   }
+
+  goBack(): void {
+    this.collectionItemService.setListView();
+  }
 }

@@ -39,39 +39,41 @@
       </div>
     </li>
   </ul>
-  <div><button type="submit" [disabled]="!newForm.form.valid || model.fields.length === 0">Add Form</button></div>
-</form>
-
-<form #newField="ngForm">
-  <label for="fieldName">New Field Name</label>
-  <input type="text" name="fieldName"
-         id="field-type" required
-         [(ngModel)]="addFieldModel.name">
-  <span>Field Type:</span>
-  <select name="fieldType" id="field-type"
-          [(ngModel)]="addFieldModel.type"
-          required #fieldType>
-          <option [value]="'text'">Text</option>
-          <option [value]="'textArea'">Text Area</option>
-          <option [value]="'radio'">Radio Buttons</option>
-          <option [value]="'checkmarks'">Check Boxes</option>
-          <option [value]="'select'">Dropdown</option>
-  </select>
-  <div>
-    <input type="text" 
-           [(ngModel)]="addFieldModel.options.placeHolder" 
-           placeholder="Field Placeholder"
-           name="fieldType">
-    <div *ngIf="addFieldModel.type && addFieldModel.type !== 'text' && addFieldModel.type !== 'textArea'">
-      <div>User Options For Field</div>
-      <div *ngFor="let option of addFieldModel.options.userOptions; let i = index; trackBy:trackByFn">
-        <input [(ngModel)]="addFieldModel.options.userOptions[i]" 
-               placeholder="Option {{i + 1}}" 
-               required
-               name="option_{{i + 1}}">
-        <div (click)="addUserOption()" [ngClass]="{'disabled': addFieldModel.options.userOptions[0] === ''}">Add Option</div>
+  <form #newField="ngForm">
+    <label for="fieldName">New Field Name</label>
+    <input type="text" name="fieldName"
+          id="field-type" required
+          [(ngModel)]="addFieldModel.name">
+    <span>Field Type:</span>
+    <select name="fieldType" id="field-type"
+            [(ngModel)]="addFieldModel.type"
+            required #fieldType>
+            <option [value]="'text'">Text</option>
+            <option [value]="'textArea'">Text Area</option>
+            <option [value]="'radio'">Radio Buttons</option>
+            <option [value]="'checkmarks'">Check Boxes</option>
+            <option [value]="'select'">Dropdown</option>
+    </select>
+    <div>
+      <input type="text" 
+            [(ngModel)]="addFieldModel.options.placeHolder" 
+            placeholder="Field Placeholder"
+            name="fieldType">
+      <div *ngIf="addFieldModel.type && addFieldModel.type !== 'text' && addFieldModel.type !== 'textArea'">
+        <div>User Options For Field</div>
+        <div *ngFor="let option of addFieldModel.options.userOptions; let i = index; trackBy:trackByFn">
+          <input [(ngModel)]="addFieldModel.options.userOptions[i]" 
+                placeholder="Option {{i + 1}}" 
+                required
+                name="option_{{i + 1}}">
+          <div (click)="addUserOption()" [ngClass]="{'disabled': addFieldModel.options.userOptions[0] === ''}">Add Option</div>
+        </div>
       </div>
     </div>
+    <button type="button" (click)="addField()" [disabled]="!newField.form.valid">Add Field</button>
+  </form>
+  <div class="submit-cancel">
+    <button type="submit" [disabled]="!newForm.form.valid || model.fields.length === 0">Add Form</button>
+    <button type="button" (click)="goBack()">Cancel</button>
   </div>
-  <button (click)="addField()" [disabled]="!newField.form.valid">Add Field</button>
 </form>

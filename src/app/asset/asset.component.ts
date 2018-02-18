@@ -26,7 +26,11 @@ export class AssetComponent implements OnChanges {
       });
   }
 
-  onSubmit() {
+  onSubmit(): void {
     this.assetService.updateAsset(this.title, this.model.body, this.type, this.model);
+  }
+
+  goBack(): void {
+    this.assetService.setAssetHome();
   }
 }

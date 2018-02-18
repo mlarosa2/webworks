@@ -22,4 +22,8 @@ export class NewAssetFormComponent implements OnInit {
     this.assetService.createNewAsset(this.model.title, this.model.body, this.model.type);
   }
 
+  goBack(): void {
+    this.assetService.setAssetHome();
+  }
+
 }

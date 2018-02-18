@@ -75,8 +75,12 @@ export class FormsBuilderComponent implements OnInit {
     return index;
   }
 
-  onSubmit():void {
+  onSubmit(): void {
     this.model.fields = this.fields;
     this.formsService.saveForm(this.model);
+  }
+
+  goBack(): void {
+    this.formsService.setFormView();
   }
 }

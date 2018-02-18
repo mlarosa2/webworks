@@ -70,12 +70,16 @@ export class PageComponent implements OnChanges {
     this.newMeta = {name: '', content: ''};
   }
 
-  removeMeta(name: string, content: string) {
+  removeMeta(name: string, content: string): void {
     this.model.meta = this.model.meta.filter(tag => !(tag.name === name && tag.content === content));
   }
 
-  onSubmit() {
+  onSubmit(): void {
     this.pageService.updatePage(this.title, this.model);
+  }
+
+  goBack(): void {
+    this.pageService.setPageHome();
   }
 
 }

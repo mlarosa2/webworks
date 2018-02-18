@@ -38,3 +38,13 @@ label {
 .label-inline {
     display: inline-block;
 }
+
+textarea {
+    width: 100%;
+    resize: vertical;
+    height: 500px;
+}
+
+.submit-cancel {
+    margin-top: 20px;
+}

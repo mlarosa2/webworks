@@ -22,5 +22,7 @@
               required
               [(ngModel)]="model.body" name="body"></textarea>
   </div>
-  <div><button type="submit" [disabled]="!newAsset.form.valid || !model.type">Create Asset</button></div>
+  <div class="submit-cancel">
+    <button type="submit" [disabled]="!newAsset.form.valid || !model.type">Create Asset</button>
+    <button (click)="goBack();">Cancel</button></div>
 </form>

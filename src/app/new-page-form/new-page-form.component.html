@@ -48,5 +48,8 @@
       <input id="meta-content" [(ngModel)]="newMeta.content" type="text" name="new-meta-content">
     </div>
     <div><button [disabled]="!newMeta.name || !newMeta.content" type="button" (click)="addMeta(newMeta.name, newMeta.content)">Add Meta Tag</button></div>
-  <div><button type="submit" [disabled]="!newPage.form.valid">Create Page</button></div>
+  <div class="submit-cancel">
+    <button type="submit" [disabled]="!newPage.form.valid">Create Page</button>
+    <button type="button" (click)="goBack()">Cancel</button>
+  </div>
 </form>

@@ -33,4 +33,8 @@ export class UpdateCollectionItemComponent implements OnChanges {
   onSubmit(): void {
     this.collectionItemService.updateItem(this.fieldModel);
   }
+
+  goBack(): void {
+    this.collectionItemService.setListView();
+  }
 }

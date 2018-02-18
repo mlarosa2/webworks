@@ -15,5 +15,8 @@
              required>
     </li>
   </ul>
-  <button type="submit" [disabled]="!updateCollectionItem.form.valid">Add</button>
+  <div class="submit-cancel">
+    <button type="submit" [disabled]="!updateCollectionItem.form.valid">Add</button>
+    <button type="button" (click)="goBack()">Cancel</button>
+  </div>
 </form>

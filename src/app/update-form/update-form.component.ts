@@ -85,8 +85,12 @@ export class UpdateFormComponent implements OnChanges {
     return index;
   }
 
-  onSubmit():void {
+  onSubmit(): void {
     this.model.fields = this.fields;
     this.formsService.updateFormRecord(this.originalTitle, this.model.fields, this.model.title);
+  }
+
+  goBack(): void {
+    this.formsService.setFormView();
   }
 }
