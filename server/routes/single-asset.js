@@ -17,13 +17,31 @@ module.exports = class SingleAsset {
     }
 
     delete(req, res) {
-    this.db.collection('Assets').deleteOne({title: req.params.title, type: req.params.type}, (err, result) => {
-        if (err) throw err;
-        let file = _getfilePath(req.params.type, req.params.title);
-        fs.unlink(file, (err, success) => {
+        this.db.collection('Assets').deleteOne({title: req.params.title, type: req.params.type}, (err, result) => {
             if (err) throw err;
-            res.sendStatus(200);
+            let file = SingleAsset._getfilePath(req.params.type, req.params.title);
+            fs.unlink(file, (err, success) => {
+                if (err) throw err;
+                res.sendStatus(200);
+            });
         });
-    });
+    }
+
+    static _getfilePath(type, title) {
+        let file = __dirname + '/../../assets/',
+            css  = type === 'css';
+        if (css) {
+            file += 'css/';
+        } else {
+            file += 'js/';
+        }
+        file += title;
+        if (css) {
+            file += '.css';
+        } else {
+            file += '.js';
+        }
+
+        return file;
     }
 };

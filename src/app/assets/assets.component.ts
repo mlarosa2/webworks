@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AssetService } from '../asset.service';
+import { DeleteConfirmationOverlayService } from '../delete-confirmation-overlay.service';
 
 @Component({
   selector: 'app-assets',
@@ -11,7 +12,8 @@ import { AssetService } from '../asset.service';
 })
 export class AssetsComponent implements OnInit {
 
-  constructor(private assetService: AssetService) { }
+  constructor(private assetService: AssetService,
+              private deleteConfirmationOverlayService: DeleteConfirmationOverlayService) { }
 
   ngOnInit() {
   }
@@ -42,7 +44,17 @@ export class AssetsComponent implements OnInit {
 
   deleteAsset(title: string, type: string, event: any): void {
     event.stopPropagation();
-    this.assetService.deleteAsset(title, type);
-    this.assetService.loadAssets();
+    const args = [
+      {
+        fn: this.assetService.deleteAsset.bind(this.assetService),
+        args: [title, type]
+      },
+      {
+        fn: this.assetService.loadAssets.bind(this.assetService),
+        args: []
+      }
+    ];
+
+    this.deleteConfirmationOverlayService.checkDelete(args, title);
   }
 }

@@ -92,7 +92,7 @@ export class AssetService {
 
   deleteAsset(title: string, type: string): Promise<void> {
     return this.http
-      .delete(`${this.assetUrl}/asset/${title}`, {headers: this.headers})
+      .delete(`${this.assetUrl}/asset/${title}/${type}`, {headers: this.headers})
       .toPromise()
       .then(() => null)
       .catch(this.handleError);
