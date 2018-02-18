@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CollectionsService } from '../collections.service';
 import { CollectionItemService } from '../collection-item.service';
+import { DeleteConfirmationOverlayService } from '../delete-confirmation-overlay.service';
 import { Collection } from '../collection';
 
 @Component({
@@ -17,7 +18,8 @@ import { Collection } from '../collection';
 export class CollectionsComponent implements OnInit {
   private selectedTitle: string;
   constructor(private collectionsService: CollectionsService,
-              private collectionItemService: CollectionItemService ) { }
+              private collectionItemService: CollectionItemService,
+              private deleteConfirmationOverlayService: DeleteConfirmationOverlayService) { }
 
   ngOnInit() {}
 
@@ -66,6 +68,13 @@ export class CollectionsComponent implements OnInit {
 
   deleteCollection(title: string, event: any): void {
     event.stopPropagation();
-    this.collectionsService.deleteCollection(title);
+    const args = [
+      {
+        fn: this.collectionsService.deleteCollection.bind(this.collectionsService),
+        args: [title]
+      }
+    ];
+
+    this.deleteConfirmationOverlayService.checkDelete(args, title);
   }
 }
