@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { CollectionItemService } from '../collection-item.service';
 import { AdminService } from '../admin.service';
+import { DeleteConfirmationOverlayService } from '../delete-confirmation-overlay.service';
 
 @Component({
   selector: 'app-collection-items',
@@ -16,7 +17,8 @@ export class CollectionItemsComponent implements OnInit {
   private currentCollectionItems: string[];
 
   constructor(private collectionItemService: CollectionItemService,
-              private adminService: AdminService) { }
+              private adminService: AdminService,
+              private deleteConfirmationOverlayService: DeleteConfirmationOverlayService) { }              
 
   ngOnInit() { }
 
@@ -43,8 +45,22 @@ export class CollectionItemsComponent implements OnInit {
 
   deleteCollectionItem(item: string, $event: any): void {
     $event.stopPropagation();
+    const args = [
+      {
+        fn: this.collectionItemService.deleteItem.bind(this.collectionItemService),
+        args: [item]
+      },
+      {
+        fn: this.removeItemFromUI.bind(this),
+        args: [item]
+      }
+    ];
+
+    this.deleteConfirmationOverlayService.checkDelete(args, item);
+  }
+
+  removeItemFromUI(item: string): void {
     this.currentCollectionItems = this.currentCollectionItems.filter(itemName => itemName !== item);
-    this.collectionItemService.deleteItem(item);
   }
 
   goToCollectionItem(title: string, $event: any): void {
