@@ -1,4 +1,5 @@
-button {
+button,
+i {
     background-color: cornflowerblue;
     border: none;
     padding: 5px;
@@ -6,19 +7,26 @@ button {
     cursor: pointer;
     outline: none;
     transition: .2s;
-    margin: 0 5px;
+    margin: 5px 5px 0;
     font-weight: bold;
 }
 
-button:hover {
+button:hover,
+i:hover {
     background-color: #5A86D6;
     transition: .2s;
 }
 
-button:active {
+button:active,
+i:active {
     background-color: #4C74BA;
     position: relative;
     top: 1px;
+}
+
+i {
+    font-size: 12px;
+    margin-top: 0;
 }
 
 button:disabled,
@@ -33,6 +41,7 @@ label {
     display: block;
     font-size: 12px;
     font-weight: bold;
+    margin-top: 10px;
 }
 
 .label-inline {
@@ -47,4 +56,8 @@ textarea {
 
 .submit-cancel {
     margin-top: 20px;
+}
+
+.no-left-margin {
+    margin-left: 0;
 }

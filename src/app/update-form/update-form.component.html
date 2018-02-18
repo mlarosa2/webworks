@@ -25,7 +25,8 @@
           </select>
         </div>
         <div>
-          <span>Placehholder</span><input type="text" [(ngModel)]="editFieldModel.options.placeholder" placeholder="Placeholder" name="placeholderEdit">
+          <label>Placeholder</label>
+          <input type="text" [(ngModel)]="editFieldModel.options.placeholder" name="placeholderEdit">
         </div>
         <div *ngFor="let option of editFieldModel.options.userOptions; let i = index; trackBy:trackByFn">
           <span>Option {{i+1}}</span>
@@ -34,7 +35,7 @@
                  required
                  name="option_{{i + 1}}">
         </div>
-        <div (click)="addEditUserOption()" [ngClass]="{'disabled': editFieldModel.options.userOptions[0] === ''}">Add Option</div>
+        <button type="button" (click)="addEditUserOption()" [disabled]="!editFieldModel.options.userOptions[0]">Add Option</button>
         <button (click)="confirmUpdate(i)">Update</button>
       </div>
     </li>
@@ -54,9 +55,9 @@
           <option [value]="'select'">Dropdown</option>
   </select>
   <div>
+    <label>Field Placeholder</label>
     <input type="text" 
            [(ngModel)]="addFieldModel.options.placeHolder" 
-           placeholder="Field Placeholder"
            name="fieldType">
     <div *ngIf="addFieldModel.type && addFieldModel.type !== 'text' && addFieldModel.type !== 'textArea'">
       <div>User Options For Field</div>
@@ -65,14 +66,14 @@
                placeholder="Option {{i + 1}}" 
                required
                name="option_{{i + 1}}">
-        <div (click)="addUserOption()" [ngClass]="{'disabled': addFieldModel.options.userOptions[i] === ''}">Add Option</div>
+        <button type="button" class="no-left-margin" (click)="addUserOption()" [ngClass]="{'disabled': addFieldModel.options.userOptions[i] === ''}">Add Option</button>
       </div>
     </div>
   </div>
-  <button type="button" (click)="addField()" [disabled]="!newField.form.valid">Add Field</button>
+  <button type="button" class="no-left-margin" (click)="addField()" [disabled]="!newField.form.valid">Add Field</button>
 </form>
   <div class="submit-cancel">
-    <button type="submit" [disabled]="!updateForm.form.valid || model.fields.length === 0">Update Form</button>
+    <button type="submit" class="no-left-margin" [disabled]="!updateForm.form.valid || model.fields.length === 0">Update Form</button>
     <button type="button" (click)="goBack()">Cancel</button>
   </div>
 </form>

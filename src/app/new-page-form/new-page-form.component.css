@@ -1,11 +1,11 @@
-label {
-    width: 79px;
+
+.add-meta div {
+    float: left;
+    margin-right: 10px;
 }
 
-button {
-    width: 100%;
-}
-
-div {
-    margin-bottom: 10px
+.add-meta::after {
+    content: ' ';
+    display: block;
+    clear: both;
 }

@@ -5,7 +5,10 @@ import { CollectionItem } from '../collection-item';
 @Component({
   selector: 'app-update-collection-item',
   templateUrl: './update-collection-item.component.html',
-  styleUrls: ['./update-collection-item.component.css']
+  styleUrls: [
+    '../css/forms.css',
+    './update-collection-item.component.css'
+  ]
 })
 export class UpdateCollectionItemComponent implements OnChanges {
   @Input() belongsTo: string;

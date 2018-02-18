@@ -13,6 +13,7 @@
   </div>
   <div>
     <p>Page CSS</p>
+    <div *ngIf="model.css.length === 0">No CSS Associated With This Page</div>
     <ul>
       <li *ngFor="let css of model.css">{{css}}<i class="fa fa-times" (click)="removeCSS(css);"></i></li>
     </ul>
@@ -20,10 +21,13 @@
       <option selected disabled>Add CSS</option>
       <option *ngFor="let selectableCSS of getPageCSS()" value="{{selectableCSS}}">{{selectableCSS}}</option>
     </select>
-    <div><button type="button" (click)="addCSS(newCSS)">Add CSS</button></div>
+    <div><button type="button"
+                 class="no-left-margin" 
+                 (click)="addCSS(newCSS)">Add CSS</button></div>
   </div>
   <div>
     <p>Page JS</p>
+    <div *ngIf="model.js.length === 0">No JavaScript Associated With This Page</div>
     <ul>
       <li *ngFor="let js of model.js">{{js}}<i class="fa fa-times" (click)="removeJS(js);"></i></li>
     </ul>
@@ -31,10 +35,13 @@
       <option selected disabled>Add JS</option>
       <option *ngFor="let selectableJS of getPageJS()" value="{{selectableJS}}">{{selectableJS}}</option>
     </select>
-    <div><button type="button" (click)="addJS(newJS)">Add JS</button></div>
+    <div><button type="button" 
+                 class="no-left-margin"
+                 (click)="addJS(newJS)">Add JS</button></div>
   </div>
     <div>
       <p>Page Meta</p>
+      <div *ngIf="model.meta.length === 0">No Meta Tags Are Associated With This Page</div>
       <ul>
         <li *ngFor="let meta of model.meta">
           <span>Name: {{meta.name}}</span> | <span>Content: {{meta.content}}</span>
@@ -42,14 +49,22 @@
         </li>
       </ul>
     </div>
-    <div>
-      <div><span>Name</span><span>Content</span></div>
-      <input id="meta-name" [(ngModel)]="newMeta.name" type="text" name="new-meta-name">
-      <input id="meta-content" [(ngModel)]="newMeta.content" type="text" name="new-meta-content">
+    <div class="add-meta">
+      <div>
+        <label>Name</label>
+        <input id="meta-name" [(ngModel)]="newMeta.name" typmodele="text" name="new-meta-name">
+      </div>
+      <div>
+        <label>Content</label>
+        <input id="meta-content" [(ngModel)]="newMeta.content" type="text" name="new-meta-content">
+      </div>
     </div>
-    <div><button [disabled]="!newMeta.name || !newMeta.content" type="button" (click)="addMeta(newMeta.name, newMeta.content)">Add Meta Tag</button></div>
+    <div><button [disabled]="!newMeta.name || !newMeta.content" 
+                 type="button"
+                 class="no-left-margin"
+                 (click)="addMeta(newMeta.name, newMeta.content)">Add Meta Tag</button></div>
   <div class="submit-cancel">
-    <button type="submit" [disabled]="!newPage.form.valid">Create Page</button>
+    <button class="no-left-margin" type="submit" [disabled]="!newPage.form.valid">Create Page</button>
     <button type="button" (click)="goBack()">Cancel</button>
   </div>
 </form>

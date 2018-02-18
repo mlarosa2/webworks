@@ -1,0 +1,10 @@
+.add-meta div {
+    float: left;
+    margin-right: 10px;
+}
+
+.add-meta::after {
+    content: ' ';
+    display: block;
+    clear: both;
+}

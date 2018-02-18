@@ -1,7 +1,7 @@
 <div class="inline-title">
   <h3 class="sub-menu-title"> Collection Items for {{title}}</h3>
-  <button (click)="newCollectionItem()">New Item</button>
-  <button (click)="goBack()">Go Back</button> 
+  <button (click)="newCollectionItem()" *ngIf="isListView()">New Item</button>
+  <button (click)="goBack()" *ngIf="isListView()">Go Back</button> 
 </div>
 <div *ngIf="isListView()">
   <div *ngIf="getCollectionItems() && getCollectionItems().length > 0">

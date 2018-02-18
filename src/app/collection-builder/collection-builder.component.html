@@ -26,7 +26,7 @@
   <button (click)="addField()" [disabled]="!addFieldModel.name">Add Field</button>
   </div>
   <div class="submit-cancel">
-    <button type="submit" [disabled]="!newCollection.form.valid || model.fields.length === 0">Add Collection</button>
+    <button type="submit" class="no-left-margin" [disabled]="!newCollection.form.valid || model.fields.length === 0">Add Collection</button>
     <button type="button" (click)="goBack()">Cancel</button>
   </div>
 </form>
