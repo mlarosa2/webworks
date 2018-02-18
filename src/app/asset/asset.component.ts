@@ -4,7 +4,10 @@ import { AssetService } from '../asset.service';
 @Component({
   selector: 'app-asset',
   templateUrl: './asset.component.html',
-  styleUrls: ['./asset.component.css']
+  styleUrls: [
+    '../css/forms.css',
+    './asset.component.css'
+  ]
 })
 export class AssetComponent implements OnChanges {
   @Input() title: string;

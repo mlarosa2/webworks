@@ -10,17 +10,17 @@
            name="asset" 
            value="js" 
            [(ngModel)]="model.type">
-    <label for="js">JavaScript</label>
+    <label for="js" class="label-inline">JavaScript</label>
     <input type="radio" 
            name="asset" 
            value="css" 
            [(ngModel)]="model.type">
-    <label for="css">CSS</label>
+    <label for="css" class="label-inline">CSS</label>
   </div>
   <div>
     <textarea id="body" 
               required
               [(ngModel)]="model.body" name="body"></textarea>
   </div>
-  <div><button type="submit" [disabled]="!updateAsset.form.valid && model.type">Update Asset</button></div>
+  <div><button type="submit" [disabled]="!updateAsset.form.valid || !model.type">Update Asset</button></div>
 </form>

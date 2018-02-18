@@ -17,7 +17,7 @@ module.exports = class Assets {
     post(req, res) {
         this.db.collection('Assets').insertOne({title: req.body.title, type: req.body.type, body: req.body.body}, (err, result) => {
             if (err) throw err;
-            let file = _getfilePath(req.body.type, req.body.title);
+            let file = Assets._getfilePath(req.body.type, req.body.title);
             fs.writeFile(file, req.body.body, (err, success) => {
                 if (err) throw err;
                 res.sendStatus(200);
@@ -27,31 +27,31 @@ module.exports = class Assets {
 
     put(req, res) {
         const query = { title: req.body.title, type: req.body.type};
-        const updatedValues = { type: req.body.newType, title: req.body.newTitle, body: req.body.body};
+        let title   = req.body.newTitle || req.body.title;
+        let type    = req.body.newType || req.body.type;
+        const updatedValues = { title: title, type: type, body: req.body.body};
 
        this.db.collection('Assets').updateOne(query, updatedValues, (err, result) => {
             if (err) throw err;
-            let file = _getfilePath(req.body.type, req.body.title);
+            let file = Assets._getfilePath(req.body.type, req.body.title);
             fs.unlink(file, (err, success) => {
                 if (err) {
-                    let restore = _getfilePath(req.body.type, req.body.title);
+                    let restore = Assets._getfilePath(req.body.type, req.body.title);
                     fs.writeFile(restore, req.body.body, (err, success) => {
-                        throw err;
+                        if (err) throw err;
                     });
                 } else {
-                    let file = _getfilePath(req.body.newType, req.body.newTitle);
-                    fs.write(file, req.body.body, (err, success) => {
+                    let file = Assets._getfilePath(type, title);
+                    fs.writeFile(file, req.body.body, (err, success) => {
                         if (err) throw err;
                         res.sendStatus(200);
                     });
                 }
-
             });
-            res.sendStatus(200);
         });
     }
 
-    _getfilePath(type, title) {
+    static _getfilePath(type, title) {
         let file = __dirname + '/../../assets/',
             css  = type === 'css';
         if (css) {

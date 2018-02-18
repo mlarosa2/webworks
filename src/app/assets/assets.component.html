@@ -10,7 +10,7 @@
 </div>
 
 <div *ngIf="isSpecificAsset()">
-  <app-asset [title]="getSelectedAsset()"></app-asset>
+  <app-asset [title]="getSelectedAsset().title" [type]="getSelectedAsset().type"></app-asset>
 </div>
 
 <div *ngIf="isCreateAsset();">
