@@ -34,6 +34,7 @@ import { AssetComponent } from './asset/asset.component';
 import { NewAssetFormComponent } from './new-asset-form/new-asset-form.component';
 import { AssetFilterPipe } from './asset-filter.pipe';
 import { DeleteConfirmationOverlayComponent } from './delete-confirmation-overlay/delete-confirmation-overlay.component';
+import { FilterHomePagePipe } from './filter-home-page.pipe';
 
 @NgModule({
   declarations: [
@@ -64,7 +65,8 @@ import { DeleteConfirmationOverlayComponent } from './delete-confirmation-overla
     AssetComponent,
     NewAssetFormComponent,
     AssetFilterPipe,
-    DeleteConfirmationOverlayComponent
+    DeleteConfirmationOverlayComponent,
+    FilterHomePagePipe
   ],
   imports: [
     BrowserModule,

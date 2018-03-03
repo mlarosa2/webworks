@@ -1,6 +1,10 @@
 <div *ngIf="isPageHome()">
   <ul>
-    <li *ngFor="let title of getTitles();">
+    <li>
+      HOMEPAGE
+      <i class="fa fa-edit" (click)="goToPagePage('HOMEPAGE')"></i>
+    </li>
+    <li *ngFor="let title of getTitles() | filterHomePage;">
       <span>{{title}}</span>
       <i class="fa fa-times" (click)="deletePage(title, $event)"></i>
       <i class="fa fa-edit" (click)="goToPage(title)"></i></li>

@@ -21,7 +21,7 @@ export class FrontendComponent implements OnInit {
   ngOnInit() {
     this.page = window.location.pathname.substr(1).replace(/-/g, ' ');
     if (this.page === '') {
-      this.page = 'FRONTPAGE';
+      this.page = 'HOMEPAGE';
     }
     this.pageService.getPage(this.page).then(response => {
       document.getElementById('content-page-exclusive-fe-component').innerHTML = response.json().parsed;
