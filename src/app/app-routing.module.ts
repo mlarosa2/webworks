@@ -6,6 +6,10 @@ import { FrontendComponent } from './frontend/frontend.component';
 
 const appRoutes: Routes = [
   {
+    path: '',
+    component: FrontendComponent
+  },
+  {
     path: 'admin',
     component: AdminComponent
   },
