@@ -6,6 +6,7 @@ import { MediaService } from '../media.service';
 import { CollectionsService } from '../collections.service'; 
 import { FormsService } from '../forms.service';
 import { AssetService } from '../asset.service';
+import { GlobalAssetsService } from '../global-assets.service';
 import { DeleteConfirmationOverlayService } from '../delete-confirmation-overlay.service';
 
 @Component({
@@ -19,6 +20,7 @@ import { DeleteConfirmationOverlayService } from '../delete-confirmation-overlay
     CollectionsService,
     FormsService,
     AssetService,
+    GlobalAssetsService,
     DeleteConfirmationOverlayService
   ]
 })

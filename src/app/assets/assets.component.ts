@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AssetService } from '../asset.service';
+import { GlobalAssetsService } from '../global-assets.service';
 import { DeleteConfirmationOverlayService } from '../delete-confirmation-overlay.service';
 
 @Component({
@@ -13,6 +14,7 @@ import { DeleteConfirmationOverlayService } from '../delete-confirmation-overlay
 export class AssetsComponent implements OnInit {
 
   constructor(private assetService: AssetService,
+              private globalAssetsService: GlobalAssetsService,
               private deleteConfirmationOverlayService: DeleteConfirmationOverlayService) { }
 
   ngOnInit() {
