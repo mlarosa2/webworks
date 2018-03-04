@@ -3,6 +3,7 @@
     <label for="title">Page Title</label>
     <input type="text" id="title"
            required
+           [disabled]="model.title === 'HOMEPAGE'"
            [(ngModel)]="model.title" name="title">
   </div>
   <div>
