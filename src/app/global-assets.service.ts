@@ -11,35 +11,18 @@ export class GlobalAssetsService {
   private titles: string[];
   constructor(private http: Http) { }
 
-  getGlobalAssets(): Promise<any> {
-    return this.http 
-          .get(`${this.globalAssetUrl}/global-assets`)
-          .toPromise();
-  }
-
-  loadGlobalAssets(): void {
-    this.getGlobalAssets()
-        .then(data => {
-          this.titles = data.json().map(asset => asset);
-        });
-  }
-
-  getTitles(): string[] {
-    return this.titles;
-  }
-
-  createNewGlobalAsset(title: string): void {
+  createNewGlobalAsset(title: string, type: string): void {
     this.http
-      .post(`${this.globalAssetUrl}/global-assets`, JSON.stringify({title: title}), {headers: this.headers})
+      .post(`${this.globalAssetUrl}/global-assets`, JSON.stringify({title: title, type: type}), {headers: this.headers})
       .toPromise()
-      .then(res => {
-        this.titles.push(res.json().title);
-      })
       .catch(this.handleError);
   }
 
-  deleteGlobalAsset(title: string): void {
-
+  deleteGlobalAsset(title: string, type: string): void {
+    this.http
+      .delete(`${this.globalAssetUrl}/asset/${title}/${type}`, {headers: this.headers})
+      .toPromise()
+      .catch(this.handleError);
   }
 
   private handleError(error: any): void {
