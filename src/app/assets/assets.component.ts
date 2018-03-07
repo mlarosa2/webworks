@@ -59,4 +59,16 @@ export class AssetsComponent implements OnInit {
 
     this.deleteConfirmationOverlayService.checkDelete(args, title);
   }
+
+  toggleGlobal(title: string, type: string, worldwide: boolean, asset: any): void {
+    if (worldwide) { // delete
+      this.globalAssetsService.deleteGlobalAsset(title, type).then(resp => {
+        asset.global = false;
+      });
+    } else { // create
+      this.globalAssetsService.createNewGlobalAsset(title, type).then(resp => {
+        asset.global = true;
+      });
+    }
+  }
 }

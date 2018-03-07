@@ -3,16 +3,16 @@
   <ul>
     <li *ngFor="let asset of getAssets() | assetFilter: 'css';">
       <span>{{asset.title}}</span>
-      <i class="fa fa-globe"></i>
+      <i class="fa fa-globe" (click)="toggleGlobal(asset.title, asset.type, asset.global);"></i>
       <i class="fa fa-times" (click)="deleteAsset(asset.title, asset.type, $event)"></i>
-      <i class="fa fa-edit" (click)="goToAsset(asset.title, asset.type)"></i>
+      <i class="fa fa-edit" (click)="goToAsset(asset.title, asset.type, asset)"></i>
     </li>
   </ul>
   <p>JS</p>
     <ul>
     <li *ngFor="let asset of getAssets() | assetFilter: 'js';">
       <span>{{asset.title}}</span>
-      <i class="fa fa-globe"></i>
+      <i class="fa fa-globe" (click)="toggleGlobal(asset.title, asset.type, asset.global);"></i>
       <i class="fa fa-times" (click)="deleteAsset(asset.title, asset.type, $event)"></i>
       <i class="fa fa-edit" (click)="goToAsset(asset.title, asset.type)"></i>
     </li>

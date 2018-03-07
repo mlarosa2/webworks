@@ -11,15 +11,15 @@ export class GlobalAssetsService {
   private titles: string[];
   constructor(private http: Http) { }
 
-  createNewGlobalAsset(title: string, type: string): void {
-    this.http
+  createNewGlobalAsset(title: string, type: string): Promise<any> {
+    return this.http
       .post(`${this.globalAssetUrl}/global-assets`, JSON.stringify({title: title, type: type}), {headers: this.headers})
       .toPromise()
       .catch(this.handleError);
   }
 
-  deleteGlobalAsset(title: string, type: string): void {
-    this.http
+  deleteGlobalAsset(title: string, type: string): Promise<any> {
+    return this.http
       .delete(`${this.globalAssetUrl}/global-assets/${title}/${type}`, {headers: this.headers})
       .toPromise()
       .catch(this.handleError);
