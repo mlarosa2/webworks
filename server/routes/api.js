@@ -17,6 +17,7 @@ const SingleCollectionItems = require('./single-collection-items');
 const CollectionItem        = require('./collection-item');
 const Assets                = require('./assets');
 const SingleAsset           = require('./single-asset');
+const GlobalAssets          = require('./global-assets');
 
 mongo.connect(mongoConnect, (err, db) => {
     const login                 = new Login(db); // /login
@@ -33,6 +34,7 @@ mongo.connect(mongoConnect, (err, db) => {
     const collectionItem        = new CollectionItem(db); // /collection-item/:belongsTo/:title
     const assets                = new Assets(db); // /assets
     const singleAsset           = new SingleAsset(db); // /asset 
+    const globalAssets          = new GlobalAsset(db) // /global-assets
     
     router.route('/login')
         .post(login.post.bind(login)); // binding so this context is consistent in class
@@ -92,6 +94,12 @@ mongo.connect(mongoConnect, (err, db) => {
     router.route('/asset/:title/:type')
         .get(singleAsset.get.bind(singleAsset))
         .delete(singleAsset.delete.bind(singleAsset));
+
+    router.route('/global-assets')
+        .post(globalAssets.post.bind(globalAssets));
+    
+    router.route('global-assets/:title/:type')
+        .delete(globalAssets.post.bind(globalAssets));
 });
 
 module.exports = router;
