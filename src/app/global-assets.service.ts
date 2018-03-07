@@ -20,7 +20,7 @@ export class GlobalAssetsService {
 
   deleteGlobalAsset(title: string, type: string): void {
     this.http
-      .delete(`${this.globalAssetUrl}/asset/${title}/${type}`, {headers: this.headers})
+      .delete(`${this.globalAssetUrl}/global-assets/${title}/${type}`, {headers: this.headers})
       .toPromise()
       .catch(this.handleError);
   }
