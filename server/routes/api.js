@@ -34,7 +34,7 @@ mongo.connect(mongoConnect, (err, db) => {
     const collectionItem        = new CollectionItem(db); // /collection-item/:belongsTo/:title
     const assets                = new Assets(db); // /assets
     const singleAsset           = new SingleAsset(db); // /asset 
-    const globalAssets          = new GlobalAsset(db) // /global-assets
+    const globalAssets          = new GlobalAssets(db); // /global-assets
     
     router.route('/login')
         .post(login.post.bind(login)); // binding so this context is consistent in class
