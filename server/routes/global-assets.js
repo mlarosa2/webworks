@@ -10,7 +10,7 @@ module.exports = class GlobalAssets {
         });      
     }
 
-    post(req, res) {
+    delete(req, res) {
         this.db.collection('GlobalAssets').deleteOne({title: req.params.title, type: req.params.type}, (err, result) => {
             if (err) throw err;
             GlobalAssets.updateAsset(req.params.title, req.params.type, false);

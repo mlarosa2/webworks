@@ -18,6 +18,12 @@
     <label for="css" class="label-inline">CSS</label>
   </div>
   <div>
+    <input type="checkbox"
+           name="global"
+           [(ngModel)]="model.global">
+    <label for="global" class="label-inline">Global</label>
+  </div>
+  <div>
     <textarea id="body" 
               required
               [(ngModel)]="model.body" name="body"></textarea>

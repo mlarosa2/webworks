@@ -16,10 +16,10 @@ export class NewAssetFormComponent implements OnInit {
   ngOnInit() {
   }
 
-  model: any = {title: '', body: '', type: ''};
+  model: any = {title: '', body: '', type: '', global: false};
 
   onSubmit(): void {
-    this.assetService.createNewAsset(this.model.title, this.model.body, this.model.type);
+    this.assetService.createNewAsset(this.model.title, this.model.body, this.model.type, this.model.global);
   }
 
   goBack(): void {

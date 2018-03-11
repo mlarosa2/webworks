@@ -58,9 +58,9 @@ export class AssetService {
     this.createAsset   = true;
   }
 
-  createNewAsset(title: string, body: string, type: string): void {
+  createNewAsset(title: string, body: string, type: string, worldWide: boolean): void {
     this.http
-      .post(`${this.assetUrl}/assets`, JSON.stringify({title: title, body: body, type: type}), {headers: this.headers})
+      .post(`${this.assetUrl}/assets`, JSON.stringify({title: title, body: body, type: type, global: worldWide}), {headers: this.headers})
       .toPromise()
       .then(res => {
         this.setAssetHome();
@@ -100,7 +100,7 @@ export class AssetService {
 
   updateAsset(title: string, body: string, type: string, model: any): Promise<void> {
     return this.http
-      .put(`${this.assetUrl}/assets`, {type: type, body: body, title: title, newType: model.type, newTitle: model.title})
+      .put(`${this.assetUrl}/assets`, {type: type, body: body, title: title, global: model.global, newType: model.type, newTitle: model.title})
       .toPromise()
       .then(() => this.setAssetHome())
       .catch(this.handleError);

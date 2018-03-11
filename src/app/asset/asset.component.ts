@@ -13,16 +13,17 @@ export class AssetComponent implements OnChanges {
   @Input() title: string;
   @Input() type: string;
 
-  private model: any = {title: '', body: '', type: ''};
+  private model: any = {title: '', body: '', type: '', global: false};
   constructor(private assetService: AssetService) { }
 
   ngOnChanges() {
     const title = this.title
     this.assetService.getAsset(this.title, this.type)
       .then(asset => {
-        this.model.title = title;
-        this.model.body  = asset.json().body;
-        this.model.type  = asset.json().type;
+        this.model.title  = title;
+        this.model.body   = asset.json().body;
+        this.model.type   = asset.json().type;
+        this.model.global = asset.json().global; 
       });
   }
 

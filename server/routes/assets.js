@@ -15,7 +15,7 @@ module.exports = class Assets {
     }
 
     post(req, res) {
-        this.db.collection('Assets').insertOne({title: req.body.title, type: req.body.type, body: req.body.body}, (err, result) => {
+        this.db.collection('Assets').insertOne({title: req.body.title, type: req.body.type, global: req.body.global, body: req.body.body}, (err, result) => {
             if (err) throw err;
             let file = Assets._getfilePath(req.body.type, req.body.title);
             fs.writeFile(file, req.body.body, (err, success) => {
@@ -29,7 +29,17 @@ module.exports = class Assets {
         const query = { title: req.body.title, type: req.body.type};
         let title   = req.body.newTitle || req.body.title;
         let type    = req.body.newType || req.body.type;
-        const updatedValues = { title: title, type: type, body: req.body.body};
+        const updatedValues = { title: title, type: type, body: req.body.body, global: req.body.global};
+
+        if (req.body.global) {
+            this.db.collection('GlobalAssets').updateOne(query, {title: title, type: type, global: true}, (err, result) => {
+                if (err) throw err;
+            });
+        } else {
+            this.db.collection('GlobalAssets').deleteOne({title: req.body.title, type: req.body.type}, (err, result) => {
+                if (err) throw err;
+            });    
+        }
 
        this.db.collection('Assets').updateOne(query, updatedValues, (err, result) => {
             if (err) throw err;
