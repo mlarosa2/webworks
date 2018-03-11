@@ -1,4 +1,5 @@
 const fs = require('fs');
+const csrfCheck = require('./csrf-token-check');
 
 module.exports = class Assets {
     constructor(db) {
@@ -15,6 +16,9 @@ module.exports = class Assets {
     }
 
     post(req, res) {
+        if (!csrfCheck(req.headers['csrf-token'], res)) {
+            return;
+        }
         this.db.collection('Assets').insertOne({title: req.body.title, type: req.body.type, global: req.body.global, body: req.body.body}, (err, result) => {
             if (err) throw err;
             let file = Assets._getfilePath(req.body.type, req.body.title);
@@ -26,6 +30,9 @@ module.exports = class Assets {
     }
 
     put(req, res) {
+        if (!csrfCheck(req.headers['csrf-token'], res)) {
+            return;
+        }
         const query = { title: req.body.title, type: req.body.type};
         let title   = req.body.newTitle || req.body.title;
         let type    = req.body.newType || req.body.type;

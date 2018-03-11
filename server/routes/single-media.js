@@ -1,5 +1,6 @@
 const fs           = require('fs');
 const multer       = require('multer');
+const csrfCheck    = require('./csrf-token-check');
 const storage      = multer.diskStorage({
     destination: (req, file, cb) => {
         cb(null, __dirname + '/../../media/');
@@ -27,6 +28,9 @@ module.exports = class SingleMedia {
     }
 
     delete(req, res) {
+        if (!csrfCheck(req.headers['csrf-token'], res)) {
+            return;
+        }
         const metaDir  = __dirname + '/../../meta-media/';
         const mediaDir = __dirname + '/../../media/'; 
         this.db.collection('Media').deleteOne({title: req.params.title}, (err, result) => {

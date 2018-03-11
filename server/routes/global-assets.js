@@ -1,9 +1,14 @@
+const csrfCheck = require('./csrf-token-check');
+
 module.exports = class GlobalAssets {
     constructor(db) {
         this.db = db;
     }
 
     post(req, res) {
+        if (!csrfCheck(req.headers['csrf-token'], res)) {
+            return;
+        }
         this.db.collection('GlobalAssets').insertOne({title: req.body.title, type: req.body.type}, (err, result) => {
             if (err) throw err;
             GlobalAssets.updateAsset(req.body.title, req.body.type, true);
@@ -11,6 +16,9 @@ module.exports = class GlobalAssets {
     }
 
     delete(req, res) {
+        if (!csrfCheck(req.headers['csrf-token'], res)) {
+            return;
+        }
         this.db.collection('GlobalAssets').deleteOne({title: req.params.title, type: req.params.type}, (err, result) => {
             if (err) throw err;
             GlobalAssets.updateAsset(req.params.title, req.params.type, false);

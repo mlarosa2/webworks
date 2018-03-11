@@ -15,7 +15,14 @@ export class PageService {
   private selectedPage: string;
   private titles: string[];
   constructor(private http: Http,
-              private assetService: AssetService) { }
+              private assetService: AssetService) {
+      let token: string;
+      let cookies = document.cookie.split('=');
+      let csrfIdx = cookies.indexOf('27a558298ca47358d3bb29e74323aa832fc4f61374759d221e7e18610f853fcd');
+      token = cookies[csrfIdx + 1];
+
+      this.headers.append('csrf-token', token);
+  }
 
   getPageTitles(): Promise<any> {
     return this.http

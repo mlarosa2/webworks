@@ -6,6 +6,7 @@ const helmet     = require('helmet');
 const bcrypt     = require('bcrypt');
 const crypto     = require('crypto');
 
+global.csrfToken = crypto.randomBytes(8).toString('hex');
 const api = require('./server/routes/api');
 
 const app = express();
@@ -23,9 +24,11 @@ app.use('/api', api);
 
 app.get('*', (req, res) => {
     const hash = crypto.createHash('sha256');
-    const token = crypto.randomBytes(8).toString('hex');
     hash.update('csurf');
-    res.append('Set-Cookie', hash.digest('hex') + '=' + token + '; Path=/;');
+    // setting again so csurf token is different across access to sites instead of per server starting up
+    global.csrfToken = crypto.randomBytes(8).toString('hex');
+
+    res.append('Set-Cookie', hash.digest('hex') + '=' + global.csrfToken + '; Path=/;');
     res.sendFile(path.join(__dirname, 'dist/index.html'));
 });
 

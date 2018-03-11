@@ -1,5 +1,6 @@
 const fs           = require('fs');
 const multer       = require('multer');
+const csrfCheck    = require('./csrf-token-check');
 const storage      = multer.diskStorage({
     destination: (req, file, cb) => {
         cb(null, __dirname + '/../../media/');
@@ -16,6 +17,9 @@ module.exports = class Media {
     }
 
     post(req, res) {
+        if (!csrfCheck(req.headers['csrf-token'], res)) {
+            return;
+        }
        upload(req, res, err => {
             if (err) throw err;
             fs.writeFile(`${__dirname}/../../meta-media/${Date.now()}-${req.file.originalname}`, '', (err) => {

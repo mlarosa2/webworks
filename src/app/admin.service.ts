@@ -13,7 +13,7 @@ export class AdminService {
                 private mediaService: MediaService,
                 private collectionsService: CollectionsService,
                 private formsService: FormsService,
-                private assetService: AssetService) { }
+                private assetService: AssetService) {}
 
   getCurrentView(): string {
     return this.currentView;

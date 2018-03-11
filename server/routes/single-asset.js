@@ -1,4 +1,5 @@
-const fs = require('fs');
+const fs        = require('fs');
+const csrfCheck = require('./csrf-token-check');
 
 module.exports = class SingleAsset {
     constructor(db) {
@@ -17,6 +18,9 @@ module.exports = class SingleAsset {
     }
 
     delete(req, res) {
+        if (!csrfCheck(req.headers['csrf-token'], res)) {
+            return;
+        }
         this.db.collection('Assets').deleteOne({title: req.params.title, type: req.params.type}, (err, result) => {
             if (err) throw err;
             let file = SingleAsset._getfilePath(req.params.type, req.params.title);

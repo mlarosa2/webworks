@@ -16,7 +16,14 @@ export class FormsService {
   private formSelected: boolean = false; //determines if a form is selected
   private selectedForm: Form //stores the selected form
 
-  constructor(private http: Http) { }
+  constructor(private http: Http) {
+      let token: string;
+      let cookies = document.cookie.split('=');
+      let csrfIdx = cookies.indexOf('27a558298ca47358d3bb29e74323aa832fc4f61374759d221e7e18610f853fcd');
+      token = cookies[csrfIdx + 1];
+
+      this.headers.append('csrf-token', token);
+  }
 
   isFormView(): boolean {
     return this.viewForms;
