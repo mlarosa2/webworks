@@ -3,11 +3,14 @@ const path       = require('path');
 const http       = require('http');
 const bodyParser = require('body-parser');
 const helmet     = require('helmet');
+const bcrypt     = require('bcrypt');
+const crypto     = require('crypto');
 
 const api = require('./server/routes/api');
 
 const app = express();
 
+// security
 app.use(helmet());
 
 app.use(bodyParser.json());
@@ -19,6 +22,10 @@ app.use('/assets', express.static(path.join(__dirname, 'assets')));
 app.use('/api', api);
 
 app.get('*', (req, res) => {
+    const hash = crypto.createHash('sha256');
+    const token = crypto.randomBytes(8).toString('hex');
+    hash.update('csurf');
+    res.append('Set-Cookie', hash.digest('hex') + '=' + token + '; Path=/;');
     res.sendFile(path.join(__dirname, 'dist/index.html'));
 });
 
