@@ -1,6 +1,6 @@
 module.exports = (token, res) => {
     if (token !== global.csrfToken) {
-        res.sendStatus(301);
+        res.sendStatus(401);
 
         return false;
     }
