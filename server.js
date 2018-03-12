@@ -6,7 +6,6 @@ const helmet     = require('helmet');
 const bcrypt     = require('bcrypt');
 const crypto     = require('crypto');
 
-global.csrfToken = crypto.randomBytes(8).toString('hex');
 const api = require('./server/routes/api');
 
 const app = express();
