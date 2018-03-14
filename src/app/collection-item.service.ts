@@ -115,6 +115,9 @@ export class CollectionItemService {
           belongsTo: this.currentCollection,
           fields: collectionItem.getFields(),
           newTitle: collectionItem.getTitle()
+        },
+        {
+          headers: this.headers
         }
       )
       .toPromise()

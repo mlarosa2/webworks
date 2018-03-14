@@ -104,7 +104,7 @@ export class MediaService {
 
   updateMedia(originalTitle: string, mediaData: any): void {
     this.http
-      .put(`${this.mediaUrl}/media/${originalTitle}`, { updateTitle: `${mediaData.name}${mediaData.ext}`})
+      .put(`${this.mediaUrl}/media/${originalTitle}`, { updateTitle: `${mediaData.name}${mediaData.ext}`}, {headers: this.headers})
       .toPromise()
       .then(response => {
         this.setFiles();

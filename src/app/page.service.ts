@@ -120,7 +120,7 @@ export class PageService {
 
   updatePage(title: string, body: Page): Promise<void> {
     return this.http
-      .put(`${this.pageUrl}/page/${title}`, {body: body})
+      .put(`${this.pageUrl}/page/${title}`, {body: body}, {headers: this.headers})
       .toPromise()
       .then(() => this.setPageHome())
       .catch(this.handleError);

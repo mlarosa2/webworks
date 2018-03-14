@@ -104,7 +104,7 @@ export class FormsService {
 
   updateFormRecord(title: string, fields: object[], newTitle: string): Promise<void> {
     return this.http
-      .put(`${this.formsUrl}`, {fields: fields, newTitle: newTitle, title: title})
+      .put(`${this.formsUrl}`, {fields: fields, newTitle: newTitle, title: title}, {headers: this.headers})
       .toPromise()
       .then(() => {
         this.setFormView();

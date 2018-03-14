@@ -125,7 +125,7 @@ export class CollectionsService {
 
   updateCollectionRecord(title: string, fields: string[], newTitle: string): Promise<void> {
     return this.http
-      .put(`${this.collectionsUrl}`, {fields: fields, newTitle: newTitle, title: title})
+      .put(`${this.collectionsUrl}`, {fields: fields, newTitle: newTitle, title: title}, {headers: this.headers})
       .toPromise()
       .then(() => {
         this.setCollectionView();
