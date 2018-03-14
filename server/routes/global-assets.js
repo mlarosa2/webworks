@@ -5,6 +5,15 @@ module.exports = class GlobalAssets {
         this.db = db;
     }
 
+    get(req, res) {
+        this.db.collection('GlobalAssets').find({}).toArray((err, result) => {
+            if (err) throw err;
+            let globals = result.map(worldwide => worldwide);
+            res.setHeader('Content-Type', 'application/json');
+            res.send(JSON.stringify(globals));
+        });
+    }
+
     post(req, res) {
         if (!csrfCheck(req.headers['csrf-token'], res)) {
             return;

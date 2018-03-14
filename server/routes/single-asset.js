@@ -23,6 +23,9 @@ module.exports = class SingleAsset {
         }
         this.db.collection('Assets').deleteOne({title: req.params.title, type: req.params.type}, (err, result) => {
             if (err) throw err;
+            this.db.collection('GlobalAssets').deleteOne({title: req.params.title, type: req.params.type}, (err, result) => {
+                if (err) throw err;
+            });
             let file = SingleAsset._getfilePath(req.params.type, req.params.title);
             fs.unlink(file, (err, success) => {
                 if (err) throw err;

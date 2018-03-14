@@ -96,6 +96,7 @@ mongo.connect(mongoConnect, (err, db) => {
         .delete(singleAsset.delete.bind(singleAsset));
 
     router.route('/global-assets')
+        .get(globalAssets.get.bind(globalAssets))
         .post(globalAssets.post.bind(globalAssets));
     
     router.route('/global-assets/:title/:type')
