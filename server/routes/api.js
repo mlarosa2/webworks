@@ -98,8 +98,8 @@ mongo.connect(mongoConnect, (err, db) => {
     router.route('/global-assets')
         .post(globalAssets.post.bind(globalAssets));
     
-    router.route('global-assets/:title/:type')
-        .delete(globalAssets.post.bind(globalAssets));
+    router.route('/global-assets/:title/:type')
+        .delete(globalAssets.delete.bind(globalAssets));
 });
 
 module.exports = router;

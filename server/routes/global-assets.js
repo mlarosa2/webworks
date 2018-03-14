@@ -9,9 +9,10 @@ module.exports = class GlobalAssets {
         if (!csrfCheck(req.headers['csrf-token'], res)) {
             return;
         }
+        const db = this.db;
         this.db.collection('GlobalAssets').insertOne({title: req.body.title, type: req.body.type}, (err, result) => {
             if (err) throw err;
-            GlobalAssets.updateAsset(req.body.title, req.body.type, true);
+            GlobalAssets.updateAsset(req.body.title, req.body.type, true, db, res);
         });      
     }
 
@@ -19,17 +20,20 @@ module.exports = class GlobalAssets {
         if (!csrfCheck(req.headers['csrf-token'], res)) {
             return;
         }
+
+        const db = this.db;
         this.db.collection('GlobalAssets').deleteOne({title: req.params.title, type: req.params.type}, (err, result) => {
             if (err) throw err;
-            GlobalAssets.updateAsset(req.params.title, req.params.type, false);
+            GlobalAssets.updateAsset(req.params.title, req.params.type, false, db, res);
         });      
     }
 
-    static updateAsset(title, type, worldwide) {
+    static updateAsset(title, type, worldwide, db, res) {
         const query = { title: title, type: type};
-        this.db.collection('Assets').updateOne(query, {global: worldwide}, (err, result) => {
+
+        db.collection('Assets').updateOne(query, {$set: {global: worldwide}}, (err, result) => {
             if (err) throw err;
-            res.send(200);
+            res.sendStatus(200);
         });
     }
 };
