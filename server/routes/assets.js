@@ -39,7 +39,10 @@ module.exports = class Assets {
         const updatedValues = { title: title, type: type, body: req.body.body, global: req.body.global};
 
         if (req.body.global) {
-            this.db.collection('GlobalAssets').updateOne(query, {title: title, type: type, global: true}, (err, result) => {
+            this.db.collection('GlobalAssets').deleteOne({title: req.body.title, type: req.body.type}, (err, result) => {
+                if (err) throw err;
+            });
+            this.db.collection('GlobalAssets').insertOne({title: title, type: type}, (err, result) => {
                 if (err) throw err;
             });
         } else {
