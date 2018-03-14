@@ -32,6 +32,13 @@ export class GlobalAssetsService {
       .catch(this.handleError);
   }
 
+  getAllGlobals(): Promise<any> {
+    return this.http
+      .get(`${this.globalAssetUrl}/global-assets`)
+      .toPromise()
+      .catch(this.handleError);
+  } 
+
   private handleError(error: any): void {
     console.log('woo boy build this out');
     console.error(error._body);
