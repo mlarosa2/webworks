@@ -19,6 +19,13 @@ module.exports = class Assets {
         if (!csrfCheck(req.headers['csrf-token'], res)) {
             return;
         }
+
+        if (req.body.global) {
+            this.db.collection('GlobalAssets').insertOne({title: req.body.title, type: req.body.type}, (err, result) => {
+                if (err) throw err;
+            });
+        }
+
         this.db.collection('Assets').insertOne({title: req.body.title, type: req.body.type, global: req.body.global, body: req.body.body}, (err, result) => {
             if (err) throw err;
             let file = Assets._getfilePath(req.body.type, req.body.title);
