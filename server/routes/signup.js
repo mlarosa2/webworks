@@ -16,7 +16,7 @@ module.exports = class Login {
                 res.sendStatus(500);
             } else {
                 password = hash;
-                this.db.collection('Users').insertOne({ name: req.body.username,  password: password, email: req.body.email}).toArray((err, result) => {
+                this.db.collection('Users').insertOne({ name: req.body.username,  password: password, email: req.body.email}, (err, result) => {
                     if (err) {
                         res.sendStatus(500);
                     } else {

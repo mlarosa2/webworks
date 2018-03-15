@@ -33,3 +33,9 @@ div {
 button {
     width: 100%;
 }
+
+.link {
+    color: dodgerblue;
+    text-decoration: underline;
+    cursor: pointer;
+}

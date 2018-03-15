@@ -16,7 +16,7 @@
     </div>
     <div><button type="submit" [disabled]="!adminLoginForm.form.valid">Log In</button></div>
   </form>
-  <p>Or <span (click)="setCreateAccount(true);">click here</span> to create a new account.</p>
+  <p>Or <span class="link" (click)="setCreateAccount(true);">click here</span> to create a new account.</p>
 </div>
 <div *ngIf="newAccount">
   <h1>Create a new account</h1>
@@ -31,7 +31,6 @@
     <div>
       <label for="user-email">Email</label>
       <input type="email" 
-             required
              [(ngModel)]="model.email"
              name="user-email">
     </div>    
@@ -45,9 +44,10 @@
       <label for="confirm-password">Confirm Password</label>
       <input type="password"
              required
-             [(ngModel)]="model.password" name="confirm-password">
+             [(ngModel)]="model.checkpassword" name="confirm-password">
     </div>
     <div *ngIf="!model.confirmPassword()">Passwords do not match.</div>
     <div><button type="submit" [disabled]="!signupForm.form.valid || !model.confirmPassword()">Sign up!</button></div>
   </form>
+  <p><span class="link" (click)="setCreateAccount(false);">Click here</span> to log in.</p>
 </div>
