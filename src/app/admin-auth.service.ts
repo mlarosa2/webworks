@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Headers, Http } from '@angular/http';
+import { AdminUser } from './admin-user';
 
 import 'rxjs/add/operator/toPromise';
 
@@ -32,6 +33,15 @@ export class AdminAuthService {
       })
       .catch(this.handleError);
     
+  }
+
+  signUp(user: AdminUser): Promise<any> {
+    return this.http
+      .post('api/signup', 
+            JSON.stringify({username: user.username, password: user.password, email: user.email}),
+            {headers: this.headers}
+      )
+      .toPromise();
   }
 
   getUserName(): string {

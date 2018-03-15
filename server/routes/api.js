@@ -4,6 +4,7 @@ const mongo        = require('mongodb').MongoClient;
 const mongoConnect = require('../secrets').mongo;
 // include REST route classes
 const Login                 = require('./login');
+const Signup                = require('./signup');
 const Pages                 = require('./pages');
 const SinglePage            = require('./single-page');
 const Media                 = require('./media');
@@ -21,6 +22,7 @@ const GlobalAssets          = require('./global-assets');
 
 mongo.connect(mongoConnect, (err, db) => {
     const login                 = new Login(db); // /login
+    const signup                = new Signup(db) // /signup
     const pages                 = new Pages(db); // /pages
     const singlePage            = new SinglePage(db); // /page/:title
     const media                 = new Media(db); // /media
@@ -38,6 +40,9 @@ mongo.connect(mongoConnect, (err, db) => {
     
     router.route('/login')
         .post(login.post.bind(login)); // binding so this context is consistent in class
+
+    router.route('/signup')
+        .post(signup.post.bind(signup));
 
     router.route('/pages')
         .get(pages.get.bind(pages))
