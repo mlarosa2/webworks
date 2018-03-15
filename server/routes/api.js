@@ -40,6 +40,9 @@ mongo.connect(mongoConnect, (err, db) => {
     
     router.route('/login')
         .post(login.post.bind(login)); // binding so this context is consistent in class
+    
+    router.route('/login/fe')   
+        .post(login.postFe.bind(login)) // when checking login from cookie
 
     router.route('/signup')
         .post(signup.post.bind(signup));
