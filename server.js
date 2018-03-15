@@ -3,7 +3,6 @@ const path       = require('path');
 const http       = require('http');
 const bodyParser = require('body-parser');
 const helmet     = require('helmet');
-const bcrypt     = require('bcrypt');
 const crypto     = require('crypto');
 
 const api = require('./server/routes/api');
