@@ -92,7 +92,7 @@ export class MediaService {
 
   deleteFile(file: string): void {
     this.http
-      .delete(`${this.mediaUrl}/media/${file}`, {body: {csrf: this.csrfToken}})
+      .delete(`${this.mediaUrl}/media/${file}`, {headers: this.headers, body: {csrf: this.csrfToken}})
       .toPromise()
       .then(response => {
         this.setFiles();
@@ -103,7 +103,7 @@ export class MediaService {
 
   updateMedia(originalTitle: string, mediaData: any): void {
     this.http
-      .put(`${this.mediaUrl}/media/${originalTitle}`, { updateTitle: `${mediaData.name}${mediaData.ext}`, csrf: this.csrfToken})
+      .put(`${this.mediaUrl}/media/${originalTitle}`, { updateTitle: `${mediaData.name}${mediaData.ext}`, csrf: this.csrfToken}, {headers: this.headers})
       .toPromise()
       .then(response => {
         this.setFiles();

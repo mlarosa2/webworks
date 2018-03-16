@@ -87,7 +87,7 @@ export class CollectionsService {
   loadTitles(): void {
     this.getAllTitles()
       .then(response => {
-        this.collectionsList = JSON.parse(response._body).map(collection => {return collection.title;});
+        this.collectionsList = JSON.parse(response._body).map(collection => collection.title);
       })
       .catch(this.handleError);
   }
@@ -103,7 +103,7 @@ export class CollectionsService {
   saveCollection(collection: Collection): void {
     collection.csrf = this.csrfToken;
     this.http
-      .post(`${this.collectionsUrl}`, JSON.stringify(collection))
+      .post(`${this.collectionsUrl}`, JSON.stringify(collection), {headers: this.headers})
       .toPromise()
       .then(response => {
         this.loadTitles();
@@ -114,7 +114,7 @@ export class CollectionsService {
 
   deleteCollection(title: String):void {
     this.http
-      .delete(`${this.collectionsUrl}`, {body: {title: title, csrf: this.csrfToken}})
+      .delete(`${this.collectionsUrl}`, {headers: this.headers, body: {title: title, csrf: this.csrfToken}})
         .toPromise()
         .then(() => {
           this.setCollectionView();
@@ -124,7 +124,7 @@ export class CollectionsService {
 
   updateCollectionRecord(title: string, fields: string[], newTitle: string): Promise<void> {
     return this.http
-      .put(`${this.collectionsUrl}`, {fields: fields, newTitle: newTitle, title: title, csrf: this.csrfToken})
+      .put(`${this.collectionsUrl}`, {fields: fields, newTitle: newTitle, title: title, csrf: this.csrfToken}, {headers: this.headers})
       .toPromise()
       .then(() => {
         this.setCollectionView();

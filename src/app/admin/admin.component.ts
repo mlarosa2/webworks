@@ -45,4 +45,8 @@ export class AdminComponent implements OnInit {
     return this.deleteConfirmationOverlayService.viewOverlay();
   }
 
+  checkingFeAuth(): boolean {
+    return this.adminAuthService.cookieAuth();
+  }
+
 }

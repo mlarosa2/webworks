@@ -12,9 +12,14 @@ export class AdminAuthService {
   private headers: Headers = new Headers({'Content-Type': 'application/json'});
   private authUrl: string = 'api';
   private csrfToken: string;
+  private checkingFeAuth: boolean = false;
   constructor(private http: Http,
               private cookieService: CookieService) {
       this.csrfToken = cookieService.getCSURFToken();
+
+    if (this.cookieService.authenticated()) {
+      this.feLogin();
+    }
   }
 
   isLoggedIn(): boolean {
@@ -33,6 +38,24 @@ export class AdminAuthService {
     
   }
 
+  feLogin() {
+    this.checkingFeAuth = true;
+    this.http
+      .post(`${this.authUrl}/login/fe`, {csrf: this.csrfToken}, {headers: this.headers})
+      .toPromise()
+      .then((res) => {
+        try {
+          this.loggedIn = true;
+          this.checkingFeAuth = false;
+          this.userName = res.json().user;
+        } catch (err) {
+          this.loggedIn = false;
+          this.userName = '';
+          // fail silently
+        }
+      }); // dont want to catch not error if cant sign in via cookie
+  }
+
   signUp(user: AdminUser): Promise<any> {
     return this.http
       .post('api/signup', 
@@ -42,8 +65,22 @@ export class AdminAuthService {
       .toPromise();
   }
 
+  signOut(): void {
+    this.http
+      .delete(`${this.authUrl}/login`, {headers: this.headers})
+      .toPromise()
+      .then(res => {
+        this.loggedIn = false;
+      })
+      .catch(this.handleError);
+  }
+
   getUserName(): string {
     return this.userName;
+  }
+
+  cookieAuth(): boolean {
+    return this.checkingFeAuth;
   }
 
   private handleError(error: any): void {

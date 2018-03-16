@@ -97,7 +97,7 @@ export class AssetService {
 
   deleteAsset(title: string, type: string): Promise<void> {
     return this.http
-      .delete(`${this.assetUrl}/asset/${title}/${type}`, {body: {csrf: this.csrfToken}})
+      .delete(`${this.assetUrl}/asset/${title}/${type}`, {headers: this.headers, body: {csrf: this.csrfToken}})
       .toPromise()
       .then(() => null)
       .catch(this.handleError);
@@ -105,7 +105,7 @@ export class AssetService {
 
   updateAsset(title: string, body: string, type: string, model: any): Promise<void> {
     return this.http
-      .put(`${this.assetUrl}/assets`, {type: type, body: body, title: title, global: model.global, newType: model.type, newTitle: model.title, csrf: this.csrfToken})
+      .put(`${this.assetUrl}/assets`, {type: type, body: body, title: title, global: model.global, newType: model.type, newTitle: model.title, csrf: this.csrfToken}, {headers: this.headers})
       .toPromise()
       .then(() => this.setAssetHome())
       .catch(this.handleError);

@@ -70,7 +70,7 @@ export class FormsService {
   loadTitles(): void {
     this.getAllTitles()
       .then(response => {
-        this.formsList = JSON.parse(response._body).map(form => {return form.title;});
+        this.formsList = JSON.parse(response._body).map(form => form.title);
       })
       .catch(this.handleError);
   }
@@ -82,7 +82,7 @@ export class FormsService {
   saveForm(form: Form): void {
     form.csrf = this.csrfToken;
     this.http
-      .post(`${this.formsUrl}`, JSON.stringify(form))
+      .post(`${this.formsUrl}`, JSON.stringify(form), {headers: this.headers})
       .toPromise()
       .then(response => {
         this.loadTitles();
@@ -93,7 +93,7 @@ export class FormsService {
 
   deleteForm(title: String):void {
     this.http
-      .delete(`${this.formsUrl}`, {body: {title: title, csrf: this.csrfToken}})
+      .delete(`${this.formsUrl}`, {headers: this.headers, body: {title: title, csrf: this.csrfToken}})
         .toPromise()
         .then(() => {
           this.setFormView();
@@ -103,7 +103,7 @@ export class FormsService {
 
   updateFormRecord(title: string, fields: object[], newTitle: string): Promise<void> {
     return this.http
-      .put(`${this.formsUrl}`, {fields: fields, newTitle: newTitle, title: title, csrf: this.csrfToken})
+      .put(`${this.formsUrl}`, {fields: fields, newTitle: newTitle, title: title, csrf: this.csrfToken}, {headers: this.headers})
       .toPromise()
       .then(() => {
         this.setFormView();

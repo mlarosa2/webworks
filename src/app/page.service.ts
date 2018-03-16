@@ -112,7 +112,7 @@ export class PageService {
 
   deletePage(title: string): Promise<void> {
     return this.http
-      .delete(`${this.pageUrl}/page/${title}`, {body: {csrf: this.csrfToken}})
+      .delete(`${this.pageUrl}/page/${title}`, {headers: this.headers, body: {csrf: this.csrfToken}})
       .toPromise()
       .then(() => null)
       .catch(this.handleError);
@@ -120,7 +120,7 @@ export class PageService {
 
   updatePage(title: string, body: Page): Promise<void> {
     return this.http
-      .put(`${this.pageUrl}/page/${title}`, {body: body, csrf: this.csrfToken})
+      .put(`${this.pageUrl}/page/${title}`, {body: body, csrf: this.csrfToken}, {headers: this.headers})
       .toPromise()
       .then(() => this.setPageHome())
       .catch(this.handleError);

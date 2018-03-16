@@ -18,14 +18,14 @@ export class GlobalAssetsService {
 
   createNewGlobalAsset(title: string, type: string): Promise<any> {
     return this.http
-      .post(`${this.globalAssetUrl}/global-assets`, JSON.stringify({title: title, type: type, csrf: this.csrfToken}))
+      .post(`${this.globalAssetUrl}/global-assets`, JSON.stringify({title: title, type: type, csrf: this.csrfToken}), {headers: this.headers})
       .toPromise()
       .catch(this.handleError);
   }
 
   deleteGlobalAsset(title: string, type: string): Promise<any> {
     return this.http
-      .delete(`${this.globalAssetUrl}/global-assets/${title}/${type}`, {body: {csrf: this.csrfToken}})
+      .delete(`${this.globalAssetUrl}/global-assets/${title}/${type}`, {headers: this.headers, body: {csrf: this.csrfToken}})
       .toPromise()
       .catch(this.handleError);
   }

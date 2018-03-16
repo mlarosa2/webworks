@@ -35,6 +35,7 @@ import { NewAssetFormComponent } from './new-asset-form/new-asset-form.component
 import { AssetFilterPipe } from './asset-filter.pipe';
 import { DeleteConfirmationOverlayComponent } from './delete-confirmation-overlay/delete-confirmation-overlay.component';
 import { FilterHomePagePipe } from './filter-home-page.pipe';
+import { CookieService } from './cookie.service';
 
 @NgModule({
   declarations: [
@@ -74,7 +75,10 @@ import { FilterHomePagePipe } from './filter-home-page.pipe';
     HttpModule,
     AppRoutingModule
   ],
-  providers: [AdminAuthService],
+  providers: [
+    AdminAuthService,
+    CookieService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

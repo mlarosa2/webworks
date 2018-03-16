@@ -38,8 +38,9 @@ mongo.connect(mongoConnect, (err, db) => {
     const singleAsset           = new SingleAsset(db); // /asset 
     const globalAssets          = new GlobalAssets(db); // /global-assets
     
-    router.route('/login')
-        .post(login.post.bind(login)); // binding so this context is consistent in class
+    router.route('/login') // handles sign out too
+        .post(login.post.bind(login)) // binding so this context is consistent in class
+        .delete(login.delete.bind(login));
     
     router.route('/login/fe')   
         .post(login.postFe.bind(login)) // when checking login from cookie

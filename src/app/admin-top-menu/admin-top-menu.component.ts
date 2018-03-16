@@ -5,6 +5,7 @@ import { MediaService } from '../media.service';
 import { CollectionsService } from '../collections.service';
 import { FormsService } from '../forms.service';
 import { AssetService } from '../asset.service';
+import { AdminAuthService } from '../admin-auth.service';
 
 @Component({
   selector: 'app-admin-top-menu',
@@ -20,9 +21,14 @@ export class AdminTopMenuComponent implements OnInit {
               private mediaService: MediaService,
               private collectionsService: CollectionsService,
               private formsService: FormsService,
-              private assetService: AssetService) { }
+              private assetService: AssetService,
+              private adminAuthService: AdminAuthService) { }
 
   ngOnInit() {
+  }
+  
+  signOut(): void {
+    this.adminAuthService.signOut();
   }
 
   goHome(): void {
