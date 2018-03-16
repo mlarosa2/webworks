@@ -15,7 +15,7 @@ module.exports = class GlobalAssets {
     }
 
     post(req, res) {
-        if (!csrfCheck(req.headers['csrf-token'], res)) {
+        if (!csrfCheck(req.body.csrf, res)) {
             return;
         }
         const db = this.db;
@@ -26,7 +26,7 @@ module.exports = class GlobalAssets {
     }
 
     delete(req, res) {
-        if (!csrfCheck(req.headers['csrf-token'], res)) {
+        if (!csrfCheck(req.body.csrf, res)) {
             return;
         }
 

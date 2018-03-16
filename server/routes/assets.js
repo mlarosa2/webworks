@@ -16,7 +16,7 @@ module.exports = class Assets {
     }
 
     post(req, res) {
-        if (!csrfCheck(req.headers['csrf-token'], res)) {
+        if (!csrfCheck(req.body.csrf, res)) {
             return;
         }
 
@@ -37,7 +37,7 @@ module.exports = class Assets {
     }
 
     put(req, res) {
-        if (!csrfCheck(req.headers['csrf-token'], res)) {
+        if (!csrfCheck(req.body.csrf, res)) {
             return;
         }
         const query = { title: req.body.title, type: req.body.type};

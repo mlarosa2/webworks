@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Headers, Http } from '@angular/http';
 import { Form } from './form';
+import { CookieService } from './cookie.service';
 
 import 'rxjs/add/operator/toPromise';
 
@@ -15,14 +16,11 @@ export class FormsService {
   private formsList: string[];
   private formSelected: boolean = false; //determines if a form is selected
   private selectedForm: Form //stores the selected form
+  private csrfToken: string;
 
-  constructor(private http: Http) {
-      let token: string;
-      let cookies = document.cookie.split('=');
-      let csrfIdx = cookies.indexOf('27a558298ca47358d3bb29e74323aa832fc4f61374759d221e7e18610f853fcd');
-      token = cookies[csrfIdx + 1];
-
-      this.headers.append('csrf-token', token);
+  constructor(private http: Http,
+              private cookieService: CookieService) {
+      this.csrfToken = cookieService.getCSURFToken();
   }
 
   isFormView(): boolean {
@@ -82,8 +80,9 @@ export class FormsService {
   }
 
   saveForm(form: Form): void {
+    form.csrf = this.csrfToken;
     this.http
-      .post(`${this.formsUrl}`, JSON.stringify(form), {headers: this.headers})
+      .post(`${this.formsUrl}`, JSON.stringify(form))
       .toPromise()
       .then(response => {
         this.loadTitles();
@@ -94,7 +93,7 @@ export class FormsService {
 
   deleteForm(title: String):void {
     this.http
-      .delete(`${this.formsUrl}`, {headers: this.headers, body: {title: title}})
+      .delete(`${this.formsUrl}`, {body: {title: title, csrf: this.csrfToken}})
         .toPromise()
         .then(() => {
           this.setFormView();
@@ -104,7 +103,7 @@ export class FormsService {
 
   updateFormRecord(title: string, fields: object[], newTitle: string): Promise<void> {
     return this.http
-      .put(`${this.formsUrl}`, {fields: fields, newTitle: newTitle, title: title}, {headers: this.headers})
+      .put(`${this.formsUrl}`, {fields: fields, newTitle: newTitle, title: title, csrf: this.csrfToken})
       .toPromise()
       .then(() => {
         this.setFormView();

@@ -18,7 +18,7 @@ module.exports = class SinglePage {
     }
 
     delete(req, res) {
-        if (!csrfCheck(req.headers['csrf-token'], res)) {
+        if (!csrfCheck(req.body.csrf, res)) {
             return;
         }
         this.db.collection('Pages').deleteOne({title: req.params.title}, (err, result) => {
@@ -28,7 +28,7 @@ module.exports = class SinglePage {
     }
 
     put(req, res) {
-        if (!csrfCheck(req.headers['csrf-token'], res)) {
+        if (!csrfCheck(req.body.csrf, res)) {
             return;
         }
         const query         = { title: req.params.title };

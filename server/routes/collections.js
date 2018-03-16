@@ -15,7 +15,7 @@ module.exports = class Collections {
     }
 
     post(req, res) {
-        if (!csrfCheck(req.headers['csrf-token'], res)) {
+        if (!csrfCheck(req.body.csrf, res)) {
             return;
         }
         this.db.collection('Collections').insertOne({title: req.body.title, fields: req.body.fields}, (err, result) => {
@@ -25,7 +25,7 @@ module.exports = class Collections {
     }
 
     delete(req, res) {
-        if (!csrfCheck(req.headers['csrf-token'], res)) {
+        if (!csrfCheck(req.body.csrf, res)) {
             return;
         }
         this.db.collection('Collections').deleteOne({title: req.body.title}, (err, result) => {
@@ -35,7 +35,7 @@ module.exports = class Collections {
     }
 
     put(req, res) {
-        if (!csrfCheck(req.headers['csrf-token'], res)) {
+        if (!csrfCheck(req.body.csrf, res)) {
             return;
         }
         const query         = { title: req.body.title };

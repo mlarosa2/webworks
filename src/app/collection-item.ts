@@ -2,7 +2,8 @@ export class CollectionItem {
     constructor(
         private title: string,
         private fields: any,
-        private belongsTo: string
+        private belongsTo: string,
+        public csrf?: string
     ) { }
 
     setBelongsTo(name: string): void {

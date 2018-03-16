@@ -28,7 +28,7 @@ module.exports = class SingleMedia {
     }
 
     delete(req, res) {
-        if (!csrfCheck(req.headers['csrf-token'], res)) {
+        if (!csrfCheck(req.body.csrf, res)) {
             return;
         }
         const metaDir  = __dirname + '/../../meta-media/';
@@ -54,6 +54,9 @@ module.exports = class SingleMedia {
     }
 
     put(req, res) {
+        if (!csrfCheck(req.body.csrf, res)) {
+            return;
+        }
         const metaDir  = __dirname + '/../../meta-media/';
         const mediaDir = __dirname + '/../../media/'; 
         const query         = { title: req.params.title };

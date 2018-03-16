@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Headers, Http } from '@angular/http';
 import { Media } from './media';
+import { CookieService } from './cookie.service';
 
 import 'rxjs/add/operator/toPromise';
 
@@ -12,13 +13,10 @@ export class MediaService {
   private uploadMode: boolean = false;
   private singleMode: boolean = false;
   private singleFile: string; 
-  constructor(private http: Http) {
-      let token: string;
-      let cookies = document.cookie.split('=');
-      let csrfIdx = cookies.indexOf('27a558298ca47358d3bb29e74323aa832fc4f61374759d221e7e18610f853fcd');
-      token = cookies[csrfIdx + 1];
-
-      this.headers.append('csrf-token', token);
+  private csrfToken: string;
+  constructor(private http: Http,
+              private cookieService: CookieService) {
+      this.csrfToken = cookieService.getCSURFToken();
   }
 
   isUploadMode(): boolean {
@@ -49,6 +47,7 @@ export class MediaService {
   }
 
   upload(formData: FormData): Promise<void> {
+    formData.append('csrf', this.csrfToken);
     return this.http
             .post(`${this.mediaUrl}/media`, formData, new Headers({'Content-Type': 'multipart/form-data'}))
             .toPromise()
@@ -93,7 +92,7 @@ export class MediaService {
 
   deleteFile(file: string): void {
     this.http
-      .delete(`${this.mediaUrl}/media/${file}`, {headers: this.headers})
+      .delete(`${this.mediaUrl}/media/${file}`, {body: {csrf: this.csrfToken}})
       .toPromise()
       .then(response => {
         this.setFiles();
@@ -104,7 +103,7 @@ export class MediaService {
 
   updateMedia(originalTitle: string, mediaData: any): void {
     this.http
-      .put(`${this.mediaUrl}/media/${originalTitle}`, { updateTitle: `${mediaData.name}${mediaData.ext}`}, {headers: this.headers})
+      .put(`${this.mediaUrl}/media/${originalTitle}`, { updateTitle: `${mediaData.name}${mediaData.ext}`, csrf: this.csrfToken})
       .toPromise()
       .then(response => {
         this.setFiles();

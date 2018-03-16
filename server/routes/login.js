@@ -8,7 +8,7 @@ module.exports = class Login {
     }
 
     post(req, res) {
-        if (!csrfCheck(req.headers['csrf-token'], res)) {
+        if (!csrfCheck(req.body.csrf, res)) {
             return;
         }
         this.db.collection('Users').find({ name: req.body.username }).toArray((err, result) => {
@@ -41,7 +41,7 @@ module.exports = class Login {
     }
 
     postFe(req, res) {
-        if (!csrfCheck(req.headers['csrf-token'], res)) {
+        if (!csrfCheck(req.body.csrf, res)) {
             return;
         }
         let user         = req.cookie['46a11f1333d6b2079f8da41e63d810406e9de5b6eb18c80f434f6c79da1f525b'];

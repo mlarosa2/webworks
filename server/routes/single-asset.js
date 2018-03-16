@@ -18,7 +18,7 @@ module.exports = class SingleAsset {
     }
 
     delete(req, res) {
-        if (!csrfCheck(req.headers['csrf-token'], res)) {
+        if (!csrfCheck(req.body.csrf, res)) {
             return;
         }
         this.db.collection('Assets').deleteOne({title: req.params.title, type: req.params.type}, (err, result) => {

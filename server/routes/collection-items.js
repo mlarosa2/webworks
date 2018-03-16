@@ -6,7 +6,7 @@ module.exports = class CollectionItems {
     }
 
     post(req, res) {
-        if (!csrfCheck(req.headers['csrf-token'], res)) {
+        if (!csrfCheck(req.body.csrf, res)) {
             return;
         }
         this.db.collection('CollectionItems').insertOne({title: req.body.title, fields: req.body.fields, belongsTo: req.body.belongsTo}, (err, result) => {
@@ -16,7 +16,7 @@ module.exports = class CollectionItems {
     }
 
     delete(req, res) {
-        if (!csrfCheck(req.headers['csrf-token'], res)) {
+        if (!csrfCheck(req.body.csrf, res)) {
             return;
         }
         this.db.collection('CollectionItems').deleteOne({title: req.body.title, belongsTo: req.body.belongsTo}, (err, result) => {
@@ -26,7 +26,7 @@ module.exports = class CollectionItems {
     }
 
     put(req, res) {
-        if (!csrfCheck(req.headers['csrf-token'], res)) {
+        if (!csrfCheck(req.body.csrf, res)) {
             return;
         }
         const query         = { title: req.body.title, belongsTo: req.body.belongsTo };

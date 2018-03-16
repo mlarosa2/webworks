@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Headers, Http } from '@angular/http';
 import { CollectionItem } from './collection-item';
+import { CookieService } from './cookie.service';
 
 import 'rxjs/add/operator/toPromise';
 
@@ -17,14 +18,11 @@ export class CollectionItemService {
   private newItemView: boolean;
   private updateItemView: boolean;
   private collectionItemToEdit: string;
+  private csrfToken: string;
 
-  constructor(private http: Http) {
-      let token: string;
-      let cookies = document.cookie.split('=');
-      let csrfIdx = cookies.indexOf('27a558298ca47358d3bb29e74323aa832fc4f61374759d221e7e18610f853fcd');
-      token = cookies[csrfIdx + 1];
-
-      this.headers.append('csrf-token', token);
+  constructor(private http: Http,
+              private cookieService: CookieService) {
+      this.csrfToken = cookieService.getCSURFToken();
   }
   
   loadCollectionItems(): void {
@@ -97,6 +95,7 @@ export class CollectionItemService {
   }
 
   addItem(collectionItem: CollectionItem): void {
+    collectionItem.csrf = this.csrfToken
     this.http
       .post(`${this.collectionItemsUrl}`, JSON.stringify(collectionItem), {headers: this.headers})
       .toPromise()
@@ -114,10 +113,8 @@ export class CollectionItemService {
           title: this.collectionItemToEdit,
           belongsTo: this.currentCollection,
           fields: collectionItem.getFields(),
-          newTitle: collectionItem.getTitle()
-        },
-        {
-          headers: this.headers
+          newTitle: collectionItem.getTitle(),
+          csrf: this.csrfToken
         }
       )
       .toPromise()
@@ -137,7 +134,7 @@ export class CollectionItemService {
 
   deleteItem(item: string): void {
     this.http
-  .delete(`${this.collectionItemsUrl}`, {headers: this.headers, body: {title: item, belongsTo: this.currentCollection}})
+  .delete(`${this.collectionItemsUrl}`, {headers: this.headers, body: {title: item, belongsTo: this.currentCollection, csrf: this.csrfToken}})
       .toPromise()
       .then(() => {
         this.loadCollectionItems();

@@ -3,6 +3,8 @@ import { Headers, Http } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { Page } from './page';
 import { AssetService } from './asset.service';
+import { CookieService } from './cookie.service';
+
 import 'rxjs/add/operator/toPromise';
 
 @Injectable()
@@ -14,14 +16,11 @@ export class PageService {
   private createPage: boolean = false;
   private selectedPage: string;
   private titles: string[];
+  private csrfToken: string;
   constructor(private http: Http,
-              private assetService: AssetService) {
-      let token: string;
-      let cookies = document.cookie.split('=');
-      let csrfIdx = cookies.indexOf('27a558298ca47358d3bb29e74323aa832fc4f61374759d221e7e18610f853fcd');
-      token = cookies[csrfIdx + 1];
-
-      this.headers.append('csrf-token', token);
+              private assetService: AssetService,
+              private cookieService: CookieService) {
+      this.csrfToken = cookieService.getCSURFToken();
   }
 
   getPageTitles(): Promise<any> {
@@ -83,7 +82,8 @@ export class PageService {
           body: body, 
           css: css, 
           js: js,
-          meta: meta
+          meta: meta,
+          csrf: this.csrfToken
         }
       ), {headers: this.headers})
       .toPromise()
@@ -112,7 +112,7 @@ export class PageService {
 
   deletePage(title: string): Promise<void> {
     return this.http
-      .delete(`${this.pageUrl}/page/${title}`, {headers: this.headers})
+      .delete(`${this.pageUrl}/page/${title}`, {body: {csrf: this.csrfToken}})
       .toPromise()
       .then(() => null)
       .catch(this.handleError);
@@ -120,7 +120,7 @@ export class PageService {
 
   updatePage(title: string, body: Page): Promise<void> {
     return this.http
-      .put(`${this.pageUrl}/page/${title}`, {body: body}, {headers: this.headers})
+      .put(`${this.pageUrl}/page/${title}`, {body: body, csrf: this.csrfToken})
       .toPromise()
       .then(() => this.setPageHome())
       .catch(this.handleError);

@@ -16,7 +16,7 @@ module.exports = class Pages {
     }
 
     post(req, res) {
-        if (!csrfCheck(req.headers['csrf-token'], res)) {
+        if (!csrfCheck(req.body.csrf, res)) {
             return;
         }
         PageParser(req.body.body).then(parsedPage => {

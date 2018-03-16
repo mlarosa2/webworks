@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Headers, Http } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
+import { CookieService } from './cookie.service';
 
 import 'rxjs/add/operator/toPromise';
 
@@ -14,13 +15,10 @@ export class AssetService {
   private selectedAsset: any;
   private titles: string[];
   private allAssets: any[] = [];
-  constructor(private http: Http) {
-      let token: string;
-      let cookies = document.cookie.split('=');
-      let csrfIdx = cookies.indexOf('27a558298ca47358d3bb29e74323aa832fc4f61374759d221e7e18610f853fcd');
-      token = cookies[csrfIdx + 1];
-
-      this.headers.append('csrf-token', token);
+  private csrfToken: string;
+  constructor(private http: Http,
+              private cookieService: CookieService) {
+      this.csrfToken = cookieService.getCSURFToken();
   }
 
   getAssets(): Promise<any> {
@@ -67,7 +65,7 @@ export class AssetService {
 
   createNewAsset(title: string, body: string, type: string, worldWide: boolean): void {
     this.http
-      .post(`${this.assetUrl}/assets`, JSON.stringify({title: title, body: body, type: type, global: worldWide}), {headers: this.headers})
+      .post(`${this.assetUrl}/assets`, JSON.stringify({title: title, body: body, type: type, global: worldWide, csrf: this.csrfToken}), {headers: this.headers})
       .toPromise()
       .then(res => {
         this.setAssetHome();
@@ -99,7 +97,7 @@ export class AssetService {
 
   deleteAsset(title: string, type: string): Promise<void> {
     return this.http
-      .delete(`${this.assetUrl}/asset/${title}/${type}`, {headers: this.headers})
+      .delete(`${this.assetUrl}/asset/${title}/${type}`, {body: {csrf: this.csrfToken}})
       .toPromise()
       .then(() => null)
       .catch(this.handleError);
@@ -107,7 +105,7 @@ export class AssetService {
 
   updateAsset(title: string, body: string, type: string, model: any): Promise<void> {
     return this.http
-      .put(`${this.assetUrl}/assets`, {type: type, body: body, title: title, global: model.global, newType: model.type, newTitle: model.title}, {headers: this.headers})
+      .put(`${this.assetUrl}/assets`, {type: type, body: body, title: title, global: model.global, newType: model.type, newTitle: model.title, csrf: this.csrfToken})
       .toPromise()
       .then(() => this.setAssetHome())
       .catch(this.handleError);

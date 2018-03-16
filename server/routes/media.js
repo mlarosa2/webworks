@@ -17,7 +17,7 @@ module.exports = class Media {
     }
 
     post(req, res) {
-        if (!csrfCheck(req.headers['csrf-token'], res)) {
+        if (!csrfCheck(req.file.csrf, res)) {
             return;
         }
        upload(req, res, err => {
