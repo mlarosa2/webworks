@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { Meta } from '@angular/platform-browser';
 import { AssetService } from '../asset.service';
 import { PageService } from '../page.service';
 import { GlobalAssetsService } from '../global-assets.service';
+import { FormSubmissionService } from '../form-submission.service';
 
 @Component({
   selector: 'app-frontend',
@@ -11,15 +12,26 @@ import { GlobalAssetsService } from '../global-assets.service';
   providers: [
                 AssetService,
                 PageService,
-                GlobalAssetsService
+                GlobalAssetsService,
+                FormSubmissionService
              ]
 })
 export class FrontendComponent implements OnInit {
-  private page: string;
+  @HostListener('submit') formSubmitted() {
+    event.preventDefault();
+    this.formSubmissionService.submitForm(event.target)
+      .then(res => {
 
+      },
+      err => {
+
+      });
+  }
+  private page: string;
   constructor(private pageService: PageService,
               private metaService: Meta,
-              private globalAssetsService: GlobalAssetsService) { }
+              private globalAssetsService: GlobalAssetsService,
+              private formSubmissionService: FormSubmissionService) { }
 
   ngOnInit() {
     this.page = window.location.pathname.substr(1).replace(/-/g, ' ');

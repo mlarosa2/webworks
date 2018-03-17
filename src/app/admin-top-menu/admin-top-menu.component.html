@@ -1,9 +1,14 @@
-<ul>
-  <li (click)="goHome()"><i class="fa fa-home"></i>
-  <li (click)="newPage()">New Page</li>
-  <li (click)="newMedia()">New Media</li>
-  <li (click)="newCollection()">New Collection</li>
-  <li (click)="newForm()">New Form</li>
-  <li (click)="newAsset()">New Asset</li>
+<ul class="top-menu">
+  <li (click)="goHome()"><i class="fa fa-home"></i></li>
+  <li (click)="toggleCreateMenu()" class="create-tab">Create <i class="fa fa-caret-down"></i>
+    <ul class="sub-menu"
+        [ngClass]="{'closed': !createMenuOpen, 'open': createMenuOpen}">
+      <li (click)="newPage()">New Page</li>
+      <li (click)="newMedia()">New Media</li>
+      <li (click)="newCollection()">New Collection</li>
+      <li (click)="newForm()">New Form</li>
+      <li (click)="newAsset()">New Asset</li>
+    </ul>
+  </li>
   <li (click)="signOut()">Sign Out, {{userName}}</li>
 </ul>

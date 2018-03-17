@@ -10,19 +10,9 @@ module.exports = class ComponentParser {
         if (this.component.hasOwnProperty('belongsTo')) {
             this.parseCollection();
         } else {
-            this.formId = convertToAscii(this.component.title);
+            this.formId = 'wwparsedform-' + this.component.title;
             this.parseForm();
         }
-    }
-
-    convertToAscii(title) {
-        let hyphenatedAscii = ''
-
-        for (let i = 0; i < title.length; i++) {
-            hyphenatedAscii += title.charCodeAt(i) + '-';
-        }
-
-        return hyphenatedAscii;
     }
 
     parseCollection() {
@@ -34,7 +24,7 @@ module.exports = class ComponentParser {
     }
 
     parseForm() {
-        this.parsedComponent += `<form id="${this.formId}">`;
+        this.parsedComponent += `<form class="${this.formId}">`;
         let submitText = this.parsedComponent.submitText || 'Submit';
         
         for (let field in this.component.fields) {
@@ -140,24 +130,24 @@ module.exports = class ComponentParser {
     getComponentUserOptions(userOptions, type, name) {
         return userOptions.map(option => {
             if (type === 'textArea') {
-                return makeSelectOption(option);
+                return ComponentParser.makeSelectOption(option);
             } else if (type === 'radio') {
-                return makeRadio(option, name);
+                return ComponentParser.makeRadio(option, name);
             } else if (type === 'checkmarks') {
-                return makeCheckbox(option, name);
+                return ComponentParser.makeCheckbox(option, name);
             }
         }).join('');
     }
 
-    makeCheckbox(value, checkboxGroup) {
+    static makeCheckbox(value, checkboxGroup) {
         return `<input id="${value + checkboxGroup}" type="checkbox" name="${checkboxGroup}" value="${value}"><label for="${value + checkboxGroup}">${value}</label>`;
     }
 
-    makeRadio(value, radioGroup) {
+    static makeRadio(value, radioGroup) {
         return `<input id="${value + radioGroup}" type="radio" name="${radioGroup}" value="${value}"><label for="${value + radioGroup}">${value}</label>`;
     }
 
-    makeSelectOption(value) {
+    static makeSelectOption(value) {
         return `<option value="${value}">${value}</option>`;
     }
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, HostListener, ElementRef } from '@angular/core';
 import { AdminService } from '../admin.service';
 import { PageService } from '../page.service';
 import { MediaService } from '../media.service';
@@ -15,14 +15,22 @@ import { AdminAuthService } from '../admin-auth.service';
 
 export class AdminTopMenuComponent implements OnInit {
   @Input() userName: string;
-  
+  @HostListener('document:click') closeMenuIfOutside() {
+    if (event.srcElement.className.indexOf('create-tab') === -1 
+        && event.srcElement.parentElement.className.indexOf('sub-menu') === -1 
+        && this.createMenuOpen) {
+      this.createMenuOpen = false;
+    }
+  }
+  private createMenuOpen: boolean = false;
   constructor(private adminService: AdminService,
               private pageService: PageService,
               private mediaService: MediaService,
               private collectionsService: CollectionsService,
               private formsService: FormsService,
               private assetService: AssetService,
-              private adminAuthService: AdminAuthService) { }
+              private adminAuthService: AdminAuthService,
+              private eRef: ElementRef) { }
 
   ngOnInit() {
   }
@@ -59,6 +67,10 @@ export class AdminTopMenuComponent implements OnInit {
   newAsset(): void {
     this.adminService.setCurrentView('assets');
     this.assetService.setCreateAsset();
+  }
+
+  toggleCreateMenu(): void {
+    this.createMenuOpen = !this.createMenuOpen;
   }
 
 }

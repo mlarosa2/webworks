@@ -17,10 +17,10 @@ module.exports = class Media {
     }
 
     post(req, res) {
-        if (!csrfCheck(req.file.csrf, res)) {
-            return;
-        }
        upload(req, res, err => {
+            if (!csrfCheck(req.body.csrf, res)) {
+                return;
+            }
             if (err) throw err;
             fs.writeFile(`${__dirname}/../../meta-media/${Date.now()}-${req.file.originalname}`, '', (err) => {
                 if (err) throw err;

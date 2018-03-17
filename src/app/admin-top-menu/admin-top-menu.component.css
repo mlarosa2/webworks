@@ -2,6 +2,7 @@
     display: block;
     background-color: silver;
     position: fixed;
+    z-index: 2;
     left: 0;
     right: 0;
 }
@@ -17,11 +18,34 @@ li {
     transition: .4s;
 }
 
-li:last-child {
+.top-menu > li:last-child {
     float: right;
 }
 
 li:hover {
     background-color: rgba(0,0,0,.25);
     transition: .3s;
+}
+
+.sub-menu {
+    position: relative;
+    background-color: silver;
+    padding: 5px;
+    top: 35px;
+    left: 80px;
+    -webkit-box-shadow: 0px 0px 8px 0px rgba(150,150,150,1);
+    -moz-box-shadow: 0px 0px 8px 0px rgba(150,150,150,1);
+    box-shadow: 0px 0px 8px 0px rgba(150,150,150,1);
+}
+
+.sub-menu li {
+    display: block;
+}
+
+.sub-menu.closed {
+    display: none;
+}
+
+.sub-menu.open {
+    position: absolute;
 }
