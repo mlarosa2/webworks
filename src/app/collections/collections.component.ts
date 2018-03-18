@@ -53,7 +53,7 @@ export class CollectionsComponent implements OnInit {
     this.selectedTitle = title;
   }
 
-  goToCollectionItems(title: string) {
+  goToCollectionItems(title: string): void {
     this.selectedTitle = title;
     this.collectionsService.selectCollectionItems(title);
     this.collectionItemService.setCurrentCollection(title);

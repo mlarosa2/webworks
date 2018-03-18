@@ -20,7 +20,8 @@ const Assets                = require('./assets');
 const SingleAsset           = require('./single-asset');
 const GlobalAssets          = require('./global-assets');
 const SubmitForm            = require('./submit-form');
-const formResponses         = require('./form-responses');
+const FormResponses         = require('./form-responses');
+const SingleFormResponse    = require('./form-response');
 
 mongo.connect(mongoConnect, (err, db) => {
     const login                 = new Login(db); // /login
@@ -40,7 +41,8 @@ mongo.connect(mongoConnect, (err, db) => {
     const singleAsset           = new SingleAsset(db); // /asset 
     const globalAssets          = new GlobalAssets(db); // /global-assets
     const submitForm            = new SubmitForm(db); // /submit-form
-    const formRespones          = new FormRespones(db); //form-responses/:belongsTo
+    const formResponses          = new FormResponses(db); //form-responses/:belongsTo
+    const singleFormResponse    = new SingleFormResponse(db); //form-response/:belongsTo/:title
     
     router.route('/login') // handles sign out too
         .post(login.post.bind(login)) // binding so this context is consistent in class
@@ -119,9 +121,11 @@ mongo.connect(mongoConnect, (err, db) => {
         .post(submitForm.post.bind(submitForm));
 
     router.route('/form-responses/:belongsTo')
-        .get(formResponses.get.bind(formResponses));
+        .get(formResponses.get.bind(formResponses))
+        .delete(formResponses.delete.bind(singleFormResponse));
+
+    router.route('/form-response/:belongsTo/:title')
+        .get(singleFormResponse.get.bind(singleFormResponse))
 });
 
-module.exports = router;    this.viewForms = true;
-    this.buildForm = false;
-    this.updateForm = false;
+module.exports = router;

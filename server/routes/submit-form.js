@@ -22,7 +22,7 @@ module.exports = class SubmitForm {
     static createReadableDate() {
         const date = new Date();
         
-        return `${SubmitForm.getMonth(date.getMonth())} ${SubmitForm.getDate()}, ${date.getFullYear()}}`;
+        return `${SubmitForm.getMonth(date.getMonth())} ${date.getDate()}, ${date.getFullYear()}`;
     }
 
     static getMonth(month) {

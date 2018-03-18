@@ -4,10 +4,14 @@
       <span>{{title}}</span>
       <i class="fa fa-times" (click)="deleteForm(title, $event)"></i>
       <i class="fa fa-edit"  (click)="goToForm(title)"></i>
+      <i class="fa fa-search" (click)="goToFormResponses(title)"></i>
     </li>
   </ul>
 </div>
 <app-form-builder *ngIf="isBuildView()"></app-form-builder>
 <div *ngIf="isUpdateView()">
     <app-update-form [title]="selectedTitle"></app-update-form>
+</div>
+<div *ngIf="isFormResponseView()">
+  <app-form-responses [belongsTo]="selectedTitle"></app-form-responses>
 </div>

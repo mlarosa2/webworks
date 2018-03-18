@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormsService } from '../forms.service';
 import { DeleteConfirmationOverlayService } from '../delete-confirmation-overlay.service';
 import { Form } from '../form';
+import { FormResponseService } from '../form-response.service';
 
 @Component({
   selector: 'app-forms',
@@ -14,6 +15,7 @@ import { Form } from '../form';
 export class FormsComponent implements OnInit {
   private selectedTitle: string;
   constructor(private formsService: FormsService,
+              private formResponseService: FormResponseService,
               private deleteConfirmationOverlayService: DeleteConfirmationOverlayService) { }
 
   ngOnInit() {}
@@ -45,6 +47,18 @@ export class FormsComponent implements OnInit {
 
   formSelected(): boolean {
     return this.formsService.isFormSelected();
+  }
+
+  goToFormResponses(title: string): void {
+    this.selectedTitle = title;
+    this.formsService.selectFormResponses(title);
+    this.formResponseService.setCurrentForm(title);
+    this.formResponseService.loadFormResponses();
+    this.formResponseService.setListView();
+  }
+
+  isFormResponseView(): boolean {
+    return this.formsService.isFormResponseView();
   }
 
   deleteForm(title: string): void {

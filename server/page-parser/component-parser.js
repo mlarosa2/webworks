@@ -10,7 +10,7 @@ module.exports = class ComponentParser {
         if (this.component.hasOwnProperty('belongsTo')) {
             this.parseCollection();
         } else {
-            this.formId = 'wwparsedform-' + this.component.title;
+            this.formId = String(this.component.title).replace(/ /g, '~__~');
             this.parseForm();
         }
     }

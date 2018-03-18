@@ -9,10 +9,12 @@ import 'rxjs/add/operator/toPromise';
 export class FormsService {
   private headers: Headers = new Headers({'Content-Type': 'application/json'});
   private formsUrl: string = 'api/forms';
+  private formResponseUrl: string = 'api/form-responses';
   private singularFormsUrl: string = 'api/form';
   private viewForms: boolean = false;
   private buildForm: boolean = false;
   private updateForm: boolean = false;
+  private formResponses: boolean = false;
   private formsList: string[];
   private formSelected: boolean = false; //determines if a form is selected
   private selectedForm: Form //stores the selected form
@@ -29,10 +31,16 @@ export class FormsService {
 
   getForm(title: string): Promise<any> {
     return this.http
-      .get(`${this.singularFormsUrl}/${title}`)
+      .get(`${this.formsUrl}/${title}`)
       .toPromise();
   }
 
+  setFormResponseView(): void {
+    this.viewForms = false;
+    this.buildForm = false;
+    this.updateForm = false;
+    this.formResponses = true;
+  }
 
   isBuildView(): boolean {
     return this.buildForm
@@ -46,6 +54,7 @@ export class FormsService {
     this.viewForms = true;
     this.buildForm = false;
     this.updateForm = false;
+    this.formResponses = false;
     this.loadTitles();
   }
 
@@ -53,12 +62,14 @@ export class FormsService {
     this.viewForms = false;
     this.buildForm = true;
     this.updateForm = false;
+    this.formResponses = false;
   }
 
   setUpdateView(): void {
     this.viewForms = false;
     this.buildForm = false;
     this.updateForm = true;
+    this.formResponses = false;
   }
 
   getAllTitles(): Promise<any> {
@@ -135,6 +146,25 @@ export class FormsService {
 
   isFormSelected(): boolean {
     return this.formSelected;
+  }
+
+  selectFormResponses(title: string): void {
+    this.setFormResponse(title);
+    this.setFormResponseView();
+  }
+
+  setFormResponse(title: string) {
+    this.http
+      .get(`${this.formResponseUrl}/${title}`)
+      .toPromise()
+      .then(response => {
+        this.formResponses = response.json();
+      })
+      .catch(this.handleError);
+  }
+
+  isFormResponseView(): boolean {
+    return this.formResponses;
   }
 
   private handleError(error: any): void {

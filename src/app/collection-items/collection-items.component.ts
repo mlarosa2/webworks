@@ -68,7 +68,7 @@ export class CollectionItemsComponent implements OnInit {
     this.collectionItemService.setUpdateItemView(title);
   }
 
-  goBack() {
+  goBack(): void {
     if (this.isListView()) {
       this.adminService.setCurrentView('collections');
     } else {

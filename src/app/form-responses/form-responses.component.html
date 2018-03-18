@@ -1,0 +1,19 @@
+<div class="inline-title">
+  <h3 class="sub-menu-title"> Form Responses for {{belongsTo}}</h3>
+  <button (click)="goBack()" *ngIf="isListView()">Go Back</button> 
+</div>
+<div *ngIf="isListView()">
+  <div *ngIf="getFormResponses() && getFormResponses().length > 0">
+    <ul>
+      <li *ngFor="let item of getFormResponses();">
+          <span>{{item}}</span><i class="fa fa-times" (click)="deleteFormResponse(item, $event)"></i><i class="fa fa-edit" (click)="goToCollectionItem(item, $event)"></i>
+      </li>
+    </ul>
+  </div>
+  <div *ngIf="!getFormResponses() || getFormResponses() && getFormResponses().length === 0">
+    No form responses found for {{belongsTo}}.
+  </div>
+</div>
+<div *ngIf="isExploreView()">
+  <app-form-response [belongsTo]="belongsTo"></app-form-response>
+</div>

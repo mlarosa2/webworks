@@ -9,6 +9,7 @@ import { AssetService } from '../asset.service';
 import { GlobalAssetsService } from '../global-assets.service';
 import { DeleteConfirmationOverlayService } from '../delete-confirmation-overlay.service';
 import { CookieService } from '../cookie.service';
+import { FormResponseService } from '../form-response.service';
 
 @Component({
   selector: 'app-admin',
@@ -23,7 +24,8 @@ import { CookieService } from '../cookie.service';
     AssetService,
     GlobalAssetsService,
     DeleteConfirmationOverlayService,
-    CookieService
+    CookieService,
+    FormResponseService
   ]
 })
 export class AdminComponent implements OnInit {

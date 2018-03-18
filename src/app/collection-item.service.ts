@@ -134,7 +134,7 @@ export class CollectionItemService {
 
   deleteItem(item: string): void {
     this.http
-  .delete(`${this.collectionItemsUrl}`, {headers: this.headers, body: {title: item, belongsTo: this.currentCollection, csrf: this.csrfToken}})
+      .delete(`${this.collectionItemsUrl}`, {headers: this.headers, body: {title: item, belongsTo: this.currentCollection, csrf: this.csrfToken}})
       .toPromise()
       .then(() => {
         this.loadCollectionItems();

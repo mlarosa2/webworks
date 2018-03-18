@@ -22,6 +22,8 @@ export class FormSubmissionService {
       }
     }
     formData.wwcsrfformsubmitcheck33254 = this.csrfToken;
+    formData.wwbelongstocheck33245 = String(form.className).replace(/~__~/g, ' ');
+    
     return this.http
       .post('api/submit-form', formData, {headers: this.headers})
       .toPromise();
