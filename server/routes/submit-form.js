@@ -11,6 +11,8 @@ module.exports = class SubmitForm {
         }
         delete req.body.wwcsrfformsubmitcheck33254;
         req.body.wwdatesubmitcheck33254 = SubmitForm.createReadableDate();
+        req.body.wwreadsubmitcheck33254 = false;
+
         this.db.collection('FormResponses').insertOne(req.body, (err, result) => {
             if (err) throw err;
             res.sendStatus(200);
