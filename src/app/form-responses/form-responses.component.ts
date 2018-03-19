@@ -7,8 +7,8 @@ import { DeleteConfirmationOverlayService } from '../delete-confirmation-overlay
   selector: 'app-form-responses',
   templateUrl: './form-responses.component.html',
   styleUrls: [
-    '../css/forms.css',
     '../css/item-menu.css',
+    '../css/forms.css',
     './form-responses.component.css'
   ]
 })
@@ -35,7 +35,7 @@ export class FormResponsesComponent implements OnInit {
     return this.formResponseService.isExploreView();
   }
 
-  deleteFormResponse(response: any, $event: any): void {
+  deleteFormResponse(response: any, index: number, $event: any): void {
     $event.stopPropagation();
     const args = [
       {
@@ -46,18 +46,19 @@ export class FormResponsesComponent implements OnInit {
         fn: this.removeResponseFromUI.bind(this),
         args: [response._id]
       }
-    ];
+    ],
+    responseName = 'Response ' + (index + 1) + ' - ' + response.wwdatesubmitcheck33254;
 
-    this.deleteConfirmationOverlayService.checkDelete(args, response);
+    this.deleteConfirmationOverlayService.checkDelete(args, responseName);
   }
 
   removeResponseFromUI(response: any): void {
     this.currentFormResponses = this.currentFormResponses.filter(responseName => responseName._id !== response._id);
   }
 
-  goToResponse(title: string, $event: any): void {
+  goToResponse(id: string, $event: any): void {
     $event.stopPropagation();
-    this.formResponseService.setExploreView(title);
+    this.formResponseService.setExploreView(id);
   }
 
   goBack(): void {

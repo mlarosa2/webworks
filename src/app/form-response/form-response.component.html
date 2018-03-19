@@ -1,6 +1,6 @@
 <div>
   <ul>
-    <li *ngFor="let response of Object.keys(formResponse)">
+    <li *ngFor="let response of formResponseKeys | formResponse">
       {{response}}: {{formResponse[response]}}
     </li>
   </ul>

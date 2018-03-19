@@ -13,14 +13,4 @@ module.exports = class FormResponses {
             }
         });
     }
-
-    delete(req, res) {
-        if (!csrfCheck(req.body.csrf, res)) {
-            return;
-        }
-        this.db.collection('FormResponses').deleteOne({_id: req.params.mongoId}, (err, result) => {
-            if (err) throw err;
-            res.sendStatus(200);
-        });
-    }
 };

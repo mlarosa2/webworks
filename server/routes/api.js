@@ -121,11 +121,11 @@ mongo.connect(mongoConnect, (err, db) => {
         .post(submitForm.post.bind(submitForm));
 
     router.route('/form-responses/:belongsTo')
-        .get(formResponses.get.bind(formResponses))
-        .delete(formResponses.delete.bind(singleFormResponse));
+        .get(formResponses.get.bind(formResponses));
 
-    router.route('/form-response/:belongsTo/:title')
+    router.route('/form-response/:belongsTo/:mongoId')
         .get(singleFormResponse.get.bind(singleFormResponse))
+        .delete(singleFormResponse.delete.bind(singleFormResponse));
 });
 
 module.exports = router;

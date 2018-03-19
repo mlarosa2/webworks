@@ -1,12 +1,14 @@
 <div class="inline-title">
   <h3 class="sub-menu-title"> Form Responses for {{belongsTo}}</h3>
-  <button (click)="goBack()" *ngIf="isListView()">Go Back</button> 
+  <button (click)="goBack()" *ngIf="isListView() || isExploreView()">Go Back</button> 
 </div>
 <div *ngIf="isListView()">
   <div *ngIf="getFormResponses() && getFormResponses().length > 0">
     <ul>
-      <li *ngFor="let item of getFormResponses();">
-          <span>{{item}}</span><i class="fa fa-times" (click)="deleteFormResponse(item, $event)"></i><i class="fa fa-edit" (click)="goToCollectionItem(item, $event)"></i>
+      <li *ngFor="let item of getFormResponses(); let i = index;">
+          <span>Response {{i + 1}} - {{item.wwdatesubmitcheck33254}}</span>
+          <i class="fa fa-times" (click)="deleteFormResponse(item, i, $event)">
+            </i><i class="fa fa-search" (click)="goToResponse(item._id, $event)"></i>
       </li>
     </ul>
   </div>

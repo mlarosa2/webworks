@@ -38,6 +38,7 @@ import { FilterHomePagePipe } from './filter-home-page.pipe';
 import { CookieService } from './cookie.service';
 import { FormResponsesComponent } from './form-responses/form-responses.component';
 import { FormResponseComponent } from './form-response/form-response.component';
+import { FormResponsePipe } from './form-response.pipe';
 
 @NgModule({
   declarations: [
@@ -71,7 +72,8 @@ import { FormResponseComponent } from './form-response/form-response.component';
     DeleteConfirmationOverlayComponent,
     FilterHomePagePipe,
     FormResponsesComponent,
-    FormResponseComponent
+    FormResponseComponent,
+    FormResponsePipe
   ],
   imports: [
     BrowserModule,

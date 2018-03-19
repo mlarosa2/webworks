@@ -1,0 +1,13 @@
+.fa-search, .fa-times {
+    color: black;
+    background: none;
+    font-size: 16px;
+    padding: 0;
+    font-weight: normal;
+}
+
+.fa-search:hover,
+.fa-times:hover {
+    background: none;
+    transition: none;
+}

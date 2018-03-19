@@ -57,7 +57,7 @@ export class FormResponseService {
 
   deleteResponse(response: string): void {
     this.http
-      .delete(`${this.formResponsesUrl}`, {headers: this.headers, body: {title: response, belongsTo: this.currentForm, csrf: this.csrfToken}})
+      .delete(`${this.singleFormResponseUrl}/${this.currentForm}/${response}`, {headers: this.headers, body: {csrf: this.csrfToken}})
       .toPromise()
       .then(() => {
         this.loadFormResponses();

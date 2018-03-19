@@ -9,13 +9,15 @@ import { FormResponseService } from '../form-response.service';
 export class FormResponseComponent implements OnChanges {
   @Input() belongsTo: string;
   private formResponse: any;
+  private formResponseKeys: string[] = [];
 
   constructor(private formResponseService: FormResponseService) { }
 
   ngOnChanges() {
     this.formResponseService.getFormResponse()
       .then(response => {
-        this.formResponse = response.json();
+        this.formResponse = response.json()[0];
+        this.formResponseKeys = Object.keys(this.formResponse);
       });
   }
 
