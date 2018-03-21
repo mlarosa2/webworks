@@ -7,7 +7,7 @@ export class FilterHomePagePipe implements PipeTransform {
 
   transform(pages: string[]): any {
     if (pages) {
-      return pages.filter(page => page !== 'HOMEPAGE');
+      return pages.filter(page => page !== 'HOMEPAGE' && page !== '404');
     }
 
     return [];

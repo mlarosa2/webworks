@@ -38,6 +38,11 @@ export class FrontendComponent implements OnInit {
     if (this.page === '') {
       this.page = 'HOMEPAGE';
     }
+    
+    this.buildPage();
+  }
+
+  buildPage(): void {
     this.pageService.getPage(this.page).then(response => {
       document.getElementById('content-page-exclusive-fe-component').innerHTML = response.json().parsed;
       this.metaService.addTags(response.json().meta);
@@ -74,6 +79,10 @@ export class FrontendComponent implements OnInit {
           document.body.appendChild(scriptTag);
         });
       });
+    },
+    (err) => {
+      this.page = '404';
+      this.buildPage();
     });
   }
 }

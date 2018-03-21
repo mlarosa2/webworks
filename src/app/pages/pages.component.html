@@ -4,6 +4,10 @@
       HOMEPAGE
       <i class="fa fa-edit" (click)="goToPage('HOMEPAGE')"></i>
     </li>
+    <li>
+      404
+      <i class="fa fa-edit" (click)="goToPage('404')"></i>
+    </li>
     <li *ngFor="let title of getTitles() | filterHomePage;">
       <span>{{title}}</span>
       <i class="fa fa-times" (click)="deletePage(title, $event)"></i>
