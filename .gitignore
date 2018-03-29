@@ -39,6 +39,7 @@ secrets.txt
 /media/*
 /meta-media/*
 /assets/*
+package-lock.json
 
 # e2e
 /e2e/*.js
