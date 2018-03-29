@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { PageService } from '../page.service';
 import { AssetService } from '../asset.service';
 import { Page } from '../page';
@@ -12,7 +12,7 @@ import { MonacoService } from '../monaco.service';
     './new-page-form.component.css'
   ]
 })
-export class NewPageFormComponent implements OnInit {
+export class NewPageFormComponent implements OnInit, OnDestroy {
   private allCSS: string[];
   private allJS: string[];
   private newCSS: string = '';
@@ -27,6 +27,10 @@ export class NewPageFormComponent implements OnInit {
     this.editor = this.monacoService.create(
       document.querySelector('#monaco')
     );
+  }
+
+  ngOnDestroy() {
+    this.monacoService.destroy(this.editor);
   }
 
   model = new Page('', '', [], [], []);
