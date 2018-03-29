@@ -24,9 +24,7 @@
     <label for="global" class="label-inline">Global</label>
   </div>
   <div>
-    <textarea id="body" 
-              required
-              [(ngModel)]="model.body" name="body"></textarea>
+    <div id="monaco"></div>
   </div>
   <div class="submit-cancel">
     <button type="submit" [disabled]="!updateAsset.form.valid || !model.type">Update Asset</button>
