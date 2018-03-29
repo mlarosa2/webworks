@@ -1,3 +1,17 @@
-<p>
-  templates works!
-</p>
+<div *ngIf="isTemplateHome()">
+  <ul>
+    <li *ngFor="let template of getTemplates()">
+      <span>{{template.title}}</span>
+      <i class="fa fa-times" (click)="deleteTemplate(template.title, $event)"></i>
+      <i class="fa fa-edit" (click)="goToTemplate(template.title, template)"></i>
+    </li>
+  </ul>
+</div>
+
+<div *ngIf="isSpecificTemplate()">
+  <app-template [title]="getSelectedTemplate().title"></app-template>
+</div>
+
+<div *ngIf="isCreateTemplate();">
+  <app-new-template-form></app-new-template-form>
+</div>

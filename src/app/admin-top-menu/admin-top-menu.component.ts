@@ -6,6 +6,7 @@ import { CollectionsService } from '../collections.service';
 import { FormsService } from '../forms.service';
 import { AssetService } from '../asset.service';
 import { AdminAuthService } from '../admin-auth.service';
+import { TemplateService } from '../template.service';
 
 @Component({
   selector: 'app-admin-top-menu',
@@ -30,7 +31,8 @@ export class AdminTopMenuComponent implements OnInit {
               private formsService: FormsService,
               private assetService: AssetService,
               private adminAuthService: AdminAuthService,
-              private eRef: ElementRef) { }
+              private eRef: ElementRef,
+              private templateService: TemplateService) { }
 
   ngOnInit() {
   }
@@ -67,6 +69,11 @@ export class AdminTopMenuComponent implements OnInit {
   newAsset(): void {
     this.adminService.setCurrentView('assets');
     this.assetService.setCreateAsset();
+  }
+
+  newTemplate(): void {
+    this.adminService.setCurrentView('templates');
+    this.templateService.setCreateTemplate();
   }
 
   toggleCreateMenu(): void {

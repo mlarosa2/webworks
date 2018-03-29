@@ -1,3 +1,14 @@
-<p>
-  new-template-form works!
-</p>
+<form #newTemplate="ngForm" (submit)="onSubmit();">
+  <div>
+    <label for="title">Template Name</label>
+    <input type="text" id="title"
+           required
+           [(ngModel)]="model.title" name="title">
+  </div>
+  <div>
+    <div id="monaco"></div>
+  </div>
+  <div class="submit-cancel">
+    <button type="submit" [disabled]="!newTemplate.form.valid">Create Template</button>
+    <button (click)="goBack();">Cancel</button></div>
+</form>
