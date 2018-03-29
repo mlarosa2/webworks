@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { PageService } from '../page.service';
 import { AssetService } from '../asset.service';
 import { Page } from '../page';
+import { MonacoService } from '../monaco.service';
 
 @Component({
   selector: 'app-new-page-form',
@@ -17,10 +18,15 @@ export class NewPageFormComponent implements OnInit {
   private newCSS: string = '';
   private newJS: string = '';
   private newMeta: any = {name: '', content: ''};
+  private editor: any;
   constructor(private pageService: PageService,
-              private assetService: AssetService) { }
+              private assetService: AssetService,
+              private monacoService: MonacoService) { }
 
   ngOnInit() {
+    this.editor = this.monacoService.create(
+      document.querySelector('#monaco')
+    );
   }
 
   model = new Page('', '', [], [], []);
@@ -68,6 +74,7 @@ export class NewPageFormComponent implements OnInit {
   }
 
   onSubmit(): void {
+    this.model.body = this.monacoService.getValue(this.editor);
     this.pageService.createNewPage(this.model.title, this.model.body, this.model.css, this.model.js, this.model.meta);
   }
 

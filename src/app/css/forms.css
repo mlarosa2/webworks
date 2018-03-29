@@ -48,9 +48,8 @@ label {
     display: inline-block;
 }
 
-textarea {
+#monaco {
     width: 100%;
-    resize: vertical;
     height: 500px;
 }
 
