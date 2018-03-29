@@ -39,6 +39,9 @@ import { CookieService } from './cookie.service';
 import { FormResponsesComponent } from './form-responses/form-responses.component';
 import { FormResponseComponent } from './form-response/form-response.component';
 import { FormResponsePipe } from './form-response.pipe';
+import { TemplatesComponent } from './templates/templates.component';
+import { NewTemplateFormComponent } from './new-template-form/new-template-form.component';
+import { TemplateComponent } from './template/template.component';
 
 @NgModule({
   declarations: [
@@ -73,7 +76,10 @@ import { FormResponsePipe } from './form-response.pipe';
     FilterHomePagePipe,
     FormResponsesComponent,
     FormResponseComponent,
-    FormResponsePipe
+    FormResponsePipe,
+    TemplatesComponent,
+    NewTemplateFormComponent,
+    TemplateComponent
   ],
   imports: [
     BrowserModule,
