@@ -1,6 +1,7 @@
-import { Component, OnChanges, Input } from '@angular/core';
+import { Component, OnChanges, OnDestroy, Input } from '@angular/core';
 import { PageService } from '../page.service';
 import { AssetService } from '../asset.service';
+import { MonacoService } from '../monaco.service';
 import { Page } from '../page';
 
 @Component({
@@ -11,17 +12,24 @@ import { Page } from '../page';
     './page.component.css'
   ]
 })
-export class PageComponent implements OnChanges {
+export class PageComponent implements OnChanges, OnDestroy {
   @Input() title: string;
   private model: Page = new Page('', '', [], [], []);
   private newCSS: string = '';
   private newJS: string = '';
   private newMeta: any = {name: '', content: ''};
+  private editor: any;
   constructor(private pageService: PageService,
-              private assetService: AssetService) { }
+              private assetService: AssetService,
+              private monacoService: MonacoService) { }
 
   ngOnChanges() {
     const title = this.title;
+    
+    this.editor = this.monacoService.create(
+      document.querySelector('#monaco')
+    );
+
     this.pageService.getPage(title)
       .then(page => {
         this.model.title = title;
@@ -29,7 +37,12 @@ export class PageComponent implements OnChanges {
         this.model.css   = page.json().css || [];
         this.model.js    = page.json().js || [];
         this.model.meta  = page.json().meta || [];
+        this.monacoService.setValue(this.editor, this.model.body);
       });
+  }
+
+  ngOnDestroy() {
+    this.monacoService.destroy(this.editor);
   }
 
   getPageCSS(): string[] {
@@ -75,6 +88,7 @@ export class PageComponent implements OnChanges {
   }
 
   onSubmit(): void {
+    this.model.body = this.monacoService.getValue(this.editor);
     this.pageService.updatePage(this.title, this.model);
   }
 
