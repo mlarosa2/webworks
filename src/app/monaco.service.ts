@@ -18,4 +18,8 @@ export class MonacoService {
   getValue(instance: any): string {
     return instance.getValue();
   }
+
+  setValue(instance: any, text: string): void {
+    instance.setValue(text);
+  }
 }
