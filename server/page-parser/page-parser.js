@@ -14,7 +14,8 @@ module.exports = class PageParser {
                     replaceMap = {},
                     componentPromises = [];
 
-                components = this.page.match(/\[\[.+\]\]/) || [];
+                components = this.page.match(/\[\[.+\]\]/g) || [];
+
                 componentPromises = components.map(component => {
                     if (typeof component === 'string') {
                         return this.parseComponent(component, db);
@@ -24,34 +25,36 @@ module.exports = class PageParser {
                 Promise.all(componentPromises).then(res => {
                     Promise.all(this.processComponents(res)).then(processedComponents => {
                         const parsedComponents = {};
-                        
-                        if (processedComponents[0]) {
-                            processedComponents[0].forEach(pc => {
-                                let id, isCollection = pc.hasOwnProperty('belongsTo'),
-                                    isTemplate = pc.hasOwnProperty('template');
+
+                        if (processedComponents) {
+                            processedComponents.forEach(pc => {
+                                const parsedComponent = pc[0];
+                                let id, isCollection = parsedComponent.hasOwnProperty('belongsTo'),
+                                    isTemplate = parsedComponent.hasOwnProperty('template'),
+                                    parser;
                                 
                                 if (isCollection) {
-                                    id = pc.belongsTo;
+                                    id = parsedComponent.belongsTo;
                                     id += '_collection';
                                 } else if (isTemplate) {
-                                    id = pc.title;
+                                    id = parsedComponent.title;
                                     id += '_template';
                                 } else {
-                                    id = pc.title;
+                                    id = parsedComponent.title;
                                     id += '_form';
                                 }
 
                                 if (!isTemplate) {
-                                    const parser = new ComponentParser(pc);
+                                    parser = new ComponentParser(parsedComponent);
                                 }
-                                
+
                                 if (isCollection) {
                                     if (!parsedComponents[id]) {
                                         parsedComponents[id] = [];
                                     }
                                     parsedComponents[id].push(parser.getParsedComponent());
                                 } else if (isTemplate) {
-                                    parsedComponents[id] = pc.body;
+                                    parsedComponents[id] = parsedComponent.body;
                                 } else {
                                     parsedComponents[id] = parser.getParsedComponent();
                                 }
@@ -102,7 +105,7 @@ module.exports = class PageParser {
 
             if (this.getComponentType(pre) === 'collection') {
                 replaceText = processedComponents[preTitle + '_collection'].join('');
-            } else if (this.componentType(pre) === 'template') {
+            } else if (this.getComponentType(pre) === 'template') {
                 replaceText = processedComponents[preTitle + '_template'];
             } else {
                 replaceText = processedComponents[preTitle + '_form'];
