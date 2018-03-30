@@ -21,7 +21,7 @@ module.exports = class Templates {
             return;
         }
 
-        this.db.collection('Templates').insertOne({title: req.body.title, body: req.body.body}, (err, result) => {
+        this.db.collection('Templates').insertOne({title: req.body.title, body: req.body.body, template: true}, (err, result) => {
             if (err) throw err;
             
             res.sendStatus(200);

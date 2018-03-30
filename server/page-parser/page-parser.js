@@ -27,20 +27,31 @@ module.exports = class PageParser {
                         
                         if (processedComponents[0]) {
                             processedComponents[0].forEach(pc => {
-                                let id, isCollection = pc.hasOwnProperty('belongsTo');
+                                let id, isCollection = pc.hasOwnProperty('belongsTo'),
+                                    isTemplate = pc.hasOwnProperty('template');
+                                
                                 if (isCollection) {
                                     id = pc.belongsTo;
                                     id += '_collection';
+                                } else if (isTemplate) {
+                                    id = pc.title;
+                                    id += '_template';
                                 } else {
                                     id = pc.title;
                                     id += '_form';
                                 }
-                                const parser = new ComponentParser(pc);
+
+                                if (!isTemplate) {
+                                    const parser = new ComponentParser(pc);
+                                }
+                                
                                 if (isCollection) {
                                     if (!parsedComponents[id]) {
                                         parsedComponents[id] = [];
                                     }
                                     parsedComponents[id].push(parser.getParsedComponent());
+                                } else if (isTemplate) {
+                                    parsedComponents[id] = pc.body;
                                 } else {
                                     parsedComponents[id] = parser.getParsedComponent();
                                 }
@@ -63,6 +74,8 @@ module.exports = class PageParser {
 
         if (componentType.toLowerCase() === 'collection') {
             return db.collection('CollectionItems').find({belongsTo: componentName});
+        } else if (componentType.toLowerCase() === 'template') {
+            return db.collection('Templates').find({title: componentName});
         } else {
             return db.collection('Forms').find({title: componentName});
         }
@@ -89,9 +102,12 @@ module.exports = class PageParser {
 
             if (this.getComponentType(pre) === 'collection') {
                 replaceText = processedComponents[preTitle + '_collection'].join('');
+            } else if (this.componentType(pre) === 'template') {
+                replaceText = processedComponents[preTitle + '_template'];
             } else {
                 replaceText = processedComponents[preTitle + '_form'];
             }
+
             regex = new RegExp(escapedPre, 'g');
             this.page = this.page.replace(regex, replaceText);
         });
