@@ -105,7 +105,7 @@ export class TemplateService {
 
   updateTemplate(title: string, body: string, model: any): Promise<void> {
     return this.http
-      .put(`${this.templateUrl}/templates`, {body: body, title: title, global: model.global, newType: model.type, newTitle: model.title, csrf: this.csrfToken}, {headers: this.headers})
+      .put(`${this.templateUrl}/templates`, {body: body, title: title, newTitle: model.title, csrf: this.csrfToken}, {headers: this.headers})
       .toPromise()
       .then(() => this.setTemplateHome())
       .catch(this.handleError);
