@@ -40,7 +40,7 @@ export class AdminComponent implements OnInit {
               private titleService: Title) { }
 
   ngOnInit() {
-    this.titleService.setTitle(window.location.host + '| Admin');
+    this.titleService.setTitle(window.location.host + ' | Admin');
   }
 
   isLoggedIn(): boolean {
