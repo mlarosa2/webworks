@@ -11,6 +11,7 @@ import { DeleteConfirmationOverlayService } from '../delete-confirmation-overlay
 import { CookieService } from '../cookie.service';
 import { FormResponseService } from '../form-response.service';
 import { MonacoService } from '../monaco.service';
+import { TemplateService } from '../template.service';
 
 @Component({
   selector: 'app-admin',
@@ -27,7 +28,8 @@ import { MonacoService } from '../monaco.service';
     DeleteConfirmationOverlayService,
     CookieService,
     FormResponseService,
-    MonacoService
+    MonacoService,
+    TemplateService
   ]
 })
 export class AdminComponent implements OnInit {
