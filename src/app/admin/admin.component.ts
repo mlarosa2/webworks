@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { AdminAuthService } from '../admin-auth.service';
 import { AdminService } from '../admin.service';
 import { PageService } from '../page.service';
@@ -29,14 +30,17 @@ import { TemplateService } from '../template.service';
     CookieService,
     FormResponseService,
     MonacoService,
-    TemplateService
+    TemplateService,
+    Title
   ]
 })
 export class AdminComponent implements OnInit {
   constructor(private adminAuthService: AdminAuthService,
-              private deleteConfirmationOverlayService: DeleteConfirmationOverlayService) { }
+              private deleteConfirmationOverlayService: DeleteConfirmationOverlayService,
+              private titleService: Title) { }
 
   ngOnInit() {
+    this.titleService.setTitle(window.location.host + '| Admin');
   }
 
   isLoggedIn(): boolean {

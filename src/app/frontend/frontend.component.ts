@@ -1,5 +1,5 @@
 import { Component, OnInit, HostListener } from '@angular/core';
-import { Meta } from '@angular/platform-browser';
+import { Meta, Title } from '@angular/platform-browser';
 import { AssetService } from '../asset.service';
 import { PageService } from '../page.service';
 import { GlobalAssetsService } from '../global-assets.service';
@@ -13,7 +13,8 @@ import { FormSubmissionService } from '../form-submission.service';
                 AssetService,
                 PageService,
                 GlobalAssetsService,
-                FormSubmissionService
+                FormSubmissionService,
+                Title
              ]
 })
 export class FrontendComponent implements OnInit {
@@ -31,7 +32,8 @@ export class FrontendComponent implements OnInit {
   constructor(private pageService: PageService,
               private metaService: Meta,
               private globalAssetsService: GlobalAssetsService,
-              private formSubmissionService: FormSubmissionService) { }
+              private formSubmissionService: FormSubmissionService,
+              private titleService: Title) { }
 
   ngOnInit() {
     this.page = window.location.pathname.substr(1).replace(/-/g, ' ');
@@ -46,7 +48,11 @@ export class FrontendComponent implements OnInit {
     this.pageService.getPage(this.page).then(response => {
       document.getElementById('content-page-exclusive-fe-component').innerHTML = response.json().parsed;
       this.metaService.addTags(response.json().meta);
-      
+      if (this.page === 'HOMEPAGE') {
+        this.titleService.setTitle(window.location.host);
+      } else {
+        this.titleService.setTitle(this.page);
+      }
       // append globals then add specific
       this.globalAssetsService.getAllGlobals().then((globalResponse) => {
         globalResponse.json().forEach(ga => {
