@@ -22,6 +22,8 @@ const GlobalAssets          = require('./global-assets');
 const SubmitForm            = require('./submit-form');
 const FormResponses         = require('./form-responses');
 const SingleFormResponse    = require('./form-response');
+const Templates             = require('./templates');
+const SingleTemplate        = require('./single-template');
 
 mongo.connect(mongoConnect, (err, db) => {
     const login                 = new Login(db); // /login
@@ -41,8 +43,10 @@ mongo.connect(mongoConnect, (err, db) => {
     const singleAsset           = new SingleAsset(db); // /asset 
     const globalAssets          = new GlobalAssets(db); // /global-assets
     const submitForm            = new SubmitForm(db); // /submit-form
-    const formResponses          = new FormResponses(db); //form-responses/:belongsTo
+    const formResponses         = new FormResponses(db); //form-responses/:belongsTo
     const singleFormResponse    = new SingleFormResponse(db); //form-response/:belongsTo/:title
+    const templates             = new Templates(db) // templates
+    const singleTemplate        = new SingleTemplate(db) // template/:title
     
     router.route('/login') // handles sign out too
         .post(login.post.bind(login)) // binding so this context is consistent in class
@@ -126,6 +130,15 @@ mongo.connect(mongoConnect, (err, db) => {
     router.route('/form-response/:belongsTo/:mongoId')
         .get(singleFormResponse.get.bind(singleFormResponse))
         .delete(singleFormResponse.delete.bind(singleFormResponse));
+
+    router.route('/templates')
+        .get(templates.get.bind(templates))
+        .post(templates.post.bind(templates))
+        .put(templates.put.bind(templates));
+    
+    router.route('/template/:title')
+        .get(singleTemplate.get.bind(singleTemplate))
+        .delete(singleTemplate.delete.bind(singleTemplate));
 });
 
 module.exports = router;
