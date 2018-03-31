@@ -38,6 +38,10 @@ li:hover {
     box-shadow: 0px 0px 8px 0px rgba(150,150,150,1);
 }
 
+.settings-sub-menu {
+    left: 152px;
+}
+
 .sub-menu li {
     display: block;
 }

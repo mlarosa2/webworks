@@ -1,6 +1,6 @@
 <ul class="top-menu">
   <li (click)="goHome()"><i class="fa fa-home"></i></li>
-  <li (click)="toggleCreateMenu()" class="create-tab">Create <i class="fa fa-caret-down"></i>
+  <li (click)="toggleCreateMenu()" class="create-tab">Create
     <ul class="sub-menu"
         [ngClass]="{'closed': !createMenuOpen, 'open': createMenuOpen}">
       <li (click)="newPage()">New Page</li>
@@ -9,6 +9,12 @@
       <li (click)="newForm()">New Form</li>
       <li (click)="newAsset()">New Asset</li>
       <li (click)="newTemplate()">New Template</li>
+    </ul>
+  </li>
+  <li (click)="toggleSettingsMenu()" class="create-tab">Settings
+    <ul class="sub-menu settings-sub-menu"
+        [ngClass]="{'closed': !settingsMenuOpen, 'open': settingsMenuOpen}">
+      <li (click)="changeFavicon()">Change Favicon</li>
     </ul>
   </li>
   <li (click)="signOut()">Sign Out, {{userName}}</li>

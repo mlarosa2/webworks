@@ -17,13 +17,18 @@ import { TemplateService } from '../template.service';
 export class AdminTopMenuComponent implements OnInit {
   @Input() userName: string;
   @HostListener('document:click') closeMenuIfOutside() {
-    if (event.srcElement.className.indexOf('create-tab') === -1 
-        && event.srcElement.parentElement.className.indexOf('sub-menu') === -1 
-        && this.createMenuOpen) {
-      this.createMenuOpen = false;
+    if (event.srcElement.className.indexOf('create-tab') === -1
+        && event.srcElement.parentElement.className.indexOf('sub-menu') === -1) {
+      if (this.createMenuOpen) {
+        this.createMenuOpen = false;
+      }
+      if (this.settingsMenuOpen) {
+        this.settingsMenuOpen = false;
+      }
     }
   }
   private createMenuOpen: boolean = false;
+  private settingsMenuOpen: boolean = false;
   constructor(private adminService: AdminService,
               private pageService: PageService,
               private mediaService: MediaService,
@@ -78,6 +83,20 @@ export class AdminTopMenuComponent implements OnInit {
 
   toggleCreateMenu(): void {
     this.createMenuOpen = !this.createMenuOpen;
+    if (this.settingsMenuOpen) {
+      this.settingsMenuOpen = false;
+    }
+  }
+
+  toggleSettingsMenu(): void {
+    this.settingsMenuOpen = !this.settingsMenuOpen;
+    if (this.createMenuOpen) {
+      this.createMenuOpen = false;
+    }
+  }
+
+  changeFavicon(): void {
+
   }
 
 }
