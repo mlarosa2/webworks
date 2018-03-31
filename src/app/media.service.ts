@@ -57,6 +57,14 @@ export class MediaService {
             .catch(this.handleError);
   }
 
+  uploadFavicon(formData: FormData): void {
+    formData.append('csrf', this.csrfToken);
+    this.http
+      .post(`${this.mediaUrl}/favicon}`, formData, new Headers({'Content-Type': 'multipart/form-data'}))
+      .toPromise()
+      .catch(this.handleError);
+  }
+
   getFiles(): Promise<any> {
     return this.http
             .get(`${this.mediaUrl}/media`)

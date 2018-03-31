@@ -9,6 +9,7 @@ import { TemplateService} from './template.service';
 @Injectable()
 export class AdminService {
   private currentView: string = 'home';
+  private modalView: string;
   private views: string[] = ['Media', 'Pages', 'Collections', 'Forms', 'Assets', 'Templates'];
     constructor(private pageService: PageService,
                 private mediaService: MediaService,
@@ -36,6 +37,14 @@ export class AdminService {
     } else if (view === 'templates') {
       this.templateService.setTemplateHome();
     }
+  }
+
+  setModalView(view: string): void {
+    this.modalView = view;
+  }
+
+  getCurrentModalView(): string {
+    return this.modalView;
   }
 
   getViews(): string[] {

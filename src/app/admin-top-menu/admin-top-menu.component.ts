@@ -96,7 +96,7 @@ export class AdminTopMenuComponent implements OnInit {
   }
 
   changeFavicon(): void {
-
+    this.adminService.setModalView('favicon');
   }
 
 }

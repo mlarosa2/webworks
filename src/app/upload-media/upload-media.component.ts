@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Media } from '../media';
 import { MediaService } from '../media.service';
 
@@ -8,6 +8,7 @@ import { MediaService } from '../media.service';
   styleUrls: ['./upload-media.component.css']
 })
 export class UploadMediaComponent implements OnInit {
+  @Input() uploadFavicon: string;
   private file;
   constructor(private mediaService: MediaService) { }
 
@@ -31,8 +32,12 @@ export class UploadMediaComponent implements OnInit {
   onSubmit(event): void {
     let formData: FormData = new FormData();
     formData.append('file', this.file, this.file.name);
-    this.mediaService.upload(formData);
-    this.mediaService.turnOffUploadMode();
+    if (this.uploadFavicon) {
+      this.mediaService.uploadFavicon(formData);
+    } else {
+      this.mediaService.upload(formData);
+      this.mediaService.turnOffUploadMode();
+    }
   } 
 
 }
