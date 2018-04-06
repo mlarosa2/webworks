@@ -9,6 +9,7 @@ const Pages                 = require('./pages');
 const SinglePage            = require('./single-page');
 const Media                 = require('./media');
 const SingleMedia           = require('./single-media');
+const Favicon               = require('./favicon');
 const Collections           = require('./collections');
 const SingleCollection      = require('./single-collection');
 const Forms                 = require('./forms');
@@ -31,6 +32,7 @@ mongo.connect(mongoConnect, (err, db) => {
     const pages                 = new Pages(db); // /pages
     const singlePage            = new SinglePage(db); // /page/:title
     const media                 = new Media(db); // /media
+    const favicon               = new Favicon(db) // /favicon
     const singleMedia           = new SingleMedia(db); // /media/:title
     const collections           = new Collections(db); // /collections
     const singleCollection      = new SingleCollection(db); // /collection/:title
@@ -75,6 +77,9 @@ mongo.connect(mongoConnect, (err, db) => {
         .get(singleMedia.get.bind(singleMedia))
         .delete(singleMedia.delete.bind(singleMedia))
         .put(singleMedia.put.bind(singleMedia));
+
+    router.route('/favicon')
+        .post(favicon.post.bind(favicon));
 
     router.route('/collections')
         .get(collections.get.bind(collections))
