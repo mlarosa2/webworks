@@ -3,7 +3,7 @@ const multer       = require('multer');
 const csrfCheck    = require('./csrf-token-check');
 const storage      = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, __dirname + '/../../src/');
+        cb(null, __dirname + '/../../dist/');
     },
     filename: (req, file, cb) => {
         cb(null, file.originalname);
@@ -22,7 +22,7 @@ module.exports = class Media {
                 return;
             }
             if (err) throw err;
-            fs.writeFile(`${__dirname}/../../src/favicon.ico`, '', (err) => {
+            fs.writeFile(`${__dirname}/../../dist/favicon.ico`, '', (err) => {
                 if (err) throw err;
             });
         }); 
