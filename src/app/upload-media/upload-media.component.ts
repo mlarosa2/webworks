@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Media } from '../media';
 import { MediaService } from '../media.service';
+import { AdminService } from '../admin.service';
 
 @Component({
   selector: 'app-upload-media',
@@ -10,7 +11,8 @@ import { MediaService } from '../media.service';
 export class UploadMediaComponent implements OnInit {
   @Input() uploadFavicon: string;
   private file;
-  constructor(private mediaService: MediaService) { }
+  constructor(private mediaService: MediaService,
+              private adminService: AdminService) { }
 
   ngOnInit() {
   }
@@ -22,7 +24,11 @@ export class UploadMediaComponent implements OnInit {
   }
 
   closeModal(): void {
-    this.mediaService.turnOffUploadMode();
+    if (this.uploadFavicon) {
+      this.adminService.setModalView(false);
+    } else {
+      this.mediaService.turnOffUploadMode();
+    }  
   }
 
   isImage(file: string): boolean {
