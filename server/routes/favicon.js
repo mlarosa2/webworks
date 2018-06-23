@@ -5,7 +5,7 @@ const storage      = multer.diskStorage({
         cb(null, __dirname + '/../../dist/');
     },
     filename: (req, file, cb) => {
-        cb(null, file.originalname);
+        cb(null, 'favicon.png');
     }
 });
 const upload = multer({storage: storage}).single('file');
@@ -20,6 +20,7 @@ module.exports = class Media {
             if (err) throw err;
             fs.writeFile(`${__dirname}/../../dist/favicon.ico`, '', (err) => {
                 if (err) throw err;
+                return res.sendStatus(200);
             });
         }); 
     }

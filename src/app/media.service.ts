@@ -53,7 +53,7 @@ export class MediaService {
 
   uploadFavicon(formData: FormData): void {
     this.http
-      .post(`${this.mediaUrl}/favicon}`, formData, new Headers({'Content-Type': 'multipart/form-data'}))
+      .post(`${this.mediaUrl}/favicon`, formData, new Headers({'Content-Type': 'multipart/form-data'}))
       .toPromise()
       .catch(this.handleError);
   }
