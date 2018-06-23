@@ -3,8 +3,9 @@ import { AppRoutingModule } from './app-routing.module';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-//components
+// components
 import { AppComponent } from './app.component';
 import { AdminComponent } from './admin/admin.component';
 import { AdminTopMenuComponent } from './admin-top-menu/admin-top-menu.component';
@@ -89,7 +90,8 @@ import { AlertComponent } from './alert/alert.component';
     BrowserModule,
     FormsModule,
     HttpModule,
-    AppRoutingModule
+    AppRoutingModule,
+    BrowserAnimationsModule
   ],
   providers: [
     AdminAuthService,

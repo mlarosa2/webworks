@@ -39,7 +39,8 @@ import { AlertService } from '../alert.service';
 export class AdminComponent implements OnInit {
   constructor(private adminAuthService: AdminAuthService,
               private deleteConfirmationOverlayService: DeleteConfirmationOverlayService,
-              private titleService: Title) { }
+              private titleService: Title,
+              private alertService: AlertService) { }
 
   ngOnInit() {
     this.titleService.setTitle(window.location.host + ' | Admin');

@@ -1,3 +1,4 @@
-<p>
-  alert works!
-</p>
+<div [@alertState]="state" 
+     (@alertState.done)="setVoidState()">
+  <p>{{message}}</p>
+</div>

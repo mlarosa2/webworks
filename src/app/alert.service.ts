@@ -1,13 +1,18 @@
 import { Injectable } from '@angular/core';
+import { Subject } from 'rxjs/Subject';
 
 @Injectable()
 export class AlertService {
+  private showBanner = new Subject<{message: string, state: string}>();
+  showBanner$ = this.showBanner.asObservable();
 
   constructor() { }
 
-  success(): void { }
+  success(message: string): void {
+    this.showBanner.next({message: message, state: 'success'});
+  }
 
-  error(): void { }
-
-  private showBanner(): void { }
+  error(message: string): void {
+    this.showBanner.next({message: message, state: 'error'});
+  }
 }
