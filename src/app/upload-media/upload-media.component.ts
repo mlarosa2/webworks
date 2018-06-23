@@ -28,7 +28,7 @@ export class UploadMediaComponent implements OnInit {
       this.adminService.setModalView(false);
     } else {
       this.mediaService.turnOffUploadMode();
-    }  
+    }
   }
 
   isImage(file: string): boolean {
@@ -36,14 +36,15 @@ export class UploadMediaComponent implements OnInit {
   }
 
   onSubmit(event): void {
-    let formData: FormData = new FormData();
+    const formData: FormData = new FormData();
     formData.append('file', this.file, this.file.name);
     if (this.uploadFavicon) {
       this.mediaService.uploadFavicon(formData);
     } else {
       this.mediaService.upload(formData);
-      this.mediaService.turnOffUploadMode();
     }
-  } 
+
+    this.mediaService.turnOffUploadMode();
+  }
 
 }
