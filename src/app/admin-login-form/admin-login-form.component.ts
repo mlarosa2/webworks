@@ -11,33 +11,11 @@ import { AdminAuthService } from '../admin-auth.service';
   ]
 })
 export class AdminLoginFormComponent implements OnInit {
-  private newAccount: boolean = false;
-  
+  model = new AdminUser('', '');
   constructor(private adminAuthService: AdminAuthService) { }
 
   ngOnInit() {
   }
 
-  model = new AdminUser('', '');
-
-  setCreateAccount(toggle: boolean): void {
-    this.newAccount = toggle;
-    if (toggle) {
-      this.model = new AdminUser('', '', '', '');
-    } else {
-      this.model = new AdminUser('', '', '');
-    }
-  }
-
-  onLogin():void { this.adminAuthService.logIn(this.model.username, this.model.password); }
-
-  onSignup():void {
-    this.adminAuthService.signUp(this.model).then(resp => {
-        this.adminAuthService.logIn(this.model.username, this.model.password);
-      },
-      err => {
-        console.log('signup failed');
-      }
-    );
-  }
+  onLogin(): void { this.adminAuthService.logIn(this.model.username, this.model.password); }
 }

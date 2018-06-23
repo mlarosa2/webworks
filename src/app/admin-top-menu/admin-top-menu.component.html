@@ -15,6 +15,7 @@
     <ul class="sub-menu settings-sub-menu"
         [ngClass]="{'closed': !settingsMenuOpen, 'open': settingsMenuOpen}">
       <li (click)="changeFavicon()">Change Favicon</li>
+      <li (click)="createUser()">Create New User</li>
     </ul>
   </li>
   <li (click)="signOut()">Sign Out, {{userName}}</li>

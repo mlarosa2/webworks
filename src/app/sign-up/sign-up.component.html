@@ -1,0 +1,31 @@
+<div>
+  <form (ngSubmit)="onSignup()" #signupForm="ngForm">
+    <div>
+      <label for="user">Username</label>
+      <input type="text" 
+             required
+             [(ngModel)]="model.username"
+             name="username">
+    </div>
+    <div>
+      <label for="user-email">Email</label>
+      <input type="email" 
+             [(ngModel)]="model.email"
+             name="user-email">
+    </div>    
+    <div>
+      <label for="password">Password</label>
+      <input type="password"
+             required
+             [(ngModel)]="model.password" name="password">
+    </div>
+    <div>
+      <label for="confirm-password">Confirm Password</label>
+      <input type="password"
+             required
+             [(ngModel)]="model.checkpassword" name="confirm-password">
+    </div>
+    <div *ngIf="!model.confirmPassword()">Passwords do not match.</div>
+    <div><button type="submit" [disabled]="!signupForm.form.valid" id="create-user">Create User</button></div>
+  </form>
+</div>

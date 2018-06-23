@@ -42,6 +42,7 @@ import { FormResponsePipe } from './form-response.pipe';
 import { TemplatesComponent } from './templates/templates.component';
 import { NewTemplateFormComponent } from './new-template-form/new-template-form.component';
 import { TemplateComponent } from './template/template.component';
+import { SignUpComponent } from './sign-up/sign-up.component';
 
 @NgModule({
   declarations: [
@@ -79,7 +80,8 @@ import { TemplateComponent } from './template/template.component';
     FormResponsePipe,
     TemplatesComponent,
     NewTemplateFormComponent,
-    TemplateComponent
+    TemplateComponent,
+    SignUpComponent
   ],
   imports: [
     BrowserModule,

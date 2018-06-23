@@ -15,6 +15,8 @@ import { TemplateService } from '../template.service';
 })
 
 export class AdminTopMenuComponent implements OnInit {
+  private createMenuOpen: boolean = false;
+  private settingsMenuOpen: boolean = false;
   @Input() userName: string;
   @HostListener('document:click') closeMenuIfOutside() {
     if (event.srcElement.className.indexOf('create-tab') === -1
@@ -27,8 +29,7 @@ export class AdminTopMenuComponent implements OnInit {
       }
     }
   }
-  private createMenuOpen: boolean = false;
-  private settingsMenuOpen: boolean = false;
+
   constructor(private adminService: AdminService,
               private pageService: PageService,
               private mediaService: MediaService,
@@ -41,7 +42,7 @@ export class AdminTopMenuComponent implements OnInit {
 
   ngOnInit() {
   }
-  
+
   signOut(): void {
     this.adminAuthService.signOut();
   }
@@ -99,4 +100,7 @@ export class AdminTopMenuComponent implements OnInit {
     this.adminService.setModalView('favicon');
   }
 
+  createUser(): void {
+    this.adminService.setCurrentView('new user');
+  }
 }

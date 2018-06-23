@@ -1,4 +1,4 @@
-<div *ngIf="!newAccount">
+<div>
   <h1>Welcome to WebWorks Admin</h1>
   <p>Please log in to access the administration panel.</p>
   <form (ngSubmit)="onLogin()" #adminLoginForm="ngForm">
@@ -16,38 +16,4 @@
     </div>
     <div><button type="submit" [disabled]="!adminLoginForm.form.valid">Log In</button></div>
   </form>
-  <p>Or <span class="link" (click)="setCreateAccount(true);">click here</span> to create a new account.</p>
-</div>
-<div *ngIf="newAccount">
-  <h1>Create a new account</h1>
-  <form (ngSubmit)="onSignup()" #signupForm="ngForm">
-    <div>
-      <label for="user">Username</label>
-      <input type="text" 
-             required
-             [(ngModel)]="model.username"
-             name="username">
-    </div>
-    <div>
-      <label for="user-email">Email</label>
-      <input type="email" 
-             [(ngModel)]="model.email"
-             name="user-email">
-    </div>    
-    <div>
-      <label for="password">Password</label>
-      <input type="password"
-             required
-             [(ngModel)]="model.password" name="password">
-    </div>
-    <div>
-      <label for="confirm-password">Confirm Password</label>
-      <input type="password"
-             required
-             [(ngModel)]="model.checkpassword" name="confirm-password">
-    </div>
-    <div *ngIf="!model.confirmPassword()">Passwords do not match.</div>
-    <div><button type="submit" [disabled]="!signupForm.form.valid || !model.confirmPassword()">Sign up!</button></div>
-  </form>
-  <p><span class="link" (click)="setCreateAccount(false);">Click here</span> to log in.</p>
 </div>

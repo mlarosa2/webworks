@@ -12,5 +12,5 @@ export class AdminUser {
         }
 
         return false;
-    } 
+    }
 }

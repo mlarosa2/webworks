@@ -23,7 +23,7 @@ export class AdminService {
   }
 
   setCurrentView(view: string): void  {
-    this.currentView = view;[]
+    this.currentView = view;
     if (view === 'pages') {
       this.pageService.setPageHome();
     } else if (view === 'media') {
