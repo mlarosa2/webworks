@@ -1,4 +1,3 @@
-const csrfCheck = require('./csrf-token-check');
 const bcrypt    = require('bcrypt');
 const crypto     = require('crypto');
 
@@ -8,9 +7,6 @@ module.exports = class Login {
     }
 
     post(req, res) {
-        if (!csrfCheck(req.body.csrf, res)) {
-            return;
-        }
         this.db.collection('Users').find({ name: req.body.username }).toArray((err, result) => {
             if (err) throw err;
             if (result[0]) {
@@ -38,9 +34,6 @@ module.exports = class Login {
     }
 
     postFe(req, res) {
-        if (!csrfCheck(req.body.csrf, res)) {
-            return;
-        }
         let user, pass;
         if (req.headers.cookie) {
             const cookies = Login.parseCookie(req.headers.cookie);

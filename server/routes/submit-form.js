@@ -1,15 +1,9 @@
-const csrfCheck = require('./csrf-token-check');
-
 module.exports = class SubmitForm {
     constructor(db) {
         this.db = db;
     }
 
     post(req, res) {
-        if (!csrfCheck(req.body.wwcsrfformsubmitcheck33254, res)) {
-            return;
-        }
-        delete req.body.wwcsrfformsubmitcheck33254;
         req.body.wwdatesubmitcheck33254 = SubmitForm.createReadableDate();
         req.body.wwreadsubmitcheck33254 = false;
 

@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Headers, Http } from '@angular/http';
 import { Form } from './form';
-import { CookieService } from './cookie.service';
 
 import 'rxjs/add/operator/toPromise';
 
@@ -16,14 +15,10 @@ export class FormsService {
   private updateForm: boolean = false;
   private formResponses: boolean = false;
   private formsList: string[];
-  private formSelected: boolean = false; //determines if a form is selected
-  private selectedForm: Form //stores the selected form
-  private csrfToken: string;
+  private formSelected: boolean = false; // determines if a form is selected
+  private selectedForm: Form; // stores the selected form
 
-  constructor(private http: Http,
-              private cookieService: CookieService) {
-      this.csrfToken = cookieService.getCSURFToken();
-  }
+  constructor(private http: Http) { }
 
   isFormView(): boolean {
     return this.viewForms;
@@ -91,7 +86,6 @@ export class FormsService {
   }
 
   saveForm(form: Form): void {
-    form.csrf = this.csrfToken;
     this.http
       .post(`${this.formsUrl}`, JSON.stringify(form), {headers: this.headers})
       .toPromise()
@@ -99,12 +93,12 @@ export class FormsService {
         this.loadTitles();
         this.setFormView();
       })
-      .catch(this.handleError)
+      .catch(this.handleError);
   }
 
   deleteForm(title: String):void {
     this.http
-      .delete(`${this.formsUrl}`, {headers: this.headers, body: {title: title, csrf: this.csrfToken}})
+      .delete(`${this.formsUrl}`, {headers: this.headers, body: {title: title}})
         .toPromise()
         .then(() => {
           this.setFormView();
@@ -114,12 +108,12 @@ export class FormsService {
 
   updateFormRecord(title: string, fields: object[], newTitle: string): Promise<void> {
     return this.http
-      .put(`${this.formsUrl}`, {fields: fields, newTitle: newTitle, title: title, csrf: this.csrfToken}, {headers: this.headers})
+      .put(`${this.formsUrl}`, {fields: fields, newTitle: newTitle, title: title}, {headers: this.headers})
       .toPromise()
       .then(() => {
         this.setFormView();
       })
-      .catch(this.handleError)
+      .catch(this.handleError);
   }
 
   selectForm(title: string): void {
@@ -133,7 +127,7 @@ export class FormsService {
       .get(`${this.singularFormsUrl}/${title}`)
       .toPromise()
       .then(response => {
-        let form = response.json();
+        const form = response.json();
         this.selectedForm = new Form(form.title, form.fields);
         this.setUpdateView();
       })

@@ -1,5 +1,4 @@
 const ObjectId     = require('mongodb').ObjectId;
-const csrfCheck    = require('./csrf-token-check');
 
 module.exports = class FormResponses {
     constructor(db) {
@@ -18,9 +17,6 @@ module.exports = class FormResponses {
     }
 
     delete(req, res) {
-        if (!csrfCheck(req.body.csrf, res)) {
-            return;
-        }
         this.db.collection('FormResponses').deleteOne({_id: ObjectId(req.params.mongoId)}, (err, result) => {
             if (err) throw err;
             res.sendStatus(200);

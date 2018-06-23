@@ -11,12 +11,9 @@ export class AdminAuthService {
   private userName: string = '';
   private headers: Headers = new Headers({'Content-Type': 'application/json'});
   private authUrl: string = 'api';
-  private csrfToken: string;
   private checkingFeAuth: boolean = false;
   constructor(private http: Http,
               private cookieService: CookieService) {
-      this.csrfToken = cookieService.getCSURFToken();
-
     if (this.cookieService.authenticated()) {
       this.feLogin();
     }
@@ -26,22 +23,21 @@ export class AdminAuthService {
     return this.loggedIn;
   }
 
-  logIn(user: string, password: string):void {
+  logIn(user: string, password: string): void {
     this.http
-      .post(`${this.authUrl}/login`, JSON.stringify({username: user, password: password, csrf: this.csrfToken}), {headers: this.headers})
+      .post(`${this.authUrl}/login`, JSON.stringify({username: user, password: password}), {headers: this.headers})
       .toPromise()
       .then(res => {
-        this.loggedIn = true; 
+        this.loggedIn = true;
         this.userName = user;
       })
       .catch(this.handleError);
-    
   }
 
   feLogin() {
     this.checkingFeAuth = true;
     this.http
-      .post(`${this.authUrl}/login/fe`, {csrf: this.csrfToken}, {headers: this.headers})
+      .post(`${this.authUrl}/login/fe`, {}, {headers: this.headers})
       .toPromise()
       .then((res) => {
         try {
@@ -59,7 +55,7 @@ export class AdminAuthService {
   signUp(user: AdminUser): Promise<any> {
     return this.http
       .post('api/signup', 
-            JSON.stringify({username: user.username, password: user.password, email: user.email, csrf: this.csrfToken}),
+            JSON.stringify({username: user.username, password: user.password, email: user.email}),
             {headers: this.headers}
       )
       .toPromise();

@@ -15,18 +15,15 @@ export class AssetService {
   private selectedAsset: any;
   private titles: string[];
   private allAssets: any[] = [];
-  private csrfToken: string;
   constructor(private http: Http,
-              private cookieService: CookieService) {
-      this.csrfToken = cookieService.getCSURFToken();
-  }
+              private cookieService: CookieService) { }
 
   getAssets(): Promise<any> {
-    return this.http 
+    return this.http
             .get(`${this.assetUrl}/assets`)
             .toPromise();
   }
-  
+
   getSelectedAsset(): string {
       return this.selectedAsset;
     }
@@ -65,7 +62,7 @@ export class AssetService {
 
   createNewAsset(title: string, body: string, type: string, worldWide: boolean): void {
     this.http
-      .post(`${this.assetUrl}/assets`, JSON.stringify({title: title, body: body, type: type, global: worldWide, csrf: this.csrfToken}), {headers: this.headers})
+      .post(`${this.assetUrl}/assets`, JSON.stringify({title: title, body: body, type: type, global: worldWide}), {headers: this.headers})
       .toPromise()
       .then(res => {
         this.setAssetHome();
@@ -97,7 +94,7 @@ export class AssetService {
 
   deleteAsset(title: string, type: string): Promise<void> {
     return this.http
-      .delete(`${this.assetUrl}/asset/${title}/${type}`, {headers: this.headers, body: {csrf: this.csrfToken}})
+      .delete(`${this.assetUrl}/asset/${title}/${type}`, {headers: this.headers})
       .toPromise()
       .then(() => null)
       .catch(this.handleError);
@@ -105,7 +102,11 @@ export class AssetService {
 
   updateAsset(title: string, body: string, type: string, model: any): Promise<void> {
     return this.http
-      .put(`${this.assetUrl}/assets`, {type: type, body: body, title: title, global: model.global, newType: model.type, newTitle: model.title, csrf: this.csrfToken}, {headers: this.headers})
+      .put(
+          `${this.assetUrl}/assets`,
+          {type: type, body: body, title: title, global: model.global, newType: model.type, newTitle: model.title},
+          {headers: this.headers}
+      )
       .toPromise()
       .then(() => this.setAssetHome())
       .catch(this.handleError);

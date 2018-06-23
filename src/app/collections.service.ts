@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Headers, Http } from '@angular/http';
 import { Collection } from './collection';
-import { CookieService } from './cookie.service';
 
 import 'rxjs/add/operator/toPromise';
 
@@ -16,15 +15,11 @@ export class CollectionsService {
   private updateCollection: boolean = false;
   private collectionItems: boolean = false;
   private collectionsList: string[];
-  private collectionSelected: boolean = false; //determines if a collection is selected
-  private selectedCollection: Collection; //stores the selected collection
-  private selectedCollectionItems: Array<any>;  //stores collection items for selected collection
-  private csrfToken: string;
+  private collectionSelected: boolean = false; // determines if a collection is selected
+  private selectedCollection: Collection; // stores the selected collection
+  private selectedCollectionItems: Array<any>;  // stores collection items for selected collection
 
-  constructor(private http: Http,
-              private cookieService: CookieService) {
-      this.csrfToken = cookieService.getCSURFToken();
-  }
+  constructor(private http: Http) { }
 
   isCollectionView(): boolean {
     return this.viewCollections;
@@ -101,7 +96,6 @@ export class CollectionsService {
   }
 
   saveCollection(collection: Collection): void {
-    collection.csrf = this.csrfToken;
     this.http
       .post(`${this.collectionsUrl}`, JSON.stringify(collection), {headers: this.headers})
       .toPromise()
@@ -114,7 +108,7 @@ export class CollectionsService {
 
   deleteCollection(title: String):void {
     this.http
-      .delete(`${this.collectionsUrl}`, {headers: this.headers, body: {title: title, csrf: this.csrfToken}})
+      .delete(`${this.collectionsUrl}`, {headers: this.headers, body: {title: title}})
         .toPromise()
         .then(() => {
           this.setCollectionView();
@@ -124,12 +118,12 @@ export class CollectionsService {
 
   updateCollectionRecord(title: string, fields: string[], newTitle: string): Promise<void> {
     return this.http
-      .put(`${this.collectionsUrl}`, {fields: fields, newTitle: newTitle, title: title, csrf: this.csrfToken}, {headers: this.headers})
+      .put(`${this.collectionsUrl}`, {fields: fields, newTitle: newTitle, title: title}, {headers: this.headers})
       .toPromise()
       .then(() => {
         this.setCollectionView();
       })
-      .catch(this.handleError)
+      .catch(this.handleError);
   }
 
   selectCollection(title: string): void {

@@ -1,5 +1,4 @@
 const PageParser   = require('../page-parser/main');
-const csrfCheck    = require('./csrf-token-check');
 
 module.exports = class SinglePage {
     constructor(db) {
@@ -18,9 +17,6 @@ module.exports = class SinglePage {
     }
 
     delete(req, res) {
-        if (!csrfCheck(req.body.csrf, res)) {
-            return;
-        }
         this.db.collection('Pages').deleteOne({title: req.params.title}, (err, result) => {
             if (err) throw err;
             res.sendStatus(200);
@@ -28,9 +24,6 @@ module.exports = class SinglePage {
     }
 
     put(req, res) {
-        if (!csrfCheck(req.body.csrf, res)) {
-            return;
-        }
         const query         = { title: req.params.title };
         const updatedValues = req.body.body;
         PageParser(req.body.body.body).then(parsedPage => {

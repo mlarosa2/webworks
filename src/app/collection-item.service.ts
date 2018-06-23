@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Headers, Http } from '@angular/http';
 import { CollectionItem } from './collection-item';
-import { CookieService } from './cookie.service';
 
 import 'rxjs/add/operator/toPromise';
 
@@ -18,13 +17,9 @@ export class CollectionItemService {
   private newItemView: boolean;
   private updateItemView: boolean;
   private collectionItemToEdit: string;
-  private csrfToken: string;
 
-  constructor(private http: Http,
-              private cookieService: CookieService) {
-      this.csrfToken = cookieService.getCSURFToken();
-  }
-  
+  constructor(private http: Http) { }
+
   loadCollectionItems(): void {
     this.http
       .get(`${this.collectionItemsUrl}/${this.currentCollection}`)
@@ -95,7 +90,6 @@ export class CollectionItemService {
   }
 
   addItem(collectionItem: CollectionItem): void {
-    collectionItem.csrf = this.csrfToken
     this.http
       .post(`${this.collectionItemsUrl}`, JSON.stringify(collectionItem), {headers: this.headers})
       .toPromise()
@@ -113,8 +107,7 @@ export class CollectionItemService {
           title: this.collectionItemToEdit,
           belongsTo: this.currentCollection,
           fields: collectionItem.getFields(),
-          newTitle: collectionItem.getTitle(),
-          csrf: this.csrfToken
+          newTitle: collectionItem.getTitle()
         }
       )
       .toPromise()
@@ -134,7 +127,7 @@ export class CollectionItemService {
 
   deleteItem(item: string): void {
     this.http
-      .delete(`${this.collectionItemsUrl}`, {headers: this.headers, body: {title: item, belongsTo: this.currentCollection, csrf: this.csrfToken}})
+      .delete(`${this.collectionItemsUrl}`, {headers: this.headers, body: {title: item, belongsTo: this.currentCollection}})
       .toPromise()
       .then(() => {
         this.loadCollectionItems();

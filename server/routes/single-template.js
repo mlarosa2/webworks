@@ -1,5 +1,3 @@
-const csrfCheck = require('./csrf-token-check');
-
 module.exports = class SingleTemplate {
     constructor(db) {
         this.db = db;
@@ -17,9 +15,6 @@ module.exports = class SingleTemplate {
     }
 
     delete(req, res) {
-        if (!csrfCheck(req.body.csrf, res)) {
-            return;
-        }
         this.db.collection('Templates').deleteOne({title: req.params.title}, (err, result) => {
             if (err) throw err;
 

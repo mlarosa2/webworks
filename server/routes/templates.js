@@ -1,5 +1,3 @@
-const csrfCheck = require('./csrf-token-check');
-
 module.exports = class Templates {
     constructor(db) {
         this.db = db;
@@ -17,10 +15,6 @@ module.exports = class Templates {
     }
 
     post(req, res) {
-        if (!csrfCheck(req.body.csrf, res)) {
-            return;
-        }
-
         this.db.collection('Templates').insertOne({title: req.body.title, body: req.body.body, template: true}, (err, result) => {
             if (err) throw err;
             
@@ -29,9 +23,6 @@ module.exports = class Templates {
     }
 
     put(req, res) {
-        if (!csrfCheck(req.body.csrf, res)) {
-            return;
-        }
         const query = { title: req.body.title};
         let title   = req.body.newTitle || req.body.title;
         const updatedValues = { title: title, body: req.body.body };

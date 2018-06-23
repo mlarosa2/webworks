@@ -3,7 +3,6 @@ import { Headers, Http } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { Page } from './page';
 import { AssetService } from './asset.service';
-import { CookieService } from './cookie.service';
 
 import 'rxjs/add/operator/toPromise';
 
@@ -16,17 +15,13 @@ export class PageService {
   private createPage: boolean = false;
   private selectedPage: string;
   private titles: string[];
-  private csrfToken: string;
   constructor(private http: Http,
-              private assetService: AssetService,
-              private cookieService: CookieService) {
-      this.csrfToken = cookieService.getCSURFToken();
-  }
+              private assetService: AssetService) { }
 
   getPageTitles(): Promise<any> {
     return this.http
                .get(`${this.pageUrl}/pages`)
-               .toPromise()
+               .toPromise();
   }
 
   getSelectedPage(): string {
@@ -78,12 +73,11 @@ export class PageService {
     this.http
       .post(`${this.pageUrl}/pages`, JSON.stringify(
         {
-          title: title, 
-          body: body, 
-          css: css, 
+          title: title,
+          body: body,
+          css: css,
           js: js,
-          meta: meta,
-          csrf: this.csrfToken
+          meta: meta
         }
       ), {headers: this.headers})
       .toPromise()
@@ -112,7 +106,7 @@ export class PageService {
 
   deletePage(title: string): Promise<void> {
     return this.http
-      .delete(`${this.pageUrl}/page/${title}`, {headers: this.headers, body: {csrf: this.csrfToken}})
+      .delete(`${this.pageUrl}/page/${title}`, {headers: this.headers})
       .toPromise()
       .then(() => null)
       .catch(this.handleError);
@@ -120,7 +114,7 @@ export class PageService {
 
   updatePage(title: string, body: Page): Promise<void> {
     return this.http
-      .put(`${this.pageUrl}/page/${title}`, {body: body, csrf: this.csrfToken}, {headers: this.headers})
+      .put(`${this.pageUrl}/page/${title}`, {body: body}, {headers: this.headers})
       .toPromise()
       .then(() => this.setPageHome())
       .catch(this.handleError);

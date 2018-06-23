@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Headers, Http } from '@angular/http';
-import { CookieService } from './cookie.service';
 
 import 'rxjs/add/operator/toPromise';
 
@@ -14,12 +13,8 @@ export class FormResponseService {
   private listView: boolean;
   private exploreView: boolean;
   private formResponseToExplore: string;
-  private csrfToken: string;
 
-  constructor(private http: Http,
-              private cookieService: CookieService) {
-      this.csrfToken = cookieService.getCSURFToken();
-  }
+  constructor(private http: Http) { }
 
   loadFormResponses(): void {
     this.http
@@ -57,7 +52,7 @@ export class FormResponseService {
 
   deleteResponse(response: string): void {
     this.http
-      .delete(`${this.singleFormResponseUrl}/${this.currentForm}/${response}`, {headers: this.headers, body: {csrf: this.csrfToken}})
+      .delete(`${this.singleFormResponseUrl}/${this.currentForm}/${response}`, {headers: this.headers})
       .toPromise()
       .then(() => {
         this.loadFormResponses();

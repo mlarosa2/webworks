@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Headers, Http } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
-import { CookieService } from './cookie.service';
 
 import 'rxjs/add/operator/toPromise';
 
@@ -15,18 +14,14 @@ export class TemplateService {
   private selectedTemplate: string;
   private titles: string[];
   private allTemplates: any[] = [];
-  private csrfToken: string;
-  constructor(private http: Http,
-              private cookieService: CookieService) {
-      this.csrfToken = cookieService.getCSURFToken();
-  }
+  constructor(private http: Http) { }
 
   getTemplates(): Promise<any> {
-    return this.http 
+    return this.http
             .get(`${this.templateUrl}/Templates`)
             .toPromise();
   }
-  
+
   getSelectedTemplate(): string {
       return this.selectedTemplate;
     }
@@ -65,7 +60,7 @@ export class TemplateService {
 
   createNewTemplate(title: string, body: string): void {
     this.http
-      .post(`${this.templateUrl}/templates`, JSON.stringify({title: title, body: body, csrf: this.csrfToken}), {headers: this.headers})
+      .post(`${this.templateUrl}/templates`, JSON.stringify({title: title, body: body}), {headers: this.headers})
       .toPromise()
       .then(res => {
         this.setTemplateHome();
@@ -97,7 +92,7 @@ export class TemplateService {
 
   deleteTemplate(title: string): Promise<void> {
     return this.http
-      .delete(`${this.templateUrl}/template/${title}`, {headers: this.headers, body: {csrf: this.csrfToken}})
+      .delete(`${this.templateUrl}/template/${title}`, {headers: this.headers})
       .toPromise()
       .then(() => null)
       .catch(this.handleError);
@@ -105,7 +100,7 @@ export class TemplateService {
 
   updateTemplate(title: string, body: string, model: any): Promise<void> {
     return this.http
-      .put(`${this.templateUrl}/templates`, {body: body, title: title, newTitle: model.title, csrf: this.csrfToken}, {headers: this.headers})
+      .put(`${this.templateUrl}/templates`, {body: body, title: title, newTitle: model.title}, {headers: this.headers})
       .toPromise()
       .then(() => this.setTemplateHome())
       .catch(this.handleError);

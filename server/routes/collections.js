@@ -1,5 +1,3 @@
-const csrfCheck = require('./csrf-token-check');
-
 module.exports = class Collections {
     constructor(db) {
         this.db = db;
@@ -15,9 +13,6 @@ module.exports = class Collections {
     }
 
     post(req, res) {
-        if (!csrfCheck(req.body.csrf, res)) {
-            return;
-        }
         this.db.collection('Collections').insertOne({title: req.body.title, fields: req.body.fields}, (err, result) => {
             if (err) throw err;
             res.sendStatus(200);
@@ -25,9 +20,6 @@ module.exports = class Collections {
     }
 
     delete(req, res) {
-        if (!csrfCheck(req.body.csrf, res)) {
-            return;
-        }
         this.db.collection('Collections').deleteOne({title: req.body.title}, (err, result) => {
             if (err) throw err;
             res.sendStatus(200);
@@ -35,9 +27,6 @@ module.exports = class Collections {
     }
 
     put(req, res) {
-        if (!csrfCheck(req.body.csrf, res)) {
-            return;
-        }
         const query         = { title: req.body.title };
         const updatedValues = { fields: req.body.fields, title: req.body.newTitle };
 

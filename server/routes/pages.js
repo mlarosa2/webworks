@@ -1,5 +1,4 @@
 const PageParser   = require('../page-parser/main');
-const csrfCheck    = require('./csrf-token-check');
 
 module.exports = class Pages {
     constructor(db) {
@@ -16,9 +15,6 @@ module.exports = class Pages {
     }
 
     post(req, res) {
-        if (!csrfCheck(req.body.csrf, res)) {
-            return;
-        }
         PageParser(req.body.body).then(parsedPage => {
             this.db.collection('Pages').insertOne(
                  {  title: req.body.title, 

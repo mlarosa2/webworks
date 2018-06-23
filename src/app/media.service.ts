@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Headers, Http } from '@angular/http';
 import { Media } from './media';
-import { CookieService } from './cookie.service';
 
 import 'rxjs/add/operator/toPromise';
 
@@ -12,12 +11,8 @@ export class MediaService {
   private mediaPaths: string[];
   private uploadMode: boolean = false;
   private singleMode: boolean = false;
-  private singleFile: string; 
-  private csrfToken: string;
-  constructor(private http: Http,
-              private cookieService: CookieService) {
-      this.csrfToken = cookieService.getCSURFToken();
-  }
+  private singleFile: string;
+  constructor(private http: Http) { }
 
   isUploadMode(): boolean {
     return this.uploadMode;
@@ -33,7 +28,7 @@ export class MediaService {
 
   turnOnUploadMode(): void {
     this.uploadMode = true;
-    if (this.singleMode) this.singleMode = false;
+    if (this.singleMode) { this.singleMode = false; }
   }
 
   turnOffSingleMode(): void {
@@ -43,11 +38,10 @@ export class MediaService {
 
   turnOnSingleMode(): void {
     this.singleMode = true;
-    if (this.uploadMode) this.uploadMode = false;
+    if (this.uploadMode) { this.uploadMode = false; }
   }
 
   upload(formData: FormData): Promise<void> {
-    formData.append('csrf', this.csrfToken);
     return this.http
             .post(`${this.mediaUrl}/media`, formData, new Headers({'Content-Type': 'multipart/form-data'}))
             .toPromise()
@@ -58,7 +52,6 @@ export class MediaService {
   }
 
   uploadFavicon(formData: FormData): void {
-    formData.append('csrf', this.csrfToken);
     this.http
       .post(`${this.mediaUrl}/favicon}`, formData, new Headers({'Content-Type': 'multipart/form-data'}))
       .toPromise()
@@ -92,7 +85,7 @@ export class MediaService {
   }
 
   isImage(file: string): boolean {
-    if (!file) return false;
+    if (!file) { return false; }
     const ext = file.substr(file.lastIndexOf('.') + 1);
     const images = ['jpg', 'png', 'svg', 'gif'];
     return images.includes(ext);
@@ -100,7 +93,7 @@ export class MediaService {
 
   deleteFile(file: string): void {
     this.http
-      .delete(`${this.mediaUrl}/media/${file}`, {headers: this.headers, body: {csrf: this.csrfToken}})
+      .delete(`${this.mediaUrl}/media/${file}`, {headers: this.headers})
       .toPromise()
       .then(response => {
         this.setFiles();
@@ -111,7 +104,7 @@ export class MediaService {
 
   updateMedia(originalTitle: string, mediaData: any): void {
     this.http
-      .put(`${this.mediaUrl}/media/${originalTitle}`, { updateTitle: `${mediaData.name}${mediaData.ext}`, csrf: this.csrfToken}, {headers: this.headers})
+      .put(`${this.mediaUrl}/media/${originalTitle}`, { updateTitle: `${mediaData.name}${mediaData.ext}`}, {headers: this.headers})
       .toPromise()
       .then(response => {
         this.setFiles();

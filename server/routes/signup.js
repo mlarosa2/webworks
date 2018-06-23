@@ -1,4 +1,3 @@
-const csrfCheck = require('./csrf-token-check');
 const bcrypt    = require('bcrypt');
 
 module.exports = class Login {
@@ -7,9 +6,6 @@ module.exports = class Login {
     }
 
     post(req, res) {
-        if (!csrfCheck(req.body.csrf, res)) {
-            return;
-        }
         let password = '';
         bcrypt.hash(req.body.password, 10, (err, hash) => {
             if (err) {

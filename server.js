@@ -21,12 +21,6 @@ app.use('/assets', express.static(path.join(__dirname, 'assets')));
 app.use('/api', api);
 
 app.get('*', (req, res) => {
-    const hash = crypto.createHash('sha256');
-    hash.update('csurf');
-    // setting again so csrf token is different across access to sites instead of per server starting up
-    global.csrfToken = crypto.randomBytes(8).toString('hex');
-
-    res.append('Set-Cookie', hash.digest('hex') + '=' + global.csrfToken + '; Path=/;');
     res.sendFile(path.join(__dirname, 'dist/index.html'));
 });
 
