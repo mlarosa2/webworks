@@ -13,6 +13,7 @@ import { CookieService } from '../cookie.service';
 import { FormResponseService } from '../form-response.service';
 import { MonacoService } from '../monaco.service';
 import { TemplateService } from '../template.service';
+import { AlertService } from '../alert.service';
 
 @Component({
   selector: 'app-admin',
@@ -31,7 +32,8 @@ import { TemplateService } from '../template.service';
     FormResponseService,
     MonacoService,
     TemplateService,
-    Title
+    Title,
+    AlertService
   ]
 })
 export class AdminComponent implements OnInit {

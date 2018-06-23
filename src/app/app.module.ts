@@ -43,6 +43,7 @@ import { TemplatesComponent } from './templates/templates.component';
 import { NewTemplateFormComponent } from './new-template-form/new-template-form.component';
 import { TemplateComponent } from './template/template.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
+import { AlertComponent } from './alert/alert.component';
 
 @NgModule({
   declarations: [
@@ -81,7 +82,8 @@ import { SignUpComponent } from './sign-up/sign-up.component';
     TemplatesComponent,
     NewTemplateFormComponent,
     TemplateComponent,
-    SignUpComponent
+    SignUpComponent,
+    AlertComponent
   ],
   imports: [
     BrowserModule,
