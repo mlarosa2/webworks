@@ -2,7 +2,7 @@
 <form (submit)="onSubmit()" #upload="ngForm">
   <i class="fa fa-times" (click)="closeModal()"></i>
   <div>
-    <label for="file">Upload File</label>
+    <label for="file" class="button">Upload File</label>
     <input type="file" id="file" name="file" (change)="fileChanged($event, preview)">
   </div>
   <div class="image-preview">

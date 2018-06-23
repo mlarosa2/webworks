@@ -1,4 +1,16 @@
+label {
+    display: block;
+    font-size: 12px;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.label-inline {
+    display: inline-block;
+}
+
 button,
+label.button,
 i {
     background-color: cornflowerblue;
     border: none;
@@ -12,12 +24,14 @@ i {
 }
 
 button:hover,
+label.button:hover,
 i:hover {
     background-color: #5A86D6;
     transition: .2s;
 }
 
 button:active,
+label.button:active,
 i:active {
     background-color: #4C74BA;
     position: relative;
@@ -31,22 +45,16 @@ i {
 
 button:disabled,
 button:disabled:hover,
-button:disabled:active {
+button:disabled:active,
+label.button:disabled,
+label.button:disabled:hover,
+label.button:disabled:active {
     cursor: default;
     background-color: lightgray;
     color: darkgray;
 }
 
-label {
-    display: block;
-    font-size: 12px;
-    font-weight: bold;
-    margin-top: 10px;
-}
-
-.label-inline {
-    display: inline-block;
-}
+label.button { text-align: center; }
 
 #monaco {
     width: 100%;

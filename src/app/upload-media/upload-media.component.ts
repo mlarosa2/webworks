@@ -6,7 +6,10 @@ import { AdminService } from '../admin.service';
 @Component({
   selector: 'app-upload-media',
   templateUrl: './upload-media.component.html',
-  styleUrls: ['./upload-media.component.css']
+  styleUrls: [
+    '../css/forms.css',
+    './upload-media.component.css'
+  ]
 })
 export class UploadMediaComponent implements OnInit {
   @Input() uploadFavicon: string;
@@ -18,7 +21,7 @@ export class UploadMediaComponent implements OnInit {
   }
 
   fileChanged(event, preview): void {
-    let target: HTMLInputElement = event.target as HTMLInputElement;
+    const target: HTMLInputElement = event.target as HTMLInputElement;
     this.file = target.files[0];
     preview.src = window.URL.createObjectURL(this.file);
   }

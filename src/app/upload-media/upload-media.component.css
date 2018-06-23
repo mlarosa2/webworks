@@ -26,6 +26,7 @@ form {
 .image-preview img {
     max-width: 200px;
     height: auto;
+    max-height: 340px;
     object-fit: cover;    
 }
 
@@ -48,3 +49,7 @@ label {
     border-radius: 100%;
     background-color: white;
 }
+
+.fa-times:active { position: absolute; top: -9px; }
+
+input[type="file"] { visibility: hidden; }
